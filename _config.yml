@@ -4,7 +4,7 @@ name: Reading List
 description: Academic reading list
 
 # url is currently only used only for the RSS feed in feed.xml
-url: http://scotte.github.io
+url: http://allenyin.github.io/reading_list
 
 # baseurl will often be '', but for a project page on gh-pages, it needs to
 # be the project name.
