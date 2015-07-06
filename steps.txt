@@ -14,7 +14,9 @@
         git checkout master
     After that, use "git push --all" instead.
     (Credit: https://gist.github.com/ozh/4154909)
-sdfs?
+9) Make the file executable
+
+10) Style site by ripping off parts of the html files in _include/
 
 
 
