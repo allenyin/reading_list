@@ -1,0 +1,21 @@
+1) install ruby: pacman -S ruby
+2) install bundler: gem install bundler
+3) make repo folder
+4) install github-pages and jekyll to keep in sync with github-pages setup: gem install github-pages
+
+5) Create new repo. Download a theme, extract and rename it to that repo's name.
+6) Edit the _config.yml file.
+7) Push to master branch.
+8) Create gh-pages branch in repo. Make it mirror the master branch by adding a post-commit hooks:
+    create .git/hooks/post-commit:
+        #!/bin/sh
+        git checkout gh-pages
+        git rebase master
+        git checkout master
+    After that, use "git push --all" instead.
+    (Credit: https://gist.github.com/ozh/4154909)
+
+
+
+
+
