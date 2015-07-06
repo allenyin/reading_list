@@ -17,6 +17,7 @@
 9) Make the file executable
 
 10) Style site by ripping off parts of the html files in _include/
+now??
 
 
 
