@@ -46,8 +46,9 @@ layout: default
     </ul>
 </div>
 ```
-At this point, Jekyll will have generated a separate page for our newly created tag at `site_base_url/tags/my_new_tag.html`.
+At this point, Jekyll will have generated a separate page for our newly created tag at `/tags/my_new_tag.html`.
 
+---
 To generate the single page that lists posts associated with all tags, we create `alltags.html`:
 
 ```html
@@ -75,7 +76,8 @@ layout: default
 ```
 Note the tags will be displayed in alphabetical order.
 
-I also want to show, for each individual post, its asssociated tags. This is done by adding the line `{% include tag_line.html %}` in `_layouts/post.html`, then create `_includes/tag_line.html/`.
+---
+I also want to show, for each individual post, its asssociated tags. This is done by including `_includes/tag_line.html` in `_layouts/post.html`: 
 
 ```html
 <p>
@@ -92,6 +94,7 @@ I also want to show, for each individual post, its asssociated tags. This is don
 </p>
 ```
 
+---
 Finally, I want a list of tags that link me to their separate link pagei (e.g. this site's sidebar). That's what `alltags.html` is for:
 
 ```html
