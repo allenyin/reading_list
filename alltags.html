@@ -1,0 +1,27 @@
+---
+layout: default
+---
+<div class="well">
+
+<h1>{{ page.title }}</h1>
+<p>&nbsp;</p>
+
+{% capture tags %}
+    {% for tag in site.tags %}
+        {{ tag[0] }}
+    {% endfor %}
+{% endcapture %}
+{% assign sortedtags = tags | split:' ' | sort %}
+
+{% for tag in sortedtags %}
+    <h3>{{ tag }}</h3>
+    <ul>
+        {% for post in site.tags[tag] %}
+        <li>
+            <a href="{{ site.baseurl}}{{ post.url }}">{{ post.date | date: "%b %-d, %Y" }} - {{ post.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+
+</div>

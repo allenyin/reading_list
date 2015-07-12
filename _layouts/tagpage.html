@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<div class="well">
+    <h1>{{ page.tag }}</h1>
+
+    <ul>
+        {% for post in site.tags[page.tag] %}
+        <li>
+            <a href="{{ site.baseurl}}{{ post.url }}">{{ post.date | date: "%b %-d, %Y" }} - {{ post.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

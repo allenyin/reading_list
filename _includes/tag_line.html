@@ -1,0 +1,13 @@
+<p>
+<small>
+    tags:
+    {% for tag in page.tags %}
+        {% if forloop.last %}
+        <span><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag }}</a></span>
+        {% else %}
+        <span><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag }},</a></span>
+        {% endif %}
+    {% endfor %}
+</small>
+</p>
+
