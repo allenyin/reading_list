@@ -3,9 +3,9 @@
     tags:
     {% for tag in page.tags %}
         {% if forloop.last %}
-        <span><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag }}</a></span>
+        <span><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag | split:'_' | join:' ' }}</a></span>
         {% else %}
-        <span><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag }},</a></span>
+        <span><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag | split:'_' | join:' ' }},</a></span>
         {% endif %}
     {% endfor %}
 </small>

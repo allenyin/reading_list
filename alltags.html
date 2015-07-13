@@ -3,17 +3,15 @@ layout: default
 ---
 <div class="well">
 
-    <!--
 {% capture tags %}
     {% for tag in site.tags %}
-        {{ tag[0] }}
+    {{ tag[0] }}
     {% endfor %}
 {% endcapture %}
 {% assign sortedtags = tags | split:' ' | sort %}
--->
 
-{% for tag in site.tags %}
-    <h3>{{ tag }}</h3>
+{% for tag in sortedtags %}
+    <h3>{{ tag | replace:'_',' ' }}</h3>
     <ul>
         {% for post in site.tags[tag] %}
         <li>

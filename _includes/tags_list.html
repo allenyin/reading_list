@@ -1,14 +1,14 @@
 <h1>Tags</h1>
 {% capture tags %}
     {% for tag in site.tags %}
-        {{ tag[0] }}
+    {{ tag[0] }}
     {% endfor %}
 {% endcapture %}
-{% assign sortedtags = tags | split:' ' | sort %}
+{% assign sortedtags = tags | split:' '' | sort %}
 
 <ul>
 {% for tag in sortedtags %}
-<li><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag }}</a></li>
+<li><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag | replace:'_',' ' }}</a></li>
 {% endfor %}
 </ul>
 
