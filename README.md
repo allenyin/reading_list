@@ -1,5 +1,7 @@
 Allen Yin's Jekyll-powered academic reading list.
 
+Latex support provided by MathJax as per [Gaston Sanchez](http://gastonsanchez.com/blog/opinion/2014/02/16/Mathjax-with-jekyll.html).
+
 License
 =======
 

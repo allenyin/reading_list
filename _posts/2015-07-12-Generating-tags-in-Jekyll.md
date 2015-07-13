@@ -22,103 +22,18 @@ Implementation:
 ==============
 The general approach is, whenever a new tag is created (e.g. entered into the "tags" field of a post's YAML front-matter), we need to create a `tags/my_new_tag.html` file with the following content:
 
-```html
+{% highlight html %}
 ---
 layout: tagpage
 tag: my_new_tag
 ---
-```
+{% endhighlight %}
 
-This means we need to create the layout `_layouts/tagpage.html`:
+This means we need to create the layout [_layouts/tagpage.html](https://github.com/allenyin/reading_list/blob/gh-pages/_layouts/tagpage.html).
 
-```html
----
-layout: default
----
-<div class="well">
-    <h1>{{ page.tag }}</h1>
-    <ul>
-        {% for post in site.tags[page.tag] %}
-        <li>
-            <a href="{{ site.baseurl}}{{ post.url }}">{{ post.date | date: "%b %-d, %Y" }} - {{ post.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
-```
 At this point, Jekyll will have generated a separate page for our newly created tag at `/tags/my_new_tag.html`.
 
----
-To generate the single page that lists posts associated with all tags, we create `alltags.html`:
+To generate the single page that lists posts associated with all tags, we create [alltags.html](https://github.com/allenyin/reading_list/blob/gh-pages/alltags.html). Note the tags will be displayed in alphabetical order.
 
-```html
----
-layout: default
----
-<div class="well">
-{% capture tags %}
-    {% for tag in site.tags %}
-        {{ tag[0] }}
-    {% endfor %}
-{% endcapture %}
-{% assign sortedtags = tags | split:' ' | sort %}
-{% for tag in sortedtags %}
-    <h3>{{ tag }}</h3>
-    <ul>
-        {% for post in site.tags[tag] %}
-        <li>
-            <a href="{{ site.baseurl}}{{ post.url }}">{{ post.date | date: "%b %-d, %Y" }} - {{ post.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-{% endfor %}
-</div>
-```
-Note the tags will be displayed in alphabetical order.
+I also want to show, for each individual post, its asssociated tags. This is done by including [\_includes/tag_line.html](https://github.com/allenyin/reading_list/blob/gh-pages/_includes/tag_line.html) in [_layouts/post.html](https://github.com/allenyin/reading_list/blob/gh-pages/_layouts/post.html).
 
----
-I also want to show, for each individual post, its asssociated tags. This is done by including `_includes/tag_line.html` in `_layouts/post.html`: 
-
-```html
-<p>
-<small>
-    tags:
-    {% for tag in page.tags %}
-        {% if forloop.last %}
-        <span><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag }}</a></span>
-        {% else %}
-        <span><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag }},</a></span>
-        {% endif %}
-    {% endfor %}
-</small>
-</p>
-```
-
----
-Finally, I want a list of tags that link me to their separate link pagei (e.g. this site's sidebar). That's what `alltags.html` is for:
-
-```html
----
-layout: default
----
-<div class="well">
-{% capture tags %}
-    {% for tag in site.tags %}
-        {{ tag[0] }}
-    {% endfor %}
-{% endcapture %}
-{% assign sortedtags = tags | split:' ' | sort %}
-{% for tag in sortedtags %}
-    <h3>{{ tag }}</h3>
-    <ul>
-        {% for post in site.tags[tag] %}
-        <li>
-            <a href="{{ site.baseurl}}{{ post.url }}">{{ post.date | date: "%b %-d, %Y" }} - {{ post.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-{% endfor %}
-</div>
-```
-
-I know, some code duplication. But minimal work is minimal.
