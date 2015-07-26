@@ -12,8 +12,9 @@ tags:
 - motor_feedback
 ---
 Mechanisms of limb stability:
-*Antagonist muscle architecture produces an equilibrium point. *Polit and Bizzi* experiments with de-afferented monkeys showed passive properties can reach target, but cannot resist pertubation very well.
-*Passive, spring-like properties of limb promotes stability.
-*CNS reflexes.
-*Neuropathy - cannot sense location of limbs without vision.
-*[*Mussa-Ivaldi*] shows stiffness of the arm remains roughly constant when expressed in terms of joint coordinates.
+
+* Antagonist muscle architecture produces an equilibrium point. *Polit and Bizzi* experiments with de-afferented monkeys showed passive properties can reach target, but cannot resist pertubation very well.
+* Passive, spring-like properties of limb promotes stability.
+* CNS reflexes.
+* Neuropathy - cannot sense location of limbs without vision.
+* [*Mussa-Ivaldi*] shows stiffness of the arm remains roughly constant when expressed in terms of joint coordinates.
