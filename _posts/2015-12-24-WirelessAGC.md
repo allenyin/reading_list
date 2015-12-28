@@ -36,7 +36,7 @@ Tim describes the firmware in his [thesis, page 162](http://m8ta.com/tim/dissert
 
 The accompanying diagram is shown below:
 
-<img src="../assets/tim_AGC.png" width="600px">
+<img src="{{ site.baseurl }}/assets/tim_AGC.png" width="600px">
 
 Below is the firmware related to this part - it is obvious now I understand how it works, and Tim's thesis explanations now makes perfect sense (it did before, but they seemed more like clues to an elaborate puzzle).
 
