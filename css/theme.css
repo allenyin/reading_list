@@ -49,3 +49,10 @@ body {
 .author a {
     color: #ee4444;
 }
+
+.center-image {
+    margin: 2px;
+    display: block;
+    padding: 19px;
+    width: 80%;
+}
