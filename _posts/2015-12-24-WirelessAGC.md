@@ -41,39 +41,39 @@ The accompanying diagram is shown below:
 
 Below is the firmware related to this part - it is obvious now I understand how it works, and Tim's thesis explanations now makes perfect sense (it did before, but they seemed more like clues to an elaborate puzzle).
 
-{% highlight asm %}
-1 |     //read in the samples -- SPORT0
-2 |     r0 = w[p0] (z); // SPORT0-primary: Ch0-31
-3 |     r1 = w[p0] (z); // SPORT0-sec:     Ch32-63
-4 |     r2.l = 0xfff;
-5 |     r0 = r0 & r2;
-6 |     r1 = r1 & r2;
-7 |     r1 <<= 16;  //secondary channel in the upper word.
-8 |     r2 = r0 + r1;
-9 |        
-10|     //apply integrator highpass + gain (2, add twice)).
-11|     r5 = [i0++]; //r5 = 32000,-16384. (lo, high)
-12|    .align 8
-13|        a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++]; // r1 = integrated mean
-14|        a0 += r2.l * r5.l, a1 += r2.h * r5.l || r6 = [i0++]; //r6 = 16384 (0.5), 800 (mu)
-15|        r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd);
-16|        a0 = r1.l * r6.l , a1 = r1.h * r6.l; //integrator
-17|        r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd)
-18|
-19|        /*AGC*/	|| r5 = [i1++] || r7 = [i0++]; //r5 = gain, r7 AGC targets (sqrt)
-20|        a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2; //save mean, above
-21|        a0 = a0 << 8 ; // 14 bits in SRC (note *4 above), amp to 16 bits, which leaves 2 more bits for amplification (*4)
-22|        a1 = a1 << 8 ; //gain goes from 0-128 hence (don't forget about sign)
-23|        r0.l = a0, r0.h = a1 ;  //default mode should work (treat both as signed fractions)
-24|        a0 = abs a0, a1 = abs a1;
-25|        r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) //subtract target, saturate, store difference
-26|            || r6 = [i0++]; //r6.l = 16384 (1), r6.h = 1 (mu)
-27|        a0 = r5.l * r6.l, a1 = r5.h * r6.l || nop; //load the gain again & scale.
-28|        r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd) || nop; //r6.h = 1 (mu); within a certain range gain will not change.
-29|    .align 8
-30|        r3 = abs r3 (v) || r7 = [FP - FP_WEIGHTDECAY]; //set weightdecay to zero to disable LMS.
-31|        r4.l = (a0 = r0.l * r7.l), r4.h = (a1 = r0.h * r7.l) (is) || i1 += m1 || [i2++] = r3;
-32|                    //saturate the sample (r4), save the gain (r3).
+{% highlight asm linenos=table %}
+ //read in the samples -- SPORT0
+ r0 = w[p0] (z); // SPORT0-primary: Ch0-31
+ r1 = w[p0] (z); // SPORT0-sec:     Ch32-63
+ r2.l = 0xfff;
+ r0 = r0 & r2;
+ r1 = r1 & r2;
+ r1 <<= 16;  //secondary channel in the upper word.
+ r2 = r0 + r1;
+    
+ //apply integrator highpass + gain (2, add twice)).
+ r5 = [i0++]; //r5 = 32000,-16384. (lo, high)
+.align 8
+    a0 = r2.l * r5.l, a1 = r2.h * r5.l || r1 = [i1++]; // r1 = integrated mean
+    a0 += r2.l * r5.l, a1 += r2.h * r5.l || r6 = [i0++]; //r6 = 16384 (0.5), 800 (mu)
+    r0.l = (a0 += r1.l * r5.h), r0.h = (a1 += r1.h * r5.h) (s2rnd);
+    a0 = r1.l * r6.l , a1 = r1.h * r6.l; //integrator
+    r2.l = (a0 += r0.l * r6.h), r2.h = (a1 += r0.h * r6.h) (s2rnd)
+
+    /*AGC*/	|| r5 = [i1++] || r7 = [i0++]; //r5 = gain, r7 AGC targets (sqrt)
+    a0 = r0.l * r5.l, a1 = r0.h * r5.h || [i2++] = r2; //save mean, above
+    a0 = a0 << 8 ; // 14 bits in SRC (note *4 above), amp to 16 bits, which leaves 2 more bits for amplification (*4)
+    a1 = a1 << 8 ; //gain goes from 0-128 hence (don't forget about sign)
+    r0.l = a0, r0.h = a1 ;  //default mode should work (treat both as signed fractions)
+    a0 = abs a0, a1 = abs a1;
+    r4.l = (a0 -= r7.l * r7.l), r4.h = (a1 -= r7.h * r7.h) (is) //subtract target, saturate, store difference
+        || r6 = [i0++]; //r6.l = 16384 (1), r6.h = 1 (mu)
+    a0 = r5.l * r6.l, a1 = r5.h * r6.l || nop; //load the gain again & scale.
+    r3.l = (a0 -= r4.l * r6.h), r3.h = (a1 -= r4.h * r6.h) (s2rnd) || nop; //r6.h = 1 (mu); within a certain range gain will not change.
+.align 8
+    r3 = abs r3 (v) || r7 = [FP - FP_WEIGHTDECAY]; //set weightdecay to zero to disable LMS.
+    r4.l = (a0 = r0.l * r7.l), r4.h = (a1 = r0.h * r7.l) (is) || i1 += m1 || [i2++] = r3;
+                //saturate the sample (r4), save the gain (r3).
 {% endhighlight %}
 
 Line 2-8 stores the 12-bit samples in the LO and HI 16-bits of r2.
@@ -125,7 +125,7 @@ Line 27 and line 28 involve yet another fixed-point trick. These two lines updat
 
 The key is noticing that multiplying a Q7.8 number by 0x4000 while treating both as Q15 numbers, then extracting the resulting Q31 number in s2rnd mode, results in a 16-bit number that has the same Q7.8 value as before. This can be demonstrated by the following lines using functions defined in [AGC_sim.py](https://github.com/allenyin/allen_wireless/blob/master/myopen_multi/headstage2_firmware/AGC_sim.py):
 
-{% highlight python %}
+{% highlight python linenos=table %}
 gain = 52                               # original gain
 Q8_gain = int(decimal_to_Q8_8(52),16)
 acc_val = int(decimal_to_Q1_31(hex_to_Q15(Q8_gain) * hex_to_Q15(16384)),16)

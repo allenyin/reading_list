@@ -56,3 +56,16 @@ body {
     padding: 19px;
     width: 80%;
 }
+
+table.highlighttable {
+    overflow-x:auto;
+    display:block;
+}
+
+table.highlighttable td.code {
+    width:100%;
+}
+
+pre code {
+    white-space: pre;
+}
