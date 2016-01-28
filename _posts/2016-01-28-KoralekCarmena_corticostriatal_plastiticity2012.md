@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Koralek et al 2012: Corticostriatal plasticity is necessary for learning intentional neuroprosthetic skills"
-date: 2016-01-28
+date: 2016-1-28
 comments: false
 tags:
 - BMI
