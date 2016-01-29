@@ -57,7 +57,8 @@ Finally, the file `bftiny.x` is the linker script to produce the final binary `.
 The assembly version of the final compiled code and their memory addresses can be found in `decompile.asm`. The code order follows the link order. See [this document](https://github.com/allenyin/allen_wireless/blob/master/myopen_multi/headstage_firmware/compile_process.txt) for more details on the compile process.
 
 The flash process will upload the final `stage.dxe` file into the onboard flash memory. The blackfin is wired to boot from flash - upon power up, blackfin will read the flash memory through SPI and load the data and instructions to the corresponding memory addresses appropriately.
----
+
+---------------------
 
 The architecture of the firmware (in `radio_AGC_IIR_SAA.asm` for RHD-headstage or `radio5.asm` for RHA-headstage) is essentially two threads: DSP service routine reads in samples from the amplifiers and does the DSP, the radio control thread handles radio transmission and reception.
 
