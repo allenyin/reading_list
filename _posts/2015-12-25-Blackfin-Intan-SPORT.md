@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Blackfin BF532 communcation with Intan RHD2136 via SPI simulation via SPORT"
+title: "Wireless Headstage: Blackfin BF532 communcation with Intan RHD2136 via SPI simulation via SPORT"
 date: 2015-12-25
 comments: false
 tags:
@@ -11,5 +11,12 @@ tags:
 - Microcontroller
 ---
 
-Place holder...need to write this post later...Merry Christmas Allen!
-Only gh-pages branch left now
+- Motivation for using SPORT to emulate SPI
+- Intan SPI protocol
+- SPORT capabilities.
+- Possible configurations and problems
+- Testing...
+    - JTAG and Intan_setup_test. DSP enable
+    - Pitfalls-->sampling frequency
+- Intan setup..signed vs unsigned
+- Threading...how SPORT acquisition speed place requirements on how long the signal length can be, manifestation in gtkclient, how to debug?
