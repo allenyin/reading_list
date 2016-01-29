@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Wireless Headstage: Least-Mean Squared (LMS) adaptive noise cancellation".
+title: "Wireless Headstage: Least-Mean Squared (LMS) adaptive noise cancellation."
 date: 2016-1-26
 comments: false
 tags:

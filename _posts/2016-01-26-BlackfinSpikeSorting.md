@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Wireless Headstage: Spike sorting via PCA and spike detection with SAA".
+title: "Wireless Headstage: Spike sorting via PCA and spike detection with SAA"
 date: 2016-1-26
 comments: false
 tags:
