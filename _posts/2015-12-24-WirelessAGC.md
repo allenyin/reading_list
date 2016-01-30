@@ -12,12 +12,14 @@ tags:
 - DSP
 ---
 
-I have been working on improving our lab's [wireless headstage](http://github.com/tlh24/myopen) using Analog Device's Blackfin BF532, Intan's analog 32-channel amplifiers RHA2136, and Nordic's NRF24L01 2.4MHz transceivers. 
+[Wireless Project github](https://github.com/allenyin/allen_wireless)
+
+I have been working on improving our lab's [old wireless headstage](http://github.com/tlh24/myopen) using Analog Device's Blackfin BF532, Intan's analog 32-channel amplifiers RHA2136, and Nordic's NRF24L01 2.4MHz transceivers. 
 The improvement is replacing the RHA2136 with Intan's digital version, RHD2136. There are 4 RHA2136 per headstage in the original headstage, each of which requires a voltage regulator and ADC, both of which can be eliminated when using RHD2136. The resulting (ideally working) board would be half the size.
 
 The PCBs have been made. I originally imagined the firmware changes to be minimal -- essentially changing how BF532 would talk to the amplifiers through SPI, while keeping most of the signal chain code constant. The code architecture should not have to change much.
 
-However, it has proved to be a lot more difficult than the expected plug-and-play scenario. One of the first issues was to first get [Blackfins to talk to the Intans correctly via SPORT]. Then I ran into the problem where the original signal chain code in between sample conversions were too long and resulted in data corruption. Therefore, I need to pick parts of the signal chain to cut and modify.
+However, it has proved to be a lot more difficult than the expected plug-and-play scenario. One of the first issues was to first get [Blackfins to talk to the Intans correctly via SPORT]({% post_url 2015-12-25-Blackfin-Intan-SPORT %}). Then I ran into the problem where the original signal chain code in between sample conversions were too long and resulted in data corruption. Therefore, I need to pick parts of the signal chain to cut and modify.
 
 This post documents my work to understand and adapt the integrator-highpass-AGC, the first stage of the signal chain.
 
