@@ -94,6 +94,31 @@ Fulfilling all of the SPI timing requirements is impossible with the SPORT inter
 
 RHD2132 transmits and receives only when _CS is pulled low. That means both RFSync and TFSync which dictates when a 16-bits word is received by or transmited from the blackfin, must be connected to _CS, and have the same timing. This was easily done by having TFSync to be internally generated, and set RFSync as externally generated and receives TFSync. The RSCLKx and TSCLKx, which dictates when a bit is sampled or driven out onto the bus is edge-sync'd to the RFSync and TFSync signal, respectively. At the same time, RSCLKx and TSCLKx have to be set to have the same timing, and connects to RHD2132's SCLK.
 
+The new Blackin SPORT to RHD2132 amplifiers connections are (amplifiers numbered from left to right):
+
+* Amplifier 1: SPORT1_SEC
+    * SCLK+ to SCLK1
+    * $$\bar{cs+}$$ to FSync1
+    * MOSI+ to DT1SEC
+    * MISO+ to DR1SEC
+* Amplifier 2: SPORT1_PRI
+    * SCLK+ to SCLK1
+    * $$\bar{cs+}$$ to FSync1
+    * MOSI+ to DT1PRI
+    * MISO+ to DR1PRI
+* Amplifier 3: SPORT0_SEC
+    * SCLK+ to SCLK0
+    * $$\bar{cs+}$$ to FSync0
+    * MOSI+ to DT0SEC
+    * MISO+ to DR0SEC
+* Amplifier 4: SPORT0_PRI
+    * SCLK+ to SCLK0
+    * $$\bar{cs+}$$ to FSync0
+    * MOSI+ to DT0PRI
+    * MISO+ to DR0PRI
+
+where SCLK0 is RSCLK0 and TSCLK0 tied together, SCLK1 is RSCLK1 and TSCLK1 tied together, FSync0 is RFS0 and TFS0 tied together, and FSync1 is RFS1 and TFS1 tied together.
+
 This means the falling edge of _CS always corresponds to either the falling/rising edge of SCLK, and similarly, the rising edge of _CS corresponds to either the falling/rising edge of SCLK. However, $$t_{CS1}$$ defines the timing between falling edge of _CS and the next rising edge of SCLK, while $$t_{CS2}$$ defines the timing between falling edge of _CS and the next rising edge of SCLK. Given the operation of SPORT, one of these requirements will be violated.
 
 In fact, according to ADI engineers, [it is not possible to fulfill all the timing requirements when using SPORT to emulate SPI](https://ez.analog.com/thread/78726). So I just hoped it could work anyways and tried to test this.
@@ -135,9 +160,13 @@ In this setup, the receive clock and frame sync are the same as the transmit clo
 
 However, `LATFS` sets late frame sync, which means when a frame sync triggers transmission or reception of a word, it will stay low during that time, and another further frame-sync during this time is ignored by the SPORT. After that time, if it's not time for another frame sync yet, frame sync will return to high, otherwise, it will be low again. Late frame sync also means the timing requiring between the falling edge of _CS and the next rising edge of SCLK is fulfilled. 
 
-Together, this means _CS will be low for 17 SCLK cycles, or $$17x50ns=850ns$$ while high for 3 SCLK cycles, or $$3x50ns=150ns$$. This is because, when frame sync first goes low, it will stay low for 17 SCLK cycles, at which time it will go high because 17 is not a multiple of 4. The next greatest multiple of 4 is 20, which is when frame sync will be pulled low again.
+Together, this means _CS will be low for 17 SCLK cycles, or $$17\times50ns=850ns$$ while high for 3 SCLK cycles, or $$3\times50ns=150ns$$. This is because, when frame sync first goes low, it will stay low for 17 SCLK cycles, at which time it will go high because 17 is not a multiple of 4. The next greatest multiple of 4 is 20, which is when frame sync will be pulled low again. 
 
-Therefore, each conversion cycle is exactly 20 SCLK cycles, or $$1\mu s$$, resulting in 1MHz conversion rate.
+The reason for _CS to be low for 17 SCLK cycles is two fold: 
+
+* Because a dataword is 16 bits, it has to be at least greater than 16 cycles. No matter what settings I have, the $$t_{cs2}$$ requirment will be violated, which based on how multiplexer work, will affect the value of the last bit being read. Since the data is read MSBit first, having 17 clock cycles would mean only the 17th bit, which I will discard later will be corrupted by the $$t_{cs2}$$ violation. Therefore no harm done!
+
+* With _CS low for 17 cycles and high for 3 cycles, I get exactly 20 cycles period, making it 1MHz. This is one of the only configurations that allows me to achieve that.
 
 With this setup, the $$t_{cs2}$$ timing requirement is not fulfilled at all, while $$t_{csoff}$$ is violated by 4ns.
 
@@ -173,6 +202,30 @@ After calculating the correct number of samples to collect to see 2 periods of 6
 
 In the plot above, channel 0, 15, 31 and 16 are applied the 6400Hz signal while the others are grounded.
 
+**Consequences of the new configuration**
 
-- Intan setup..signed vs unsigned
-- Threading...how SPORT acquisition speed place requirements on how long the signal length can be, manifestation in gtkclient, how to debug?
+RHD2132 also support outputting ADC results in either unsigned offset-binary where reference electrode voltage has the value of 0x8000, or using signed two's complement, where the reference electrode has the value of 0x0000 and values less than that has the MSB set to 1 two's complement style.
+
+This would result in modifications of the first stage of the firmware's signal chain, which is to convert the incoming samples to fixed-point Q1.15 format for further processing. See [the post on modifying the AGC stage]({% post_url 2015-12-24-WirelessAGC %}).
+
+Finally, the option `DITFS` make the SPORT frame-sync, read and write happen every $$1\mu s$$ regardless if new commands have been pushed into the SPORT transmit FIFO. This means, if our code-path (signal-chain plus the radio transmission code) inbetween SPORT FIFO reads/writes is too long, the previous command in the FIFO will be sent again, and two cycles later, the corresponding result will be read. This will then result in erroneous data.
+
+However, the manifestation of this data corruption is somewhat counter-intuitive. After establishing correct Intan and SPORT setup to successfully acquire signals, I added in minimally modified signal-chain code from RHA-headstage's working firmware `headstage_firmware/radio5.asm`, and saved all pre-processed samples from one of the amplifiers in memory (`headstage2_firmware/firmware1.asm`). I then stopped the execution when the designated buffer is memory is full, dumped the results for plotting in JTAG. The plots, which I expected to be smooth sinusoids of the applied signal, were riddled with random spikes.
+
+This cannot be due to the signal-chain code since the samples saved came directly from the SPORT. A second test where I simply added nops inbetween SPORT reads/writes confirms that the data corruption was due to the code-path being too long. However, the number of nops that allowed for glitchless data acquisition is less than the signal-chain length used in `radio5.asm`. This is very strange, since the timing requirement for both headstage firmware setup is similar -- accounting for the radio transmission code, the DSP code has to finish in about 800ns. But somehow the timing budget for the RHD-headstage is significantly less.
+
+In the nop test done in `firmware2.asm`, it was found I can fit 150 nops. I have yet to figure out why this is the case. Regardless, that means a reduction of the original RHA-headstage firmware is needed to adapt it to RHD-headstage. Since the radio-transmission code must stay the same, this reduction is exclusively on the signal-chain code, which includes:
+
+1. high-pass + AGC = 5 cycles/2 channels * 2 = 10 cycles.
+
+   In each signal-chain iteration 4 samples are acquired, 1 per amplifier, so all 4 must be processed. Blackfin works efficiently with two 16-bit samples at once, so samples from two channels are processed first, then the remaining two samples are processed in the rest of the signal-chain code.
+
+2. LMS = 27 cycles/2 channels * 2 = 54 cycles.
+
+3. IIR = 27 cycles/2 channels * 2 = 54 cycles.
+
+4. SAA = 58 cycles.
+
+[AGC is automatic gain control]({% post_url 2015-12-24-WirelessAGC %}), [LMS is least-mean-square adaptive noise cancellation]({% post_url 2016-01-26-BlackfinLMS %}), [IIR is infinite impulse response filter]({% post_url 2016-01-06-DirectFormI-IIR-butterworth-filters %}), and [SAA is used for spike template matching]({% post_url 2016-01-26-BlackfinSpikeSorting %}).
+
+Among these, SAA is required for spike matching. AGC is required because the templates for spike-sorting were made under certain signal power level, AGC is needed to fix the channel's power level. Therefore, all of LMS and half of IIR are ripped out to reduce code-length.
