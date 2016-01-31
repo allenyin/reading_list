@@ -96,16 +96,20 @@ As the comment in line 20 hints, this is the new mean.
 
 To characterize the behavior of this integrator-filter stage, we have the following two equations:
 
-\begin{aligned}
+$$
+\begin{align}
 m &= mz^{-1}(1-2\mu)+8\mu x \\\\
 y &= 4x-mz^{-1}
-\end{aligned}
+\end{align}
+$$
 
 where m is integrated mean, 1/z is delay, x is the original 12-bit samples, y is the output. Note again that since x is 12-bit unsigned, conversion into Q15 does not change anything, therefore the system equations are easy to derive:
 
-\begin{aligned}
+$$
+\begin{align}
 \frac{Y}{X} &= 4 \frac{1-z^{-1}}{1+z^{-1}(2\mu-1)}
-\end{aligned}
+\end{align}
+$$
 
 The gain is 4, and the 3dB point is determined by \\(z=1-2\mu\\). In the code \\(\mu\approx 0.0244\\), so \\(z=0.9512\\). Note also, in Tim's thesis, \\(\mu\\) is actually \\(0.0488\\), this is because (s2rnd) was used in the actual implementation.
 
