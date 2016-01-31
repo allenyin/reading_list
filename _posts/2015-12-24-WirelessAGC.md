@@ -19,7 +19,7 @@ The improvement is replacing the RHA2136 with Intan's digital version, RHD2136. 
 
 The PCBs have been made. I originally imagined the firmware changes to be minimal -- essentially changing how BF532 would talk to the amplifiers through SPI, while keeping most of the signal chain code constant. The code architecture should not have to change much.
 
-However, it has proved to be a lot more difficult than the expected plug-and-play scenario. One of the first issues was to first get [Blackfins to talk to the Intans correctly via SPORT]({% post_url 2015-12-25-Blackfin-Intan-SPORT %}). Then I ran into the problem where the original signal chain code in between sample conversions were too long and resulted in data corruption. Therefore, I need to pick parts of the signal chain to cut and modify.
+However, it has proved to be a lot more difficult than the expected plug-and-play scenario. One of the first issues was to first get [Blackfins to talk to the Intans correctly via SPORT]({{ site.baseurl }}/{% post_url 2015-12-25-Blackfin-Intan-SPORT %}). Then I ran into the problem where the original signal chain code in between sample conversions were too long and resulted in data corruption. Therefore, I need to pick parts of the signal chain to cut and modify.
 
 This post documents my work to understand and adapt the integrator-highpass-AGC, the first stage of the signal chain.
 
