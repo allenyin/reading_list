@@ -38,7 +38,7 @@ The resulting normalized frequency of oscillation is $$\omega=\angle{p_1}$$, in 
 So all we need to find is $$fp$$ to get a desired oscillation frequency. To find the appropriate coefficients for the last biquad of my signal to induce oscillations, I used the following Matlab script. Note that the coefficients naming is different from that in the diagram -- $$a0$$ and $$a1$$ in script are the same as $$a1$$ and $$a2$$ in diagram.
 
 {% highlight matlab linenos=table %} 
-% IIR oscillator - myopen_multi/gktclient_multi/IIR_oscillator.m
+% IIR oscillator - myopen_multi/gktclient_multi/matlab/IIR_oscillator.m
 Fs = 31250;     % sampling frequency
 
 % To get oscillator of frequency f, do:
