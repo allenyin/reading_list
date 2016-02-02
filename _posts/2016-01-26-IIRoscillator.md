@@ -35,7 +35,7 @@ p_{1,2} = \frac{(2-f_p)\pm\sqrt{f_p^2-4f_p}}{2} \\
 
 The resulting normalized frequency of oscillation is $$\omega=\angle{p_1}$$, in radians/sample. Oscillation frequency in Hz is $$f=\frac{\omega F_s}{2\pi}$$, where $$F_s$$ is the sampling frequency (in our case 31.25kHz for all channels).
 
-So all we need to find is $$fp$$ to get a desired oscillation frequency. To find the appropriate coefficients for the last biquad of my signal to induce oscillations, I used the following Matlab script. Note that the coefficients naming is different from that in the diagram -- $$a0$$ and $$a1$$ in script are the same as $$a1$$ and $$a2$$ in diagram.
+So all we need to find is $$fp$$ to get a desired oscillation frequency. To find the appropriate coefficients for the last biquad of my signal to induce oscillations, I used the following Matlab script. Note that the coefficients naming is different from that in the diagram -- $$a_0$$ and $$a_1$$ in script are the same as $$a_1$$ and $$a_2$$ in diagram.
 
 {% highlight matlab linenos=table %} 
 % IIR oscillator - myopen_multi/gktclient_multi/matlab/IIR_oscillator.m
