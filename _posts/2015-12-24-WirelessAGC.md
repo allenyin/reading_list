@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Wireless Headstage: AGC with Blackfin BF532 and Intan RHD2136"
+title: "Wireless Headstage: AGC with Blackfin BF532 and Intan RHD2132"
 date: 2015-12-24
 comments: false
 tags:
@@ -15,7 +15,7 @@ tags:
 [Wireless Project github](https://github.com/allenyin/allen_wireless)
 
 I have been working on improving our lab's [old wireless headstage](http://github.com/tlh24/myopen) using Analog Device's Blackfin BF532, Intan's analog 32-channel amplifiers RHA2136, and Nordic's NRF24L01 2.4MHz transceivers. 
-The improvement is replacing the RHA2136 with Intan's digital version, RHD2136. There are 4 RHA2136 per headstage in the original headstage, each of which requires a voltage regulator and ADC, both of which can be eliminated when using RHD2136. The resulting (ideally working) board would be half the size.
+The improvement is replacing the RHA2136 with Intan's digital version, RHD2132. There are 4 RHA2136 per headstage in the original headstage, each of which requires a voltage regulator and ADC, both of which can be eliminated when using RHD2132. The resulting (ideally working) board would be half the size.
 
 The PCBs have been made. I originally imagined the firmware changes to be minimal -- essentially changing how BF532 would talk to the amplifiers through SPI, while keeping most of the signal chain code constant. The code architecture should not have to change much.
 
@@ -153,7 +153,7 @@ There are two solutions to this problem:
 
 1. Right-shift the incoming 16-bit unsigned binary offset samples to 12 bits. Do this right after line 8, and the rest of the code stays unchanged. This approach the least changes to the old firmware (of course, line 1-8 need to be altered to work with Intan, but that's not algorithmic).
 
-2. RHD2136 is capable of outputting the ADC samples in 16-bit signed, two's complement format. This would solve the above mentioned problem of inadvertently flipped signs, since the samples will already in Q15 format. But this would also require changing the integrator-highpass stage, to obtain the same behavior. Specifically, in the system function, there is a pre-gain of 4 in front. This is a result of the line 14, and the two s2rnd operations in line 15 and line 17.
+2. RHD2132 is capable of outputting the ADC samples in 16-bit signed, two's complement format. This would solve the above mentioned problem of inadvertently flipped signs, since the samples will already in Q15 format. But this would also require changing the integrator-highpass stage, to obtain the same behavior. Specifically, in the system function, there is a pre-gain of 4 in front. This is a result of the line 14, and the two s2rnd operations in line 15 and line 17.
 
     Now that our samples are full 16-bits, we do not need the extra gain. This requires changing the coefficient values in:  
       * r5 in line 11: from r5.l=0x7fff, r5.h=0xc000 to r5.l=0x7fff, r5.h=0x8000.

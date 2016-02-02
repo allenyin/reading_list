@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Wireless Headstage: Blackfin BF532 communcation with Intan RHD2136 via SPI simulation via SPORT"
+title: "Wireless Headstage: Blackfin BF532 communcation with Intan RHD2132 via SPI simulation via SPORT"
 date: 2015-12-25
 comments: false
 tags:
