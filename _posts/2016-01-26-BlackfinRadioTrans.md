@@ -56,7 +56,7 @@ In the screenshots below, I applied square waves of known frequency to one of th
 
 *800Hz signal applied*
 
-![image1]({{ site.basurl }}/assets/radio_debug800Hz.png){: .center-image}
+![image1]({{ site.baseurl }}/assets/radio_debug800Hz.png){: .center-image}
 
 *1kHz signal applied*
 
