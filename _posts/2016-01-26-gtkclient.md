@@ -62,6 +62,7 @@ The gtkclient by default used the signed char mapping. Therefore when I first tr
 This problem happened during a demo of the wheelchair experiment using RHA-headstages, with RHA-gtkclient running on Daedalus. A router was used rather than a switch at a time. Despite router configurations to not filter multicast traffic, the bridges were not able to be detected by gtkclient.
 
 UDP sockets opened by gtkclient:
+
 * 4340, and 4340+radio_channel are the bcastsock to detect bridges. This is what we are interested in for the bridge problem.
 * 4343: TCP server socket to receive BMI3 connections
 * 8845: Strobe socket
