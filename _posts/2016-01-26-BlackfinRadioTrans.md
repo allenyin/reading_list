@@ -102,10 +102,6 @@ The first idea that came to mind to investigate what's going on was performing F
 
 ![image11]({{ site.baseurl }}/assets/radio_debug5000Hz_fft.png){: .center-image}
 
-*919Hz IIR-generated signal FFT*
-
-![image12]({{ site.baseurl }}/assets/radio_debugIIR.png){: .center-image}
-
 None of the spectra look very clean, and the signal's actual frequency never has the most energy. However, it seemed that the highest peaks are consistently 1300Hz apart. Since the sampling frequency of the amplifiers is 31.25kHz, 1300Hz correspond to every 24 samples, or every 4 packets.
 
 In the radio-transmission protocol, the spike-match bits are looped every 4 packets -- the spike match bits rae saved in a buffer, and for every packet a pointer reads through this buffer. The pointer loops should therefore loop around the buffer every 4 packets, since all spike-match bits are transfered in that time.
