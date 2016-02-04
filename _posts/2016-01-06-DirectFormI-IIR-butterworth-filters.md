@@ -24,9 +24,9 @@ DF2-biquad
 
 DF1-biquad
 
-Most commonly, Direct Form II biquads are used in implementations. However, as [this great paper](m8ta.com/images/584_1.pdf) suggests, Direct Form II biquads have extra limitations on the coefficient range. Therefore, Direct Form I biquads are more desirable in 16-bit fixed-point applications. The paper does point out instability issues of DF1-based IIR filters. 
+Most commonly, Direct Form II biquads are used in implementations. However, as [this great paper](https://m8ta.com/images/584_1.pdf) suggests, Direct Form II biquads have extra limitations on the coefficient range. Therefore, Direct Form I biquads are more desirable in 16-bit fixed-point applications. The paper does point out instability issues of DF1-based IIR filters. 
 
-A lot of the original implementation rationale of the filters have been discussed in [Tim's post from a long time ago](m8ta.com/index.pl?pid=438), although his post was deriving elliptic filters.This post will mostly talk about how to generate the coefficients for the filters given the following assembly code structure:
+A lot of the original implementation rationale of the filters have been discussed in [Tim's post from a long time ago](https://m8ta.com/index.pl?pid=438), although his post was deriving elliptic filters.This post will mostly talk about how to generate the coefficients for the filters given the following assembly code structure:
 
 {% highlight asm linenos=table %}
 r5 = [i0++] || r1 = [i1++];  // r5=b0(LPF), r1=x0(n-1); i0@b1(LPF), i1@x0(n-2)
@@ -88,7 +88,7 @@ a_HPF_DSP = round(a_HPF*2^14)*-1;
 % b0=15260, b1=-30519, a0=30442, a1=-14213
 {% endhighlight %}
 
-These resulting coefficients are what I ended up using in the firmware.
+These resulting coefficients are what I ended up using in the firmware. The two code snippet above is in `gtkclient_multi/genIIRfilters.m`.
 
 As mentioned in Tim's post, if the inputs were of less than 16-bits, the scaler value can be something other than \\(2^{14}\\) to increase the gain and expand the results to the full 16-bits range. For example, if the input to the biquad were 12-bits, we can incorporate a scale factor of x2 into the first biquad, and x4 into the second:
 
@@ -106,7 +106,7 @@ By multiplying the b-coefficients, different scale factor can be applied. Howeve
 
 The above approach is fine when we need one LPF biquad and one HPF biquad. But say we need an 8th-order buttworht bandpass filter, using the above approach we would need two HPF biquads and two LPF biquads. We can't simply use two of the same HPF biquads and two of the same LPF biquads. The resulting bandpass filter will have less bandwidth between the -3dB points (two poles at same frequency means sharper roll-off from that point on).
 
-The solution then, requires us to factor the generated transfer function:
+The solution then, requires us to factor the generated transfer function (`gtkclient_multi/genIIRfilters2.m`):
 
 {% highlight matlab linenos=table %}
 % design butterworth filter, and derive coefficients for
