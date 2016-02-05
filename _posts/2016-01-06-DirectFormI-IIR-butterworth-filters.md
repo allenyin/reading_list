@@ -160,3 +160,30 @@ Ironically, the filtering behavior looks better for the 4th-order filter generat
 ![butterworth_comparison]({{ site.baseurl }}/assets/butterworth_comparison.png){: .center-image }
 
 In the 8th-order filter, the HPF filter disappeared..not sure why?
+
+--------------------------------------------------
+
+**Edit: 2/4/2016**
+
+While comparing the signal quality between RHD- and RHA-headstage, it seems that RHD headstage is more noisy, even in the middle of the passband (FFT analysis of acquired signals). Therefore the extra noise may be due to the more compact board layout?..
+
+As a basic attempt to reduce noise, I reduced the pass band from [500Hz, 9kHz] to [500Hz, 7kHz]. This is also accompanied by my Intan passband setup changes, `gtkclient.cpp` UI changes, and `headstage.cpp` resetBiquad changes.
+
+_Original bandwidth settings_
+
+* Intan cutoff freq: [250Hz, 10kHz]
+* Intan DSPen setting: High pass above 300Hz
+* Firmware AGC highpass: >375Hz
+* IIR setting: [500Hz, 9kHz]
+    * LPF: `b0=6004, b1=12008, a0=-4594, a1=-3039`
+    * HPF: `b0=15260, b1=-30519, a0=30442, a1=-14213`
+
+_Reduced bandwidth settings_
+
+* Intan cutoff freq: [250Hz, 7.5kHz]
+* Intan DSPen setting: High pass above 300Hz
+* Firmware AGC highpass: >375Hz
+* IIR setting: [500Hz, 7kHz]
+    * LPF: `b0=4041, b1=8081, a0=3139, a1=-2917`
+    * HPF: `b0=15260, b1=-30519, a0=30442, a1=-14213`
+
