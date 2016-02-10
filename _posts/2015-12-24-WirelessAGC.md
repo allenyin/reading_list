@@ -156,10 +156,11 @@ There are two solutions to this problem:
 2. RHD2132 is capable of outputting the ADC samples in 16-bit signed, two's complement format. This would solve the above mentioned problem of inadvertently flipped signs, since the samples will already in Q15 format. But this would also require changing the integrator-highpass stage, to obtain the same behavior. Specifically, in the system function, there is a pre-gain of 4 in front. This is a result of the line 14, and the two s2rnd operations in line 15 and line 17.
 
     Now that our samples are full 16-bits, we do not need the extra gain. This requires changing the coefficient values in:  
-      * r5 in line 11: from r5.l=0x7fff, r5.h=0xc000 to r5.l=0x7fff, r5.h=0x8000.
-      * r6 in line 14: from r6.l=0x4000, r6.h=800 to r6.l=0x7fff, r6.h=1600.
+      
+    * r5 in line 11: from r5.l=0x7fff, r5.h=0xc000 to r5.l=0x7fff, r5.h=0x8000.
+    * r6 in line 14: from r6.l=0x4000, r6.h=800 to r6.l=0x7fff, r6.h=1600.
  
-    In addition to deleting line 14, and changing the MAC option from (s2rnd) to default in line 15 and line 17. 
+    In addition to deleting the accumulator instructions in line 14, and changing the MAC option from (s2rnd) to default in line 15 and line 17. 
 
 I ended up using the second approach, because I don't like throwing away bits. But both works.
 
