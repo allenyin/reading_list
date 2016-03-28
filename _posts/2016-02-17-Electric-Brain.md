@@ -38,7 +38,7 @@ Some interesting points:
         
     * [Gallese et al., Action recognition in the premotor cortex](https://brain.oxfordjournals.org/content/119/2/593)
         
-    * [Fogassi et al., Parietal Lobe: From action organization to intention understanding](http://science.sciencemag.org/content/308/5722/662) - showed neurons coding a specific act showed makredly different activations when this act was part of different actions, and discharged during the observation of those acts done by others.
+    * [<s>Fogassi et al., Parietal Lobe: From action organization to intention understanding</s>](http://science.sciencemag.org/content/308/5722/662) - showed neurons coding a specific act showed makredly different activations when this act was part of different actions, and discharged during the observation of those acts done by others.
 
     These probably explain why passive observation training work in BMI.
 
