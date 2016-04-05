@@ -8,6 +8,8 @@ tags:
 - Wireless
 - Blackfin
 - DSP
+- Spike_train_analysis
+- Distance_measures
 ---
 
 After finishing work on the wireless headstage, it occured to me that no comprehensive validation has been done to confirm spike-sorting and signal quality of the wireless headstages. So I'm conducting a semi-rigourous testing of the RHA-headstage, RHD-headstage, agains the Plexon recordings. This [paper on a Blackrock-based wireless system testing](http://iopscience.iop.org/1741-2552/12/5/056005/media) has been useful.
