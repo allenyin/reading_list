@@ -67,8 +67,13 @@ And the corresponding table of labeled peak locations:
 
 The developing lead in sample numbers between the two recorded signals are most likely due to loss of packets from the wireless headstage. Each packet contains new waveform samples, and if they are lost, our recorded signal will be effectively shortened from the reference signal, resulting in this lead. And since the number of lost packets can only increase, this lead will simply increase with time.
 
-While this is a problem when we are doing offline analysis of the recorded signals, it is probably not a huge deal in terms of real-time BMI applications where we care about the instantaneous firing rate -- as long as we dont lose too many packets.
+While this is a problem when we are doing offline analysis of the recorded signals, it should not be a huge deal in terms of real-time BMI applications where we care about the instantaneous firing rate -- as long as we dont lose too many packets. As Tim has stated in his thesis:
+
+> 1 in 3176 packets were rejected on average; assuming one bit error per packet, this equates to a bit error rate (BER) of 1.23e-6, or approximately one bit error per second. Efforts to reduce this have not been successful, but the system works acceptably presently.
+
+This matches what I have seen empirically, and comparisons against Plexon. As long as the BER is on the order of 1e-6, then packet loss should not affect performance too much.
 
 The current software keeps track of the total number of lost packets. It might be of interest to find how this changes through time. The previous tables seems to suggest that the number of samples lost increase linearly with time, which supports my hypothesis that the shift is due to last packets. **To get a better idea, however, I would want to perform that same analysis around different time points along the signal, probably within a sliding window. Matlab's `findpeaks()` function can extract the positions of the different peaks within the signals, but matching them would be more difficult. While it is relatively easy via visual inspection, it seems to me to be NP-hard...what's an efficient algorithm to do this?**
 
+Update - Perhaps a sliding window of seller's algorithm to match the 'edit distance' of the peaks would answer the question, but that's not too important for our goal of validation.
  
