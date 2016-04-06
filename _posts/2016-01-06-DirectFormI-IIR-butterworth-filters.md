@@ -187,3 +187,21 @@ _Reduced bandwidth settings_
     * LPF: `b0=4041, b1=8081, a0=3139, a1=-2917`
     * HPF: `b0=15260, b1=-30519, a0=30442, a1=-14213`
 
+------------------------------------------------
+
+**Edit: 4/6/2016
+
+During [validation]({% post_url 2016-03-31-WirelessValidationMetrics %}) of recording and sorting quality between RHA-headstage, RHD-headstage, and plexon, a few changes to the final deployement firmware was made. Specifically, AGC was replaced by a fixed gain stage. The filtering settings were changed as well.
+
+The new settings is:
+
+* Intan cutoff freq: [1Hz, 10kHz]
+* Intan DSPen setting: High pass above 1Hz
+* Firmware `radio_AGC_IIR_SAA.asm` AGC highpass: >375Hz 
+* Firmware `radio_gain_IIR_SAA.asm` (final) AGC highpass: none
+* IIR setting: [250, 9kHz]
+    * LPF: `b0=6004, b1=12008, a0=-4594, a1=-3039`
+    * HPF: `b0=15812, b1=-31624, a0=31604, a1=-15260`
+
+We widened the Intan's hardware filter bandwidth so when sorting, the incoming waveform is less distorted and we can better see the spike features. The two stage IIR filters (2 poles on each side) are sufficient to attenuate the undesired out-of-band signals.
+

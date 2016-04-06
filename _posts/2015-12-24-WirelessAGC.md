@@ -164,3 +164,11 @@ There are two solutions to this problem:
 
 I ended up using the second approach, because I don't like throwing away bits. But both works.
 
+-----------------------------------
+
+**Edit: 4/6/2016
+
+After [validation]({% post_url 2016-03-31-WirelessValidationMetrics %}) of recording and sorting quality between RHA-headstage, RHD-headstage, and plexon, it looks like AGC amplifies noise too much under low SNR conditions. 
+
+As a result, the final deployment [firmware](https://github.com/allenyin/allen_wireless/blob/master/myopen_multi/headstage2_firmware/radio_gain_IIR_SAA.asm#L145-L162) uses a fixed pre-gain stage before the IIR stage. This gain is Q7.8 value and can be set in the appropriately compiled version of gtkclient in 0.5 increment from -128 to 127.5.
+
