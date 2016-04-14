@@ -1,0 +1,24 @@
+Wiener filter --> multivariate linear regression. Both input and reference processes are WSS. Very important!
+
+However, nearly two decades after Wiener’s
+work, Rudolf Kalman developed the Kalman filter, which is the optimum mean
+square linear filter for nonstationary processes (evolving under a certain state space
+model) and stationary ones (converging in steady state to the Wiener’s solution)
+
+Dan Simon (http://academic.csuohio.edu/simond/courses/eec644/kalman.pdf)
+
+UKF - Introduces two modifications to KF:
+1) Allows nonlinear neuron tuning model -- nonlinear observation model, in this case, it's quadratic. Describes neuron tuning better (apparently).
+2) Allows nonlinear movement model -- nonlinear state model.
+3) n-degree movement model -- movement transition as a nonlinear model in terms of the past n states.
+
+Why not use EKF? According to wikipedia (https://en.wikipedia.org/wiki/Kalman_filter#Unscented_Kalman_filter), 
+
+When the movement and observation models "are highly non-linear, the extended Kalman filter can give particularly poor performance.[38] This is because the covariance is propagated through linearization of the underlying non-linear model. The unscented Kalman filter (UKF) [38] uses a deterministic sampling technique known as the unscented transform to pick a minimal set of sample points (called sigma points) around the mean. These sigma points are then propagated through the non-linear functions, from which the mean and covariance of the estimate are then recovered. The result is a filter which more accurately captures the true mean and covariance. "
+
+The number of sigma points was chose to be 2d+1, where d=4n is the dimension of the state space. If n=10, then d=40 -- big state space!
+
+Understand the concepts, have not gone through the math.
+The name "unscented" is pretty dumb, the author named it after "unscented deodrant" he saw on his coworker's desk..stupid.
+
+ReFIT-KF..?
