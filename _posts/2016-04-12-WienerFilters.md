@@ -120,7 +120,7 @@ In Zheng Li's 2009 paper, [Unscented Kalman Filter for Brain-Machine Interfaces]
 
 3. The movement model was made to be of *degree-n*, meaning that the state equation is no longer a function of the previous state, but of the previous *n* states. Incorporating this "movement history" acts as smoothing for the output kinematics.
 
-The number of sigma points was chosen to be $$2d+1$$, where $$d=4n$$ is the dimension of the state space. If $$n=10$$, then $$d=40$$ -- big state space.
+The number of sigma points was chosen to be $$2d+1$$, where $$d=4n$$ is the dimension of the state space. If $$n=10$$, then $$d=40$$, big state space.
 
 The name *unscented* is pretty dumb and provides no clue to how it modifies the KF.
 
