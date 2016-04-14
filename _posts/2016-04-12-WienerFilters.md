@@ -89,7 +89,7 @@ Looking at the *a posteriori* state estimate equation, we can see that
 
 In implementation, KF operates by alternating between the prediction phase and a correct phase. The prediction phase projects the state based on the state model. The correction phase updates the estimate from the predictioin phase by the measurement and observation model. Operation is recursive and efficient.
 
-![KF_architecture]({{ site.baseurl }}/assets/KF_diagram.jpg){: .center-image}
+![KF_architecture]({{ site.baseurl }}/assets/KF_diagram.jpg){: .center-image }
 
 Thus the KF is a generalization of the Wiener filter when the input and reference processes are non-stationary. This is done by estimating the *state*, tracking the changing statistics in the non-stationary process. This tracking is enabled by the incorporating the measurements taken.
 
