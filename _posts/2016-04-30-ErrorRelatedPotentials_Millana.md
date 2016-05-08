@@ -35,7 +35,7 @@ The ErrP classifiers maintained the same performance when tested several months 
 
 1. Eye movement contamination: Need to make sure location or movement of target stimuli are balanced.
 2. Observed potentials are more related to the rarrity of the erroneous events (?)
-3. Attential level: subjects tend to have smaller ErrP amplitude when simply monitoring the device than when they are controoling it -- requires efficient calibration methods.
+3. Attential level: subjects tend to have smaller ErrP amplitude when simply monitoring the device than when they are controling it -- requires efficient calibration methods.
 
 **Error-Driven Learning**
 
