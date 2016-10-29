@@ -31,3 +31,39 @@ Finally, **the eigenvectors of $$A$$ lie in its column space and nullspace, not 
     * $$Av_i=0$$, $$A^Tu_i=0$$, for $$i>r$$. 
       $$v_i$$ are the eigenvectors of the null space of $$A^T$$, 
       $$u_i$$ are the eigenvectors of the null space of $$A$$.
+
+***
+Relationship with PCA
+
+**PCA Algorithm**
+Inputs: The *centered* data matrix $$X$$ and $$k\gt1$$.
+1. Compute the SVD of $$X$$: $$[U,\Gamma,V]=svd(X)$$.
+2. Let $$V_k=[\mathbf{v}_1,...,\mathbf{v}_k]$$ be the first $$k$$ columns of $$V$$.
+3. The PCA-feature matrix and the reconstructed data are:
+            $$Z=XV_k, \hat{X}=XV_kV_k^T$$.
+
+So in PCA, the rows of the data matrix are the observations, and the columns are in the original coordinate system. The principle components are then the eigenvectors of the row space. We can do PCA in MATLAB with `pca` or manually with `svd`:
+
+{% highlight matlab linenos=table %}
+% PCA test
+a = rand(100,1);
+b = 5*a+rand(100,1);
+
+data = [a, b];  % rows are observations
+plot(a,b, '.');
+
+% PCA results
+% coeffs=eigenvectors, scores=observation in PC-space, latent=variance explained
+[coeffs, score, latent] = pca(data);
+hold on;
+plot(score(:,1), score(:,2), 'r.');
+
+% SVD results
+centeredData = bsxfun(@minus, data, mean(data,1));
+[U, S, V] = svd(centeredData);
+svd_score = centeredData*V;
+plot(svd_score(:,1), svd_score(:,2), 'g.');
+{% endhighlight %}
+
+The results shown below. Blue is original data, green/red are the PCA results, they overlap exactly. Note that MATLAB's `pca` by default centers the data.
+![image1]({{ site.baseurl }}/assets/PCAtest.png){: .center-image}
