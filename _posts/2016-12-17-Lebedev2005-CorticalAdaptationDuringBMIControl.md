@@ -106,6 +106,8 @@ $$V_x(t)=b+\sum^{n}_{\tau=-m}\mathbf{w}(\tau)\mathbf{n}(t+\tau)+\epsilon(t)$$
     
     - Therefore, neuronal ensemble controlling hte BMI may have been optimizing its performance by trading magnitude of tuning and the diversity of PD, or that increased correlation is only a temporary effect and will decrease with prolonged training (attention in learning stage increases synchrony).
 
+Probably led to [Orsborn & Carmena 2014](../../2015/07/OrsbornCarmena2014)'s task of pressing a button while doing BMI center-out.
+
 $$^1$$ --  Cortical neurons can encode movement directions regardless of muscle patterns, represent target of movement and movement of the hand-controlled visual marker toward it rather than actual hand trajectory, encode multiple spatial variables, reflect orientation of selective spatial attention, and represent misperceived movements of visual targets.
 
 $$^2$$ -- Murphy and Fetz, 1992, 1996a,b; Riehle et al., 1997, 2000; Hatsopoulos et al., 1998; Lebedev and Wise, 2000; Baker et al., 2001.
