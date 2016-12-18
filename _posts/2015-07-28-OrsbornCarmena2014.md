@@ -23,7 +23,7 @@ Performance (measured by % correct, success rate - trials/min, and mean error - 
 
 One key finding was that 
     
-    [...] gradual refinement of cursor control, with continued improvements in movement errors and success rates reached a plateau. These improvements were absent when CLDA was used each day to maximize performance starting from varying initial decoders that used differeint neural ensembles. Whereas CLDA could achieve high task performance, movement kinematics showed no improvements. Daily performance also showed variability commonly observed with daily re-training. This finding confirms that observed learning was not purely reflective of increased practice in BMI and highlights the improtance of some degree of neural and decoder stability for learning.
+> [...] gradual refinement of cursor control, with continued improvements in movement errors and success rates reached a plateau. These improvements were absent when CLDA was used each day to maximize performance starting from varying initial decoders that used differeint neural ensembles. Whereas CLDA could achieve high task performance, movement kinematics showed no improvements. Daily performance also showed variability commonly observed with daily re-training. This finding confirms that observed learning was not purely reflective of increased practice in BMI and highlights the improtance of some degree of neural and decoder stability for learning.
 
 While the specifics of how CLDA is used exactly in their training scheme are needed for me to accept their conclusion (reseeding CLDA every day would introduce abrupt changes to the decoder, as the authors mention), but the idea of intermittent decoder adapation and neural plastiticty can be useful. Also supports using reinforcement learning to train the decoder...
 
@@ -50,9 +50,9 @@ Performance improved even when CLDA was used to fully adapt the decoder, suggest
 
 **References to Read**
 
-* Collinger, J.L., Wodlinger, B., Downey, J.E., Wang, W., Tyler-Kabara, E.C., Weber, D.J., McMorland, A.J., Velliste, M., Boninger, M.L., and Schwartz, A.B. (2013). High-performance neuroprosthetic control by an individual with tetraplegia. Lancet 381, 557–564
-* Dangi, S., Orsborn, A.L., Moorman, H.G., and Carmena, J.M. (2013). Design and analysis of closed-loop decoder adaptation algorithms for brain-machine interfaces. Neural Comput. 25, 1693–1731
-* Gilja, V., Nuyujukian, P., Chestek, C.A., Cunningham, J.P., Yu, B.M., Fan, J.M., Churchland, M.M., Kaufman, M.T., Kao, J.C., Ryu, S.I., and Shenoy, K.V. (2012). A high-performance neural prosthesis enabled by control algorithm design. Nat. Neurosci. 15, 1752–1757
+* ~~Collinger, J.L., Wodlinger, B., Downey, J.E., Wang, W., Tyler-Kabara, E.C., Weber, D.J., McMorland, A.J., Velliste, M., Boninger, M.L., and Schwartz, A.B. (2013). High-performance neuroprosthetic control by an individual with tetraplegia. Lancet 381, 557–564~~
+* ~~Dangi, S., Orsborn, A.L., Moorman, H.G., and Carmena, J.M. (2013). Design and analysis of closed-loop decoder adaptation algorithms for brain-machine interfaces. Neural Comput. 25, 1693–1731~~
+* ~~Gilja, V., Nuyujukian, P., Chestek, C.A., Cunningham, J.P., Yu, B.M., Fan, J.M., Churchland, M.M., Kaufman, M.T., Kao, J.C., Ryu, S.I., and Shenoy, K.V. (2012). A high-performance neural prosthesis enabled by control algorithm design. Nat. Neurosci. 15, 1752–1757~~
 * Orsborn, A.L., Dangi, S., Moorman, H.G., and Carmena, J.M. (2012). Closedloop decoder adaptation on intermediate time-scales facilitates rapid BMI performance improvements independent of decoder initialization conditions. IEEE Trans. Neural Syst. Rehabil. Eng. 20, 468–477.
 * Suminski, A.J., Tkach, D.C., and Hatsopoulos, N.G. (2009). Exploiting multiple sensory modalities in brain-machine interfaces. Neural Netw. 22, 1224–1234
 * Suminski, A.J., Tkach, D.C., Fagg, A.H., and Hatsopoulos, N.G. (2010). Incorporating feedback from multiple sensory modalities enhances brain-machine interface control. J. Neurosci. 30, 16777–16787.

@@ -14,7 +14,7 @@ tags:
 
 [Reversible large-scale modification of cortical networks during neuroprosthetic control](http://www.nature.com/neuro/journal/v14/n5/full/nn.2797.html)
 
-    Monitored ensembles of neurons that were either casually linked to BMI control or indirectly invovled, found that proficient neuroprosthetic control is associated with *large-scale modifications to the cortical network*. [...] Specifically, there were changes in the preferred direction of both direct and indirect neurons. Notably, with learning, there was a relative decrease in the net modulation of indirect neural activity in comparison with direct activity. [...] Thus, the process of learning BMI control is associated with differential modification of neural populations based on their specific relation to movement control.
+> Monitored ensembles of neurons that were either casually linked to BMI control or indirectly invovled, found that proficient neuroprosthetic control is associated with *large-scale modifications to the cortical network*. [...] Specifically, there were changes in the preferred direction of both direct and indirect neurons. Notably, with learning, there was a relative decrease in the net modulation of indirect neural activity in comparison with direct activity. [...] Thus, the process of learning BMI control is associated with differential modification of neural populations based on their specific relation to movement control.
 
 Results pretty intuitive, but analysis methods are useful to know.
 
