@@ -11,6 +11,7 @@ tags:
 
 
 [FemtoDuino Offical Site](https://femtoduino.com/shop)
+
 [FemtoBeacon Specs](https://www.tindie.com/products/femtoduino/femtobeacon-kit-starter/?pt=full_prod_search)
 
 We bought the 5-coin + dongle version. Each chip has onboard a ATMEL SAM R21E (ATSAMR21E18A), which is Arduino compatible. The coins have onbaoard precision altimeter and a 9 Axis IMU (MPU-9250). The wireless communication between the coins and the dongle can be programmed t use any available 2.4GHz RF stack. FemtoDuino implements Atmel's LwMesh stack.
