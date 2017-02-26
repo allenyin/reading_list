@@ -24,7 +24,7 @@ I am using the Arduino core and bootloader for my development as well.
 
 Femtoduino has a [list of instructions](https://femtoduino.com/examples/setup). There is also a list of instructions on [Femtoduino's github repo](https://github.com/femtoduino/ArduinoCore-atsamd21e18a/). 
 
-Here I compile the relevant procedures I have taken.
+Here I compile the relevant procedures I have taken, on Ubuntu 14.04.
 
 1. [Download Arduino IDE](https://www.arduino.cc/en/main/software), version 1.8.1 or higher.
 
@@ -90,7 +90,8 @@ void handleNetworking()
 to 
 
 {% highlight c linenos=table%}
-unsigned long start;
+unsigned long start = millis(); // Global variable,
+
 void handleNetworking()
 {
     SYS_TaskHandler();
@@ -105,11 +106,43 @@ void handleNetworking()
 
 This way, even without wireless traffic, the dongle will print out "Node #1 handleNetworking()" every second in the serial monitor.
 
+**Testing Femtobeacon Networking**
+
+Upload one Femtobeacon coin with `FemtoBeacon_Rf_MESH_IMU_Coin.ino` and the dongle with `FemtoBeacon_Rf_MESH_IMU_Dongle.ino`.
+
+Keep the dongle plugged into your computer with Arduino IDE running, and the other coin unconnected but powered through its USB connector.
+
+In the Serial monitor, you should be able to see outputs such as
+
+```
+Node #1 handleNetworking()
+Node #1 handleNetworking()
+Node #1 handleNetworking()
+Node #1 handleNetworking()
+Node #1 handleNetworking()
+Node #1 receiveMessage() from Node #2 = lqi: 156  rssi: -91  data:   154.23,   16.56,   34.45
+Node #1 receiveMessage() from Node #2 = lqi: 172  rssi: -91  data:   153.93,   16.89,   34.93
+Node #1 receiveMessage() from Node #2 = lqi: 220  rssi: -91  data:   153.66,   17.18,   35.32
+Node #1 receiveMessage() from Node #2 = lqi: 160  rssi: -91  data:   153.39,   17.43,   35.61
+```
+
+where `Node#1 represent the dongle`, `Node #2` represents the coin beacon.
+
+
 **Calibrating IMU**
 
 Follow the official Femtoduino's [instructions](https://femtoduino.com/examples/calibration-info). Note that the calibration utility `cal_gui.py` is in the FreeIMU-Updates folder that was forked in machine setup step 5.
 
 
+**Common Errors**
+
+1. If serial port permission problems aren't setup correctly, we may see this error:
+
+    `Caused by: processing.app.SerialException: Error touching serial port '/dev/ttyACM0'.`.
+
+    Solve by adding your user account to the dialout group:
+
+    `sudo usermod -a -G dialout yourUserName`
     
 
 **References**
