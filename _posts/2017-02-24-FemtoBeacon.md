@@ -48,11 +48,35 @@ Here I compile the relevant procedures I have taken, on Ubuntu 14.04.
 
 5. Install the FreeIMU libraries from Femtoduino's fork of FreeIMU-Updates. This is needed for the onboard MCUs to talk to the IMU chips.
 
-    This is done by either forking or downloading [FreeIMU-Updates](https://github.com/femtoduino/FreeIMU-Updates)'s **FemtoBeacon** branch (important!). 
+    This is done by either forking or downloading [FreeIMU-Updates](https://github.com/femtoduino/FreeIMU-Updates)'s **FemtoBeacon** branch (important!). Make the libraries visible to Arduion -- two ways to do this:
 
-    Then copy all the folders, except the `MotionDriver/` folder in `FreeIMU-Updates/libraries` into the Arduion libraries folder. By default, the Arduion libraries folder is under `/Arduino/libraries`. See [Arduino library guide](https://www.arduino.cc/en/Guide/Libraries) for more instructions.
+        1. Copy all the folders, except the `MotionDriver/` folder in `FreeIMU-Updates/libraries` into the Arduion libraries folder. By default, the Arduion libraries folder is under `/Arduino/libraries`. See [Arduino library guide](https://www.arduino.cc/en/Guide/Libraries) for more instructions.
 
+
+        2. As I might make changes to FreeIMU library code, it's easier to symbolic link the libraries to Arduino's library directory. Do this with:
+
+            `cd ~/Arduino/libraries`
+
+            `cp -r --symbolic-link ~/PATH_TO/FreeIMU-Updates/libraries/* .
+
+            Remember to delete the symbolic link to `MotionDriver/` since we don't need it.
+            
     In `FreeIMU/FreeIMU.h` header file (from folders copied previously), the line `#define MPU9250_5611` is the only uncommented line under `3rd party boards`.
+
+    In `FreeIMU/FreeIMU.h`, find the following section:
+
+    {% highlight c %}
+    //Magnetic declination angle for iCompass
+    //#define MAG_DEC 4 //+4.0 degrees for Israel
+    //#define MAG_DEC -13.1603  //degrees for Flushing, NY
+    //#define MAG_DEC 0.21  //degrees for Toulouse, FRANCE
+    //#define MAG_DEC 13.66 // degrees for Vallejo, CA
+    //#define MAG_DEC 13.616 // degrees for San Francisco, CA
+    #define MAG_DEC -9.6    // degrees for Durham, CA 
+    //#define MAG_DEC 0
+    {% endhighlight %}
+
+    and enter the magnetic declination angle for your location. Do this by going to [NOAA](https://www.ngdc.noaa.gov/geomag-web/#declination), enter your zip code and get the declination result. For the result, an **east** declination angle is positive, and **west** declination agnle is negative. This is needed to for magnetometer reading responsible for yaw calculations.
 
 6. Install the FemtoDuino port of the LwMesh library. This is needed to run the wireless protocols.
 
@@ -133,6 +157,8 @@ where `Node#1 represent the dongle`, `Node #2` represents the coin beacon.
 
 Follow the official Femtoduino's [instructions](https://femtoduino.com/examples/calibration-info). Note that the calibration utility `cal_gui.py` is in the FreeIMU-Updates folder that was forked in machine setup step 5.
 
+Download processing and run the cube sketch to check for results.
+
 
 **Common Errors**
 
@@ -144,6 +170,11 @@ Follow the official Femtoduino's [instructions](https://femtoduino.com/examples/
 
     `sudo usermod -a -G dialout yourUserName`
     
+**Directories**
+
+* `Arduino/libraries`: All the third-party libraries for lwmesh, RTCZero, FreeIMU_Updates. FreeIMU_Updates symbolic-linked to FreeIMU_Updates git repo.
+* `.arduino/.../femtoduino../`: Arduino board-manager installed cores.
+
 
 **References**
 
