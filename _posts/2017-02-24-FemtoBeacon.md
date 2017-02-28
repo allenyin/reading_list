@@ -158,6 +158,7 @@ Follow the official Femtoduino's [instructions](https://femtoduino.com/examples/
 
 Download processing and run the cube sketch to check for results.
 
+Before starting to collect samples from the GUI, in Arduino's Serial Monitor, send a few "q" commands (reset IMU) with some time in between or a "r" command (reset quaternion matrix) for best results. See [post here](https://github.com/mjs513/FreeIMU-Updates/issues/3)
 
 **Common Errors**
 
@@ -168,6 +169,37 @@ Download processing and run the cube sketch to check for results.
     Solve by adding your user account to the dialout group:
 
     `sudo usermod -a -G dialout yourUserName`
+
+2. The FreeIMU's  variants of `getYawPitchRoll` methods doesn't actually give the yaw, pitch, and roll one may expect. In the comments for the method:
+
+    ```
+    Returns the yaw pitch and roll angles, respectively defined as the angles in radians between
+    the Earth North and the IMU X axis (yaw), the Earth ground plane and the IMU X axis (pitch)
+    and the Earth ground plane and the IMU Y axis.
+
+    @note This is not an Euler representation: the rotations aren't consecutive rotations but only
+    angles from Earth and the IMU. For Euler representation Yaw, Pitch and Roll see FreeIMU::getEuler
+    ```
+
+    The one that I expected is given by the `getEuler() method`:
+
+    ```
+    Returns the Euler angles in degrees defined with the Aerospace sequence.
+    See Sebastian O.H. Madwick report "An efficient orientation filter for 
+    inertial and intertial/magnetic sensor arrays" Chapter 2 Quaternion representation
+    ```
+
+3. After the previous step, we should have reasonable yaw, pitch, roll readings in degrees. However, the yaw reading may exhibit a huge drift/set point behavior -- while the beacon sits flat on a surface and is rotated along its z-axis, the yaw reading would initially change to some reasonable measurement, then drift back to the same value.
+
+    As the magnetometer should be pretty stable, unless the environment has a lot of changing magnetic field, it would be due to how the sensor-fusion algorithm is updating the measurements. In `FreeIMU.h`, look for the lines:
+
+    ```
+    // Set filter type: 1 = Madgwick Gradient Descent, 0 - Madgwick implementation of Mahoney DCM
+    // in Quaternion form, 3 = Madwick Original Paper AHRS, 4 - DCM Implementation
+    #define MARG 3
+    ```
+
+    Out of the possible methods, only method 3 gives me yaw reading with a non-instant drift-time...
     
 **Directories**
 
@@ -178,3 +210,7 @@ Download processing and run the cube sketch to check for results.
 **References**
 
 [Compilation issue](https://github.com/femtoduino/ArduinoCore-atsamd21e18a/issues/11)
+
+[Magnetometer Reading Explanations](https://cdn-shop.adafruit.com/datasheets/AN203_Compass_Heading_Using_Magnetometers.pdf)
+
+[Complementary Filters](http://www.pieter-jan.com/node/11)
