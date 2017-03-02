@@ -173,7 +173,7 @@ _Original bandwidth settings_
 
 * Intan cutoff freq: [250Hz, 10kHz]
 * Intan DSPen setting: High pass above 300Hz
-* Firmware AGC highpass: >375Hz
+* Firmware AGC highpass: > 225Hz
 * IIR setting: [500Hz, 9kHz]
     * LPF: `b0=6004, b1=12008, a0=-4594, a1=-3039`
     * HPF: `b0=15260, b1=-30519, a0=30442, a1=-14213`
@@ -182,7 +182,7 @@ _Reduced bandwidth settings_
 
 * Intan cutoff freq: [250Hz, 7.5kHz]
 * Intan DSPen setting: High pass above 300Hz
-* Firmware AGC highpass: >375Hz
+* Firmware AGC highpass: > 225Hz
 * IIR setting: [500Hz, 7kHz]
     * LPF: `b0=4041, b1=8081, a0=3139, a1=-2917`
     * HPF: `b0=15260, b1=-30519, a0=30442, a1=-14213`
@@ -197,7 +197,7 @@ The new settings is:
 
 * Intan cutoff freq: [1Hz, 10kHz]
 * Intan DSPen setting: High pass above 1Hz
-* Firmware `radio_AGC_IIR_SAA.asm` AGC highpass: >375Hz 
+* Firmware `radio_AGC_IIR_SAA.asm` AGC highpass: > 225Hz
 * Firmware `radio_gain_IIR_SAA.asm` (final) AGC highpass: none
 * IIR setting: [250, 9kHz]
     * LPF: `b0=6004, b1=12008, a0=-4594, a1=-3039`
