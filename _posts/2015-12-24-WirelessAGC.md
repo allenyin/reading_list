@@ -113,6 +113,19 @@ $$
 
 The gain is 4, and the 3dB point is determined by \\(z=1-2\mu\\). In the code \\(\mu\approx 0.0244\\), so \\(z=0.9512\\). Note also, in Tim's thesis, \\(\mu\\) is actually \\(0.0488\\), this is because (s2rnd) was used in the actual implementation.
 
+The -3dB frequency can be calculated by plugging in the transfer function into MATLAB, since there's no easy way to get the Bode plot of a z-transform from the poles and zeros like the analog systems..unless if substituting $$z=exp{j\omega}$$ into the transfer function and calculating the magnitude response is easy..
+
+```
+>> num=[1,-1];
+den=[1, -0.9512];
+[h,w] = freqz(num,den,'whole',2001);
+plot(w/pi,20*log10(abs(h)))
+xlabel('Normalized Frequency (\times\pi rad/sample)')
+ylabel('Magnitude (dB)')
+```
+
+This will plot the two-sided magnitude response. We only care the part where normalized frequency is from 0 to 1. The normalized frequency $$\omega_c$$ at the -3dB point can be found be estimated from the plot. Convert to Hz via $$f_c=\omega_c*\pi*F_s/(2*\pi)$$. For this AGC setting, $$f_c\approx 225Hz$$.
+
 Line 20-23 is the first step of AGC, and is pretty tricky. r5 contains the AGC gain, which as described in the thesis is Q7.8 format (really Q8.8, but we never have negative gain here).
 
 Line 20 multiplies r0 with the AGC gain. But the default mode of multiplication treats both numbers as Q15 fractions, the value inside the accumulator is Q31 and will not be correct. In Q31, the decimal point is after bit 31. But when a Q15 number multiplies a Q7.8 number, there are 15+8=23 fractional bits, and the decimal point is in fact after bit 23. 
