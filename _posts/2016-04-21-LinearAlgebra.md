@@ -52,8 +52,11 @@ b = 5*a+rand(100,1);
 data = [a, b];  % rows are observations
 plot(a,b, '.');
 
+
 % PCA results
-% coeffs=eigenvectors, scores=observation in PC-space, latent=variance explained
+% coeffs=PC in original coordinate[PxP], 
+% scores=observation in PC-space [NxP], 
+% latent=variance explained [Px1]
 [coeffs, score, latent] = pca(data);
 hold on;
 plot(score(:,1), score(:,2), 'r.');
