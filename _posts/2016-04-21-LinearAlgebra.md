@@ -70,3 +70,6 @@ plot(svd_score(:,1), svd_score(:,2), 'g.');
 
 The results shown below. Blue is original data, green/red are the PCA results, they overlap exactly. Note that MATLAB's `pca` by default centers the data.
 ![image1]({{ site.baseurl }}/assets/PCAtest.png){: .center-image}
+
+---
+[Philip Sabes' Linear Algebra notes](http://keck.ucsf.edu/~sabes/documents/Sabes_LinearEquations.pdf)
