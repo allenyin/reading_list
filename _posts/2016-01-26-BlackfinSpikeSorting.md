@@ -31,7 +31,7 @@ The 16-point templates in the time domain is limited only to the purple strip in
 
 **Blackfin Implementation**
 
-The assembly implementation of template matching on blackfin is as below:
+The assembly implementation of template matching on blackfin (without LMS) is as below:
 
 {% highlight asm linenos=table %}
 // At end of signal chain for both group of two samples
@@ -77,6 +77,8 @@ The assembly implementation of template matching on blackfin is as below:
     r1 << = 1;
     r6 = r0 + r1;       // r6=[14 zeros][amp4A][amp2A][14 zeros][amp3A][amp1A]
 {% endhighlight %}
+
+In non-LMS versions of firmware, incrementing by `m3` moves address up by 16 32-bit words. In LMS-verions of firmware, incrementing by `m3` moves address up by 2 32-bit words.
 
 As mentioned in the [Blackfins-Intan post]({{ site:url }}/2015-12-25-Blackfin-Intan-SPORT), Blackfin works efficiently with two 16-bit samples at once, therefore the signal-chain operates twice before reaching the template matching step, once for each two samples acquired in a SPORT cycle.
 
