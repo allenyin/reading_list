@@ -229,3 +229,33 @@ In the nop test done in `firmware2.asm`, it was found I can fit 150 nops. I have
 [AGC is automatic gain control]({% post_url 2015-12-24-WirelessAGC %}), [LMS is least-mean-square adaptive noise cancellation]({% post_url 2016-01-26-BlackfinLMS %}), [IIR is infinite impulse response filter]({% post_url 2016-01-06-DirectFormI-IIR-butterworth-filters %}), and [SAA is used for spike template matching]({% post_url 2016-01-26-BlackfinSpikeSorting %}).
 
 Among these, SAA is required for spike matching. AGC is required because the templates for spike-sorting were made under certain signal power level, AGC is needed to fix the channel's power level. Therefore, all of LMS and half of IIR are ripped out to reduce code-length.
+
+-----------------------
+
+**Update: 7/26/2017**
+
+The reduction of available processing cycles kept bothering me, so I tried to see what it is caused by and how I can squeeze more cycles.
+
+Initial RHD-headstage firmware flows like so:
+
+1. Initialize all memory bank values [`_radio_bidi_asm`](https://github.com/allenyin/allen_wireless/blob/master/myopen_multi/headstage2_firmware/radio_AGC_LMS_IIR_SAA.asm#L692).
+
+2. Setup Intan communication by writing to its config registers and calibrate the ADC [`comm_setup`](https://github.com/allenyin/allen_wireless/blob/master/myopen_multi/headstage2_firmware/radio_AGC_LMS_IIR_SAA.asm#L1080).
+
+3. Go to main loop where signal acquistion and processing interleaves with radio transmission.
+
+In step 3, after getting the latest samples from the SPORT buffers, we increment the channel count, construct a proper request to Intan and send it through SPORT again. The SPORT would presumable output this to Intan headstages simulataneously while reading for new samples from Intan. This is done through:
+
+{% highlight asm linenos=table %}
+r7 = CHANNEL_SHIFTED; 
+[p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
+[p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
+[p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
+[p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
+{% endhighlight %}
+
+Turns out if in the Intan-setup phase, prior to the start of signal acquisition, I leave the command for auto-incrementing selected amplifier channel in the SPORT transmission (`SPORT1_TX`, `SPORT0_TX`) and delete the above snippet from the signal acquisition code, the same behavior is achieved and I can an extra 57 cycles to work with during step 3. This then allows me to fit the entire LMS step into the firmware.
+
+Why does this happen? Probably because accessing the SPORT ports on the blackfin, takes more than 1 CCLK cycle (1/400MHz=2.5ns), which is the case for all the instructions. The [ADSP-BF532 hardware reference section 3-5](http://www.analog.com/media/en/dsp-documentation/processor-manuals/ADSP-BF59x_hwr_rev1.2.pdf) mentions that Peripheral Access Bus (PAB) and Memory Mapped Register (MMR) access, which includes `SPORTx_TX` and `SPORTx_RX` takes 2 SCLK cycles.
+
+SCLK cycle is set to 80MHz, which is 5 CCLK cycles. The code snippet above takes 4*2=8 SCLK cycles, or 40 CCLK cycles. This is less than the extra 57 cycles I got after deleting them, but I think confirms what I see.

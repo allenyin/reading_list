@@ -24,9 +24,9 @@ DF2-biquad
 
 DF1-biquad
 
-Most commonly, Direct Form II biquads are used in implementations. However, as [this great paper](https://m8ta.com/images/584_1.pdf) suggests, Direct Form II biquads have extra limitations on the coefficient range. Therefore, Direct Form I biquads are more desirable in 16-bit fixed-point applications. The paper does point out instability issues of DF1-based IIR filters. 
+Most commonly, Direct Form II biquads are used in implementations because only 1 delay line is needed. However, as [this great paper]({{ site.baseurl }}/assets/BlackfinIIR_biquad.pdf) and [other common DSP resources] (https://www.amazon.com/Understanding-Digital-Signal-Processing-3rd/dp/0137027419) suggest, Direct Form II biquads have limitations on the coefficient range. Therefore, Direct Form I biquads are more desirable in 16-bit fixed-point applications for its better resistance to coefficient quantization and stability. 
 
-A lot of the original implementation rationale of the filters have been discussed in [Tim's post from a long time ago](https://m8ta.com/index.pl?pid=438), although his post was deriving elliptic filters.This post will mostly talk about how to generate the coefficients for the filters given the following assembly code structure:
+A lot of the original implementation rationale of the filters have been discussed in [Tim's post from a long time ago](https://m8ta.com/index.pl?pid=438), it was decided that the filters would implement Butterworth type due to the excellent in-band performance. This post will mostly talk about how to generate the coefficients for the filters given the following assembly code structure per [this paper again]({{ site.baseurl }}/assets/BlackfinIIR_biquad.pdf):
 
 {% highlight asm linenos=table %}
 r5 = [i0++] || r1 = [i1++];  // r5=b0(LPF), r1=x0(n-1); i0@b1(LPF), i1@x0(n-2)
@@ -90,17 +90,14 @@ a_HPF_DSP = round(a_HPF*2^14)*-1;
 
 These resulting coefficients are what I ended up using in the firmware. The two code snippet above is in `gtkclient_multi/genIIRfilters.m`.
 
-As mentioned in Tim's post, if the inputs were of less than 16-bits, the scaler value can be something other than \\(2^{14}\\) to increase the gain and expand the results to the full 16-bits range. For example, if the input to the biquad were 12-bits, we can incorporate a scale factor of x2 into the first biquad, and x4 into the second:
+By multiplying the b-coefficients of the low-pass filter, we can increase the DC-gain without changing the shape of the gain curve (equivalent of increasing the in-band gain due to flatness of Butterworth). However, the resulting coefficients must be clamped within [-32768, 32767] so they can be properly stored within 16-bits. 
 
-{% highlight matlab linenos=table %}
-b_LPF_DSP = round(b_LPF*2^14*2);    % x2 scale factor
-a_LPF_DSP = round(a_LPF*2^14)*-1;
+This is desirable if the presence of high frequency noise makes the incoming signal envelope high and limits the gain, then LMS subtract this common noise. With the extra IIR-stage gain, we can amplify the signal in the passband more. <s>It is not applicable to my version of headstage, because the raw samples are alreayd 16-bits.</s> This is now [implemented in gtkclient](https://github.com/allenyin/allen_wireless/blob/master/myopen_multi/gtkclient_multi/src/headstage.cpp#L139-L244) for all firmware versions with an IIR stage.
 
-b_HPF_DSP = round(b_HPF*2^14*2^2);  % x4 scale factor
-a_HPF_DSP = round(a_HPF*2^14);
-{% endhighlight %}
+The total gain of each biquad is limited to the coefficient range in Q15. For LPF, the DC gain can be calculated as the sum of the filter's feedforward coefficients divided by 1 minus the sum of the filter's feedback coefficients (in decimal). Keeping the feedback coefficients, multiplying both feedforward coefficients by the same amount increases the DC gain of the LPF biquad by the same. In gtkclient code, we assumed static gain is 1, i.e. 1 minus the sum of the feedback coefficients is equal to the sum of feedforward coefficients. This is not entirely true, therefore, the IIR gain value represents *how much extra gain the filter stage would provide over the base gain*.
 
-By multiplying the b-coefficients, different scale factor can be applied. However, the resulting coefficients must be clamped within 15-bits, i.e. [-32768, 32767]. This is the mechanism by which gtkclient changes the signal gain on Tim's headstage. It is not applicable to my version of headstage, because the raw samples are alreayd 16-bits.
+As the feedforward coefficient values have different magnitude, the same gain may saturate just one of the coefficients. In this case the gain scaling may change the filter's shape. Therefore, in practice, the IIR gain entered should not be greater than [-2.5, 2.5]. To find the max IIR gain possible without saturating, find the smallest feedforward coefficient for the LPF biquad (`m_lowpass_coeffs[0,1,4,5]` for RHA or `m_low_pass_coeffs[0,1]` for RHD, in [headstage.h](https://github.com/allenyin/allen_wireless/blob/master/myopen_multi/gtkclient_multi/src/headstage.h), and divide 2 by that number).
+
 
 **Approach 2**
 
@@ -165,9 +162,9 @@ In the 8th-order filter, the HPF filter disappeared..not sure why?
 
 **Edit: 2/4/2016**
 
-While comparing the signal quality between RHD- and RHA-headstage, it seems that RHD headstage is more noisy, even in the middle of the passband (FFT analysis of acquired signals). Therefore the extra noise may be due to the more compact board layout?..
+<s>While comparing the signal quality between RHD- and RHA-headstage, it seems that RHD headstage is more noisy, even in the middle of the passband (FFT analysis of acquired signals). Therefore the extra noise may be due to the more compact board layout?..</s>
 
-As a basic attempt to reduce noise, I reduced the pass band from [500Hz, 9kHz] to [500Hz, 7kHz]. This is also accompanied by my Intan passband setup changes, `gtkclient.cpp` UI changes, and `headstage.cpp` resetBiquad changes.
+<s>As a basic attempt to reduce noise, I reduced the pass band from [500Hz, 9kHz] to [500Hz, 7kHz]. This is also accompanied by my Intan passband setup changes, `gtkclient.cpp` UI changes, and `headstage.cpp` resetBiquad changes.</s>
 
 _Original bandwidth settings_
 
@@ -189,9 +186,11 @@ _Reduced bandwidth settings_
 
 ------------------------------------------------
 
-**Edit: 4/6/2016
+**Edit: 4/6/2016**
 
+<s>
 During [validation]({% post_url 2016-03-31-WirelessValidationMetrics %}) of recording and sorting quality between RHA-headstage, RHD-headstage, and plexon, a few changes to the final deployement firmware was made. Specifically, AGC was replaced by a fixed gain stage. The filtering settings were changed as well.
+</s>
 
 The new settings is:
 
@@ -205,3 +204,7 @@ The new settings is:
 
 We widened the Intan's hardware filter bandwidth so when sorting, the incoming waveform is less distorted and we can better see the spike features. The two stage IIR filters (2 poles on each side) are sufficient to attenuate the undesired out-of-band signals.
 
+------------------------------------------------
+**Edit: 7/26/2017**
+
+After implementing LMS, the input to IIR stage is much less noisy. Keeping the filter bandwidth setting the same -- [250, 9kHz], IIR gain makes the spikes much easier to see. RHD headstages have comparable performance to RHA headstages, upon qualitative evaluation (heh).
