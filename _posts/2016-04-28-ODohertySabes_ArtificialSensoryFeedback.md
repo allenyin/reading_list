@@ -5,7 +5,8 @@ date: 2016-4-28
 comments: false
 tags:
 - BMI
-- motor_feedback
+- sensory_feedback
+- cortical_stimulation
 - Sabes
 - O'Doherty
 ---
