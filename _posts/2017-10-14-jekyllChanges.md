@@ -13,7 +13,13 @@ My Ubuntu machine was outdated and according to [github](https://help.github.com
 
 Installed the ruby version manager -- [rvm](https://github.com/rvm/ubuntu_rvm), and followed the instructions on the github page. Had a strange permission error [https://github.com/bundler/bundler/issues/5211] during `bundle install`, solved it finally by deleting the offending directory.
 
-Basic syntax highlighting using the fenced-code blocks can be achieved following instructions [here](https://benhur07b.github.io/2017/03/25/add-syntax-highlighting-to-your-jekyll-site-with-rouge.html), however, enabling line numbers requires using the `{{% highlight language linenos %}}` tag, which is not consistent with the custom rouge syntax highlighting themes out of the box. Required a bunch of CSS stylings to get them to work. In the following steps `/myjekyll` represents the path to my jekyll site's root directory.
+Basic syntax highlighting using the fenced-code blocks can be achieved following instructions [here](https://benhur07b.github.io/2017/03/25/add-syntax-highlighting-to-your-jekyll-site-with-rouge.html), however, enabling line numbers requires using the 
+
+{% raw %}
+`{% highlight language linenos %}`
+{% endraw %} 
+
+tag, which is not consistent with the custom rouge syntax highlighting themes out of the box. Required a bunch of CSS stylings to get them to work. In the following steps `/myjekyll` represents the path to my jekyll site's root directory.
 
 1. All my css style sheets are in the directory `/myjekyll/css`. In my `/myjekyll/_includes/header.html` file, the syntax highlighting stylesheet is included as `syntax.css`. I did 
 
@@ -98,6 +104,16 @@ Basic syntax highlighting using the fenced-code blocks can be achieved following
     }
     ```
 
-5. A finally thing that is broken about the `{{% highlight %}}` tag is that using it inside a list will break the list. In this post, all items after the list with line numbers have started their number all over agian. According to [the ticket here](https://github.com/jekyll/jekyll/issues/588), there is no easy solution to this because it is related to the kramdown parser. Using different indentation (3 spaces or 4 spaces) in list items does not change. 
+5. A final thing that is broken about the 
 
-    Some imperfect solutions are suggested [here](https://stackoverflow.com/questions/35858704/jekyll-kramdown-code-in-ordered-list-number-reset#41917631) and [here](https://stackoverflow.com/questions/17995467/how-can-i-put-a-liquid-tag-highlight-in-an-ordered-list). None can fix the indentation problem. But, by placing `{{:start="3"}}` one line before my third list item allows the following items to have the correct numbering.
+    {% raw %}
+    `{% highlight %}`
+    {% endraw %}
+
+     tag is that using it inside a list will break the list. In this post, all items after the list with line numbers have started their number all over agian. According to [the ticket here](https://github.com/jekyll/jekyll/issues/588), there is no easy solution to this because it is related to the kramdown parser. Using different indentation (3 spaces or 4 spaces) in list items does not change. Some imperfect solutions are suggested [here](https://stackoverflow.com/questions/35858704/jekyll-kramdown-code-in-ordered-list-number-reset#41917631) and [here](https://stackoverflow.com/questions/17995467/how-can-i-put-a-liquid-tag-highlight-in-an-ordered-list). None can fix the indentation problem. But, by placing 
+
+    {% raw %} 
+    `{:start="3"}` 
+    {% endraw %}
+
+    one line before my third list item allows the following items to have the correct numbering.
