@@ -10,7 +10,10 @@
 
 {% include disqus-counts.html %}
 {% if jekyll.environment == 'production' %}
+production!
 {% include analytics.html %}
+{% else %}
+not production!
 {% endif %}
 
 </body>
