@@ -44,3 +44,7 @@ kramdown:
     #        start_line: 1
 
 exclude: ['README.md', 'LICENSE']
+
+# google analytics account: used in analytics.html
+gaacount: UA-108068754-1
+

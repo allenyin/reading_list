@@ -9,7 +9,9 @@
 </div>
 
 {% include disqus-counts.html %}
+{% if jekyll.environment == 'production' %}
 {% include analytics.html %}
+{% endif %}
 
 </body>
 </html>
