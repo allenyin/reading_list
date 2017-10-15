@@ -103,17 +103,16 @@ Testing the Dongle requires some modification of `FemotoBeacon_Rf_MESH_IMU_Dongl
 
 This is not very informative if we just want to see if the Dongle's working. So change the original `handleNetworking()` method:
 
-{% highlight c linenos=table%}
+``` c
 void handleNetworking()
 {
     SYS_TaskHandler();
 }
-{% endhighlight %}
-
+```
 to 
 
-{% highlight c linenos=table%}
-unsigned long start = millis(); // Global variable,
+{% highlight c linenos %}
+unsigned long start = millis(); // Global variable, asdffffffffffffffffffffffffffffffffffffffffffffffffffff
 
 void handleNetworking()
 {

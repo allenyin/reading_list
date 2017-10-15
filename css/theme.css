@@ -57,15 +57,61 @@ body {
     width: 80%;
 }
 
-table.highlighttable {
-    overflow-x:auto;
-    display:block;
+/* highlighter-rouge */
+code.highlighter-rouge {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0 0.5em;
+    color: #d14;
 }
 
-table.highlighttable td.code {
-    width:100%;
-}
-
+/* fence-block style highlighting */
 pre code {
     white-space: pre;
+}
+
+/* Block quote */
+blockquote {
+    color: #555;
+    font-size: 14px;
+}
+
+/* Syntax highlighting for monokai -- see syntax.css */
+.highlight pre,
+.highlight .table 
+{
+    border: box;
+    border-radius: 0px;
+    border-collapse: collapse;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.highlight table td { 
+    padding: 0px; 
+    background-color: #49483e; 
+    color: #f8f8f2;
+    margin: 0px;
+}
+
+.highlight td.gutter {
+    border-right: 1px solid white;
+}
+
+.highlight table pre { 
+    margin: 0;
+    background-color: #49483e; 
+    color: #f8f8f2;
+}
+
+.highlight pre {
+    background-color: #49483e; 
+    color: #f8f8f2;
+    border: 0px;    /* no border between cells! */
+}
+
+/* The code box extend the entire code block */
+.highlight table td.code {
+    width: 100%;
 }
