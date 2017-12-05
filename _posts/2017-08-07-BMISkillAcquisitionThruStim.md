@@ -3,14 +3,7 @@ layout: post
 title: "BMI skill acquisition through stimulation"
 date: 2017-08-09
 comments: false
-tags:
-- BMI
-- sensory_feedback
-- cortical_stimulation
-- tDCS
-- Collinger
-- Boninger
-- Fetz
+tags: [BMI, sensory_feedback, cortical_stimulation, tDCS, Collinger, Boninger, Fetz]
 ---
 
 There is an interesting section on **Approaches for BCI Learning** in the review [Brain computer interface learning for systems based on electrocorticography and intracortical microelectrode arrays](http://journal.frontiersin.org/article/10.3389/fnint.2015.00040/full#h6). Specifically:
@@ -18,6 +11,7 @@ There is an interesting section on **Approaches for BCI Learning** in the review
 > Since cortical stimulation can modulate cortical activity patterns (Hummel and Cohen, 2006; Harvey and Nudo, 2007), it is conceivable that cortical stimulation may be able to replace or supplement repetitive behavior training to induce changes in cortical activity and accelerate BCI learning (Soekadar et al., 2014). While this approach has not been well investigated for BCI learning, previous studies about neuroplasticity (Gage et al., 2005; Jackson et al., 2006) and rehabilitation using neurostimulation (Ziemann et al., 2002; Hummel et al., 2005; Hummel and Cohen, 2006; Harvey and Nudo, 2007; Perez and Cohen, 2009; Plow et al., 2009; Reis et al., 2009) can shed some light on the feasibility of this approach. At the macroscopic level, cortical areas can be stimulated non-invasively using transcranial magnetic or current stimulations. In the context of stroke rehabilitation, it has been suggested that such stimulation can enhance motor cortical excitability and change cortical connectivity (Hummel et al., 2005; Hummel and Cohen, 2006; Perez and Cohen, 2009). [...] A recent pilot study has shown that transcranial direct current stimulation induces event-related desynchronization associated with sensorimotor rhythm (Wei et al., 2013). This event-related desynchronization, along with motor imagery, was used to improve the performance of an EEG based BCI.
 
 Nothing interesting there, there have been quiet some evidence that anodal tDCS has positive effects on motor and cognitive skill acquisition. I particularly like [Soekadar 2014](https://academic.oup.com/cercor/article/25/9/2409/2926054/Enhancing-Hebbian-Learning-to-Control-Brain): tDCS was used to help with the subjects to train to modulate sensorimotor rhythms (SMR, 8-15Hz). They hypothesized that M1 had a causal link to modulate SMR, so anodal tDCS was applied there. They found anodal stimulation resulted in better performance than sham and cathodal stimulation. I will not comment on if this experiment alone establishes its conclusion that "M1 is a common substrate for acquisition of physical motor skills and learning to control brain oscillatory activity", but it certainly serves as evidence that tDCS may help in BMI control acquisition.
+
 
 > At the microscopic level, based on the concept of Hebbian or associative learning, motor cortical reorganization can be induced by coupling action potentials of one motor cortical neuron with electrical stimulation impulses of another motor cortical neuron (Jackson et al., 2006; Stevenson et al., 2012).  Besides electromagnetic stimulation, optogenetics is another approach to stimulate cortical tissue. 
 

@@ -16,7 +16,7 @@ baseurl: '/reading_list'
 github: 'allenyin/reading_list'
 
 # Set this to your UA-# value, or '' to disable the block completely
-gaaccount: ''
+gaaccount: UA-108068754-1
 
 # Set this to your disqus shortname to enable comments. Note that the 'comments'
 # setting below must also be true. Individual posts can override 'comments' to
@@ -27,11 +27,20 @@ comments: false
 permalink: /:year/:month/:title
 paginate: 20
 
-highlighter: pygments
+highlighter: rouge 
 markdown: kramdown
 kramdown:
-    input: GFM
-redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data", "strikethrough"]
+    #input: GFM
+    auto_ids: true
+    syntax_highlighter: rouge
+
+    # Options taken from https://github.com/jekyll/jekyll/issues/4619
+    #syntax_highlighter_opts:
+    #    css_class: 'highlight'
+    #    span:
+    #        line_numbers: false
+    #    block:
+    #        line_numbers: true
+    #        start_line: 1
 
 exclude: ['README.md', 'LICENSE']

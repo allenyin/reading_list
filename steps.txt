@@ -19,6 +19,9 @@
 10) Style site by ripping off parts of the html files in _include/
 now??
 
+---------------------------
+1) Install ruby with rvm, currently using 2.4.
+2) jekyll install: https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/
 
 
 
