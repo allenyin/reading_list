@@ -60,7 +60,9 @@ Here we are fitting a glm: log(bincnts) ~ beta_0+z0(beta_2+beta_5X)+z1(beta_1+be
 
 `durations` is significant, but interaction terms are not significant, so we actually see a homogeneity of slopes. `reward_cond_0` is significant but not `reward_cond_1`, this means the regression line (duration and bincnts) for the first reward condition (represented by intercept, durations) are not significantly different from that for `reward_cond_1`, but it is for `reward_cond_0`.
 
-The fitted response values are shown below ![image1]({{ site.baseurl }}/assets/bincounts_vs_duration_fitted.png){: .center-image }. Note in the print out that the dispersion is greater than 1 (1.46), meaning the variance of the data is bigger than expected for a Poisson distribution (where var=mean).
+The fitted response values are shown below ![image2]({{ site.baseurl }}/assets/bincounts_vs_duration_fit.png){: .center-image } 
+
+Note in the print out that the dispersion is greater than 1 (1.46), meaning the variance of the data is bigger than expected for a Poisson distribution (where var=mean).
 
 As can be seen in the fitted plot, the blue line is less than the red and green line, and red~=green line. To get all these orderings we need to do post-hoc pairwise tests between the factors, and adjust for multiple comparison. If it was regular ANCOVA, in MATLAB this can be done by `acotool` and `multcompare`. Unfortunately `multcompare` doesn't work for GLM.
 
