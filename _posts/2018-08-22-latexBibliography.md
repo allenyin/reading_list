@@ -19,7 +19,7 @@ This is difficult for several reasons.
 
 The top level `dissertation.tex` is something like
 
-```latex
+``` latex
 \documentclass[]{dissertation}
 % Package setup, blabla
 \begin{document}
@@ -49,7 +49,7 @@ If I were using word, I might just copy and paste some formatted lines to the en
 
 Created a separate bibtex file `mypub.bib`, then inserted the following lines in `biography.tex`:
 
-```latex
+``` latex
 \nocite{*}                      % needed to show all the items in the bib-file. 
                                 % Otherwise only those called with \cite{}
 \bibliographystyle{myStyle}     % uses style defined in myStyle.bst
@@ -74,7 +74,7 @@ Don't want those. Finally found this SO post [How to use multibib in order to in
 
 So new approach, in `dissertation.tex`:
 
-```latex
+``` latex
 % preamble stuff
 \usepackage{multibib}
 \newcites{pub}{headingTobeRemoved}  % create a new bib part called 'pub' with heading 'headingTobeRemoved`
@@ -90,7 +90,7 @@ So new approach, in `dissertation.tex`:
 
 In `biography.tex`:
 
-```latex
+``` latex
 Blablabla memememememe
 \nocitepub{*}
 \bibliographystylepub{myStyle}
@@ -119,7 +119,7 @@ No good.
 
 In `biography.tex`, included the following suggest by [SO post](https://stackoverflow.com/a/4471260)
 
-```latex
+``` latex
 Blablabla memememememe
 \renewcommand{\chapter}[2]{}
 \nocitepub{*}
@@ -139,7 +139,7 @@ This took the longest time and I could not find a satisfactory solution. Using
 
 did not help. Nobody seems to even have this problem...so I gave up and just made the items use bullets instead. In `biography.tex`:
 
-```latex
+``` latex
 Blablabla memememeem
 
 \renewcommand{\chapter}[2]{}
@@ -159,7 +159,7 @@ This one is very tricky, and requires modifying the actual `myStyle.bst` file. T
 
 [plainyr-rev.bst](https://github.com/jberger/Curriculum_Vita/blob/master/plainyr-rev.bst) provides a working example of ordering reference entries in reverse chronological order. I decided to use [`jasa.bst`](https://github.com/merliseclyde/AAIS/blob/master/jasa.bst), from Journal of American Statistical Association. The following are the changes needed:
 
-```latex
+{% highlight latex linenos %}
 %%%%%%% Extra added functions %%%%%%%%%%%%%%%
 % From plainyr_rev.bst
 FUNCTION {sort.format.month}
@@ -329,7 +329,7 @@ REVERSE {reverse.pass}
 %ITERATE {bib.sort.order}
 
 SORT                    % Now things will sort as desired
-```
+{% endhighlight %}
 
 **Extra: Make my name bold**
 
@@ -339,7 +339,7 @@ Suppose your name is John A. Smith. Depending on the reference style and the spe
 
 In bibtex, the author line may be something like:
 
-```latex
+``` latex
 % variation 1
 author = {Smith, John and Doe, Jane}
 % variation 2
@@ -348,7 +348,7 @@ author = {Smith, John A. and Doe, Jane}
 
 Apparently the bst files simply goes through these lines, strsplit based on keyword "and", and take the last name and first name field and contatenate them together. And if only initial is needed, take the first letter of the first name. So, we can simply make the correct fields bold:
 
-```latex
+``` latex
 % variation 1
 author = {{\bf Smith}, {\bf J}{\bf ohn} and Doe, Jane}
 % variation 2
