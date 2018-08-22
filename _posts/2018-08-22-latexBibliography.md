@@ -6,7 +6,6 @@ comments: false
 tags:
 - Notes
 - Latex
-- Bibtex
 ---
 
 Writing my dissertation I chose to use Latex because it makes everything looks good, I can stay in Vim, type math easily, and don't have to deal with an actual Word-like processor's abysmal load speed when I'm writing 100+ pages. At the same time, some things that should be very easy took forever to figure out.
@@ -350,9 +349,9 @@ Apparently the bst files simply goes through these lines, strsplit based on keyw
 
 ``` latex
 % variation 1
-author = {{\bf Smith}, {\bf J}{\bf ohn} and Doe, Jane}
+author = { {\bf Smith}, {\bf J}{\bf ohn} and Doe, Jane}
 % variation 2
-author = {{\bf Smith}, {\bf J}{\bf ohn} {\bf A.} and Doe, Jane}
+author = { {\bf Smith}, {\bf J}{\bf ohn} {\bf A.} and Doe, Jane}
 ```
 Note that the first name's first letter and last letters are bolded separately for correct formatting.
 
