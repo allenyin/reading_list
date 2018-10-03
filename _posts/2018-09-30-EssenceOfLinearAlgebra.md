@@ -73,7 +73,7 @@ In this nominal case where $$\|det(A)\|>0$$, there exists an inverse $$A^{-1}$$ 
 
 Intuitively this makes sense -- to get the vector pre-transformation, we simply reverse the transformation.
 
-Now suppose $$\|det(A)\|=0$$, this means $$A$$ maps a 3-D vector onto a lower-dimensional space, which can be a plane, a line, or even a point. In this case, no inverse $$A^{-1}$$ exists, because how can you transform these lower-dimensional constructs into 3D space? (Note that in most textbooks, the justification of $$A^{-1}$$ exists only when $$|det(A)|$$ is not zero is made on the basis of Gauss-Jordan form, which is not intuitive at all).
+Now suppose $$\|det(A)\|=0$$, this means $$A$$ maps a 3-D vector onto a lower-dimensional space, which can be a plane, a line, or even a point. In this case, no inverse $$A^{-1}$$ exists, because how can you transform these lower-dimensional constructs into 3D space? (Note that in most textbooks, the justification of $$A^{-1}$$ exists only when $$det(A)$$ is not zero is made on the basis of Gauss-Jordan form, which is not intuitive at all).
 
 #### Column Space and Null Space ####
 
