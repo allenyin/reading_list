@@ -51,6 +51,8 @@ Two good sources on Kalman Filter:
 
 2. Greg Welch and Gary Bishop's [An Introduction to the Kalman Filter](https://www.cs.unc.edu/~welch/media/pdf/kalman_intro.pdf). Presents just the right amount of math in the derivation of the KF. [My notes]({{ site.baseurl }}/assets/WelchNotes.pdf)
 
+3. Update (12/9/2021): New best Kalman Filter derivation, by Thacker and Lacey. [Full memo](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.408.5594&rep=rep1&type=pdf), [Different link](https://web.mit.edu/kirtley/kirtley/binlustuff/literature/control/Kalman%20filter.pdf).
+
 The general framework of the Kalman filter is (using notation from Welch and Bishop):
 
 $$
