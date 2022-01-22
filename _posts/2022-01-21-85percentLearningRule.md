@@ -13,7 +13,7 @@ tags:
 
 A practice schedule or learning plan can be very important in skills and knowledge acquisition, thus the saying "perfect practice makes perfect". I first heard about this work on Andrew Huberman's [podcast on goal setting](https://hubermanlab.com/the-science-of-setting-and-achieving-goals/). The results here are significant, offering insights into both training ML algorithms, as well as biological learners. Furthermore, the analysis techniques are elegant, definitely brushed off some rust here!
 
-## Summary
+### Summary
 
 1. Examine the role of the __difficulty of training__ on the __rate of learning__.
 2. Theoretical result derived for learning algorithms relying on some form of __gradient descent__, in the context of __binary classification__.
@@ -25,7 +25,7 @@ A practice schedule or learning plan can be very important in skills and knowled
 4. Training according to fixed error rate yields __exponentially faster__ improvement in precision (proportional to accuracy), compared to fixed difficulty. $$O(\sqrt(t))$$ vs. $$O(\sqrt(log(t)))$$.
 5. Theoretical results validated in simulations for perceptrons, 2-layer NN on MNIST dataset, and [Law and Gold model](https://www.nature.com/articles/nn.2304) of perceptual learning (neurons in MT area making decision about the moving direction of dots with different coherence level, using reinforcement learning rules).
 
-## Some background
+### Some background
 
 The problem of optimal error rate pops up in many domains:
 - Curriculum learning, or self-paced learning in ML.
@@ -34,13 +34,13 @@ The problem of optimal error rate pops up in many domains:
 
 In education and game design, empirically we know that people are more engaged when the tasks being presented aren't too easy, and just slightly more difficult. Some call this the optimal conditions for "flow state".
 
-## Problem formulation
+### Problem formulation
 
 The problem formulation is fairly straight-forward, as the case of binary classification and Gaussian noise.
 
-1. Agent make decision, represented by a decision variable $$h$$, computed as $$h=\Phi(\mathbf{x}, \phi)$$, where $$\mathbf{x}$$ is the stimulus, and $$\phi$ are the parameters of whatever learning algorithm.
-2. The decision variable $$h$$ is a noisy representation of the true label $$\Delta$$: $$h = \Delta + n$$, where $$n \tilde N(0, \sigma)$$.
-3. If the decision boundary is set at $$h=0$$ (see Figure 1A), such that chose A when $$h<0$$, B when $$h>0$$ and randomly otherwise, then the decision noise leads to error rate of: \\[ER = \int_-\infty^0 p(h|\Delta,\sigma)dh=F(-\Delta/\sigma)=F(-\beta\Delta)\\].
+1. Agent make decision, represented by a decision variable $$h$$, computed as $$h=\Phi(\mathbf{x}, \phi)$$, where $$\mathbf{x}$$ is the stimulus, and $$\phi$$ are the parameters of whatever learning algorithm.
+2. The decision variable $$h$$ is a noisy representation of the true label $$\Delta$$: $$h = \Delta + n$$, where $$n \approx N(0, \sigma)$$.
+3. If the decision boundary is set at $$h=0$$ (see Figure 1A), such that chose A when $$h<0$$, B when $$h>0$$ and randomly otherwise, then the decision noise leads to error rate of: \\[ER = \int_{-\infty}^{0} p(h|\Delta,\sigma)dh=F(-\Delta/\sigma)=F(-\beta\Delta)\\].
   - p() is Gaussian distribution
   - F() is Gaussian CDF
   - $$\beta$$ is precision, and essentially measures how "peaky" the decision variable distribution is. This can be thought of as the (inverse) accuracy or "skill" of the agent.
@@ -52,14 +52,15 @@ The problem formulation is fairly straight-forward, as the case of binary classi
 
 ![model illustration]({{ site.baseurl }}/assets/optimal_error_rate1.png){: .center-image }
 
-## Simulations
+### Simulations
 
 Validation of this theory boils down to the following elements:
-1. How to quantify problem/stimulus difficulty $$\Delta$$?
-2. How to select problem with the desired difficulty?
-3. How to adjust target difficulty level to maintain the desired error rate?
-3. How to measure error rate $$ER$$?
-4. How to measure skill level?
+- How to quantify problem/stimulus difficulty $$\Delta$$?
+- How to select problem with the desired difficulty?
+- How to adjust target difficulty level to maintain the desired error rate?
+- How to measure error rate $$ER$$?
+- How to measure skill level?
+
 
 1. Application to perceptron:
   - A fully trained teacher perceptron network's weights $$\mathbf{e}$$ are used to calculate the difficulty. The difficulty of a sample is equal to its distance from the decision boundary (higher is less difficult).
