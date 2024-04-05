@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "A Cross-Modal approach to silent speech with LLM-Enhanced recognition" 
-date: 2015-7-26
+date: 2024-04-05
 comments: false
 tags:
 - Deep_Learning
