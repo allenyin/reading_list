@@ -68,3 +68,9 @@ For final MONA LISA performance (joint-model + LLM output):
 1. SOTA on Gaddy silent speech: 28.8% to 12.2%
 2. SOTA on vocal EMG speech: 23.3% to 3.7%
 3. SOTA on Brain-to-Text: 9.8% to 8.9%
+
+## Additional userful reference
+
+Cites [Acceptability of Speech and Silent Speech Input Methods in Private and Public](https://dl.acm.org/doi/10.1145/3411764.3445430):
+
+> The performance threshold for SSIs to become a viable alternative to existing automatic speech recognition (ASR) systems is approximately 15% WER
