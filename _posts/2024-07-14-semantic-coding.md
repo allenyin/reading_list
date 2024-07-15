@@ -21,6 +21,8 @@ They found something akin to "semantic tuning" on the single neuron level to the
   - They observed most of the neurons exhibited semantic selectivity to only one semantic domain. Though construction of 1-vs-all determination of semantic tuning this conclusion is a bit weak.
   - As a control, many semantic-selective neurons also distinguished real vs. non-words.
 
+![image1]({{ site.baseurl }}/assets/semantic_selectivity1.png){: .center-image }
+
 # Generalizable semantic selectivity
 
 - Semantic decoders generalize to words not used in the training set (31+/-7%)
@@ -33,6 +35,8 @@ Considering they use a support vector classifier with only 43 neurons, this is r
 Additional control found different story "narrative" (different thematic and style) does not affect semantic decoding (28% accuracy using decoders trained from a different narrative).
 
 The decoding experiments used the response from the collective semantically-tuned neurons from all 10 participants (they can do this since the tasks are the same across participant). They checked the semantic decoding generalizability hold for individual participant.
+
+![image2]({{ site.baseurl }}/assets/semantic_selectivity2.png){: .center-image }
 
 # Context-dependence
 
@@ -55,6 +59,8 @@ They regressed the responses of all 133 units onto the embedding vectors (300-di
 -  Word pairs with less hierarchical semantic distance (cophenetic distance) elicited more similar neuronal activities, r=0.36.
 
 These last two points are interesting. It FEELS right, since hierarchical semantic organization probably allows a moer efficient coding scheme for a large and expanding semantic space.
+
+![image3]({{ site.baseurl }}/assets/semantic_selectivity3.png){: .center-image }
 
 # Impact
 
