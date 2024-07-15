@@ -68,7 +68,7 @@ The natural next-step IMO is to obviously recorded from more neurons with more s
 
 And this will be a huge step toward what most people perceive as "thought"-decoding vs. speech-decoding (which deals more with the mechanics of speech roduction such as tones and frequencies vs. languag aspects such as semantics).
 
-## What else are needed?
+__What else are needed?__
 
 The discussion section of the paper is a good read, and this section stands out regarding different aspects of semantic processing:
 
