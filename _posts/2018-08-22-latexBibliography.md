@@ -18,7 +18,8 @@ This is difficult for several reasons.
 
 The top level `dissertation.tex` is something like
 
-``` latex
+{% raw %}
+```latex
 \documentclass[]{dissertation}
 % Package setup, blabla
 \begin{document}
@@ -35,6 +36,7 @@ The top level `dissertation.tex` is something like
 \include{{./Biography/biography}}
 \end{document}
 ```
+{% endraw %}
     
 If I were using word, I might just copy and paste some formatted lines to the end of the page and call it a day. But since I am a serious academic and want to do this the right away...it poses a slight struggle. I need to make bibtex format my publications and insert it at the end during the compile process. My requirements:
 
@@ -73,7 +75,8 @@ Don't want those. Finally found this SO post [How to use multibib in order to in
 
 So new approach, in `dissertation.tex`:
 
-``` latex
+{% raw %}
+```latex
 % preamble stuff
 \usepackage{multibib}
 \newcites{pub}{headingTobeRemoved}  % create a new bib part called 'pub' with heading 'headingTobeRemoved`
@@ -86,15 +89,18 @@ So new approach, in `dissertation.tex`:
 \include{{./Biography/biography}}
 \end{document}
 ```
+{% endraw %}
 
 In `biography.tex`:
 
-``` latex
+{% raw %}
+```latex
 Blablabla memememememe
 \nocitepub{*}
 \bibliographystylepub{myStyle}
 \bibliographypub{mypub}
 ```
+{% endraw %}
 
 Really important in the second reference section to use `\nocitepub`, `\bibliographystylepub`, and `\bibliographypub` such that it matches the name of the `\newcites` group.
 
@@ -118,7 +124,7 @@ No good.
 
 In `biography.tex`, included the following suggest by [SO post](https://stackoverflow.com/a/4471260)
 
-``` latex
+```latex
 Blablabla memememememe
 \renewcommand{\chapter}[2]{}
 \nocitepub{*}
@@ -138,7 +144,8 @@ This took the longest time and I could not find a satisfactory solution. Using
 
 did not help. Nobody seems to even have this problem...so I gave up and just made the items use bullets instead. In `biography.tex`:
 
-``` latex
+{% raw %}
+```latex
 Blablabla memememeem
 
 \renewcommand{\chapter}[2]{}
@@ -151,6 +158,7 @@ Blablabla memememeem
 \bibliographystylepub{myStyle}
 \bibliographypub{mypub}
 ```
+{% endraw %}
 
 **Reverse chronological order**
 
@@ -158,7 +166,8 @@ This one is very tricky, and requires modifying the actual `myStyle.bst` file. T
 
 [plainyr-rev.bst](https://github.com/jberger/Curriculum_Vita/blob/master/plainyr-rev.bst) provides a working example of ordering reference entries in reverse chronological order. I decided to use [`jasa.bst`](https://github.com/merliseclyde/AAIS/blob/master/jasa.bst), from Journal of American Statistical Association. The following are the changes needed:
 
-{% highlight latex linenos %}
+{% raw %}
+```latex
 %%%%%%% Extra added functions %%%%%%%%%%%%%%%
 % From plainyr_rev.bst
 FUNCTION {sort.format.month}
@@ -328,7 +337,8 @@ REVERSE {reverse.pass}
 %ITERATE {bib.sort.order}
 
 SORT                    % Now things will sort as desired
-{% endhighlight %}
+```
+{% endraw %}
 
 **Extra: Make my name bold**
 
@@ -347,12 +357,15 @@ author = {Smith, John A. and Doe, Jane}
 
 Apparently the bst files simply goes through these lines, strsplit based on keyword "and", and take the last name and first name field and contatenate them together. And if only initial is needed, take the first letter of the first name. So, we can simply make the correct fields bold:
 
-``` latex
+{% raw %}
+```latex
 % variation 1
 author = { {\bf Smith}, {\bf J}{\bf ohn} and Doe, Jane}
 % variation 2
 author = { {\bf Smith}, {\bf J}{\bf ohn} {\bf A.} and Doe, Jane}
 ```
+{% endraw %}
+
 Note that the first name's first letter and last letters are bolded separately for correct formatting.
 
 Took way too long!

@@ -16,7 +16,7 @@ Installed the ruby version manager -- [rvm](https://github.com/rvm/ubuntu_rvm), 
 Basic syntax highlighting using the fenced-code blocks can be achieved following instructions [here](https://benhur07b.github.io/2017/03/25/add-syntax-highlighting-to-your-jekyll-site-with-rouge.html), however, enabling line numbers requires using the 
 
 {% raw %}
-`{% highlight language linenos %}`
+````language`
 {% endraw %} 
 
 tag, which is not consistent with the custom rouge syntax highlighting themes out of the box. Required a bunch of CSS stylings to get them to work. In the following steps `/myjekyll` represents the path to my jekyll site's root directory.
@@ -39,7 +39,7 @@ tag, which is not consistent with the custom rouge syntax highlighting themes ou
    
    We want to have the code blocks to be consistent with these colors. Inspecting the code block elements allow us to set the appropriate css properties. Notably, the highlighted code-block with line numbers is implemented as a table, one td for the line numbers, and one td for the code. I added the following into my `/myjekyll/css/theme.css` file (or whatever other stylesheet that's included in your header)
    
-   {% highlight css linenos %}
+   ```css
    /* Syntax highlighting for monokai -- see syntax.css */
    .highlight pre,
    .highlight .table 
@@ -79,7 +79,7 @@ tag, which is not consistent with the custom rouge syntax highlighting themes ou
    .highlight table td.code {
        width: 100%;
    } 
-   {% endhighlight %}
+   ```
 
 {:start="3"}
 3. The fenced code-block by default wraps a long line instead of creating a horizontal scrollbar, unlike using the highlight tag. According to [the internet](https://stackoverflow.com/questions/36612856/prevent-line-wraps-of-code-blocks-using-jekyll-kramdown-and-rouge), this can be done by adding to the style sheet:

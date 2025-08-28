@@ -1,45 +1,50 @@
 ---
+# 1. This front matter enables Eleventy's pagination
 layout: default
+pagination:
+  data: collections.posts  # Paginate the 'posts' collection
+  size: 10                 # Show 10 posts per page
+  alias: posts             # The posts for the current page will be in a 'posts' variable
 ---
 
-{% for post in paginator.posts %}
+{# 2. Loop over the 'posts' variable from our alias #}
+{% for post in posts %}
 <div class="article">
     <div class="well">
-        <h1><a href="{{ site.baseurl}}{{ post.url }}">{{ post.date | date: "%b %-d, %Y" }} - {{ post.title }}</a></h1>
+        {# 3. Use Nunjucks date filter and Eleventy's 'url' filter #}
+        <h1><a href="{{ post.url | url }}">{{ post.date | date("LLL d, yyyy") }} - {{ post.data.title }}</a></h1>
         
         <p>
         <small>
         tags:
-            {% for tag in post.tags %}
-                {% if forloop.last %}
-                <span><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag | split:'_' | join:' ' }}</a></span>
-                {% else %}
-                <span><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag | split:'_' | join:' ' }},</a></span>
-                {% endif %}
+            {# 4. Use 'loop.last' and the simpler 'replace' filter #}
+            {% for tag in post.data.tags %}
+                <span><a href="/tags/{{ tag | slug }}/">{{ tag | replace('_', ' ') }}</a></span>{% if not loop.last %}, {% endif %}
             {% endfor %}
         </small>
         </p>
 
-        {% if site.comments == true and post.comments == true and site.disqus != '' %}
-          <p class="author"><a href="{{ site.baseurl }}{{ post.url }}/#disqus_thread">Comments</a></p>
+        {% if site.comments and post.data.comments and site.disqus %}
+          <p class="author"><a href="{{ post.url | url }}/#disqus_thread">Comments</a></p>
         {% endif %}
+        
         <div class="content">
-            {{ post.content }}
+            {# 5. 'post.content' contains the rendered HTML of the post #}
+            {{ post.content | safe }}
         </div>
     </div>
 </div>
 {% endfor %}
 
 <div class="pagination">
-  {% if paginator.previous_page %}
-      {% if paginator.previous_page == 1 %}
-        <a class="btn btn-default" href="{{ site.baseurl}}/index.html" class="previous">Newer</a>
-      {% else %}
-        <a class="btn btn-default" href="{{ site.baseurl}}/page{{ paginator.previous_page }}" class="previous">Newer</a>
-      {% endif %}
-  {% endif %}
-  <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
-  {% if paginator.next_page %}
-    <a class="btn btn-default" href="{{ site.baseurl}}/page{{ paginator.next_page }}" class="next">Older</a>
-  {% endif %}
+    {# 6. Use Eleventy's pagination object and its properties #}
+    {% if pagination.previousPageHref %}
+        <a class="btn btn-default" href="{{ pagination.previousPageHref | url }}" class="previous">Newer</a>
+    {% endif %}
+
+    <span class="page_number ">Page: {{ pagination.pageNumber + 1 }} of {{ pagination.totalPages }}</span>
+
+    {% if pagination.nextPageHref %}
+        <a class="btn btn-default" href="{{ pagination.nextPageHref | url }}" class="next">Older</a>
+    {% endif %}
 </div>

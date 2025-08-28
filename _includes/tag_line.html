@@ -1,11 +1,11 @@
 <p>
 <small>
     tags:
-    {% for tag in page.tags %}
-        {% if forloop.last %}
-        <span><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag | split:'_' | join:' ' }}</a></span>
+    {% for tag in page.data.tags %}
+        {% if loop.last %}
+        <span><a href="/tags/{{ tag }}.html">{{ tag | replace('_', ' ') }}</a></span>
         {% else %}
-        <span><a href="{{ site.baseurl }}/tags/{{ tag }}.html">{{ tag | split:'_' | join:' ' }},</a></span>
+        <span><a href="/tags/{{ tag }}.html">{{ tag | replace('_', ' ') }},</a></span>
         {% endif %}
     {% endfor %}
 </small>

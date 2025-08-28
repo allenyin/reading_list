@@ -42,13 +42,13 @@ Around the middle of the signal (around 45.82s), we see the signals are no longe
 
 We can further make a table of where the corresponding labeled peaks occur within their respective signals, in terms of sample number:
 
-{% highlight latex %}
+```latex
 |Recording samp#       | Ref samp#            | Diff in samp#    | Diff in ms 
 -----------------------|----------------------|------------------|------------
 1432167                | 1432972              | 805              | 25.76      
 1432707                | 1433515              | 808              | 25.856     
 1433025                | 1433830              | 805              | 25.76      
-{% endhighlight %}
+```
 
 the last column is calculated by dividing the `Diff in samp#` by `31250Hz` to obtain the lead in seconds, then to ms.
 
@@ -58,14 +58,14 @@ Near the end of the signal (around 96.056s), the lead becomes even greater, as s
 
 And the corresponding table of labeled peak locations:
 
-{% highlight latex %}
+```latex
 |Recording samp#       | Ref samp#            | Diff in samp#    | Diff in ms 
 -----------------------|----------------------|------------------|------------
 3001750                | 3003284              | 1534             | 49.088    
 3002059                | 3003620              | 1561             | 49.952
 3002839                | 3004374              | 1535             | 49.12      
 3003072                | 3004612              | 1540             | 49.28
-{% endhighlight %}
+```
 
 The developing lead in sample numbers between the two recorded signals are most likely due to loss of packets from the wireless headstage. Each packet contains new waveform samples, and if they are lost, our recorded signal will be effectively shortened from the reference signal, resulting in this lead. And since the number of lost packets can only increase, this lead will simply increase with time.
 

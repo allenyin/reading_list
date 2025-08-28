@@ -1,0 +1,35 @@
+---
+layout: default
+title: Archive
+---
+
+<div class="well">
+    {# Loop through all the posts, which are already sorted by date (newest first) #}
+    {% for post in collections.posts %}
+
+        {# Get the year of the current post #}
+        {% set currentYear = post.date | date('yyyy') %}
+
+        {# For the very first post, just print the year heading #}
+        {% if loop.first %}
+            <h1>{{ currentYear }}</h1>
+            <ul>
+        {# For all other posts, check if the year has changed #}
+        {% else %}
+            {# Get the year of the PREVIOUS post in the loop #}
+            {% set previousYear = collections.posts[loop.index0 - 1].date | date('yyyy') %}
+            {% if currentYear != previousYear %}
+                </ul> {# Close the previous year's list #}
+                <h1>{{ currentYear }}</h1> {# Print the new year heading #}
+                <ul> {# Start a new list for the new year #}
+            {% endif %}
+        {% endif %}
+
+        <li>
+            {# Note the Nunjucks date filter syntax and the 'url' filter #}
+            <a href="{{ post.url | url }}">{{ post.date | date("LLL d") }} - {{ post.data.title }}</a>
+        </li>
+
+    {% endfor %}
+    </ul> {# Close the final list #}
+</div>

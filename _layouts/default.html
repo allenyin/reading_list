@@ -1,13 +1,13 @@
-{% include header.html %}
+{% include "header.html" %}
 
 <div class="container container-left">
     <div class="row">
-        <div class="col-md-3 hidden-xs">
-            {% include sidebar.html %}
-        </div>
-        <div class="col-md-9">
-            {{ content }}
+        {# The content column now takes up the full 12-column width #}
+        <div class="col-md-12">
+            {# Use the 'safe' filter to ensure HTML content renders correctly #}
+            {{ content | safe }}
         </div>
     </div>
 </div>
-{% include footer.html %}
+
+{% include "footer.html" %}

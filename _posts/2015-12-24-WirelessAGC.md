@@ -19,7 +19,7 @@ The improvement is replacing the RHA2136 with Intan's digital version, RHD2132. 
 
 The PCBs have been made. I originally imagined the firmware changes to be minimal -- essentially changing how BF532 would talk to the amplifiers through SPI, while keeping most of the signal chain code constant. The code architecture should not have to change much.
 
-However, it has proved to be a lot more difficult than the expected plug-and-play scenario. One of the first issues was to first get [Blackfins to talk to the Intans correctly via SPORT]({{ site:url }}/2015-12-25-Blackfin-Intan-SPORT). Then I ran into the problem where the original signal chain code in between sample conversions were too long and resulted in data corruption. Therefore, I need to pick parts of the signal chain to cut and modify.
+However, it has proved to be a lot more difficult than the expected plug-and-play scenario. One of the first issues was to first get [Blackfins to talk to the Intans correctly via SPORT]({{ site.url }}/2015-12-25-Blackfin-Intan-SPORT). Then I ran into the problem where the original signal chain code in between sample conversions were too long and resulted in data corruption. Therefore, I need to pick parts of the signal chain to cut and modify.
 
 This post documents my work to understand and adapt the integrator-highpass-AGC, the first stage of the signal chain.
 
@@ -43,7 +43,7 @@ The accompanying diagram is shown below:
 
 Below is the firmware related to this part - it is obvious now I understand how it works, and Tim's thesis explanations now makes perfect sense (it did before, but they seemed more like clues to an elaborate puzzle).
 
-{% highlight asm linenos=table %}
+```asm
  //read in the samples -- SPORT0
  r0 = w[p0] (z); // SPORT0-primary: Ch0-31
  r1 = w[p0] (z); // SPORT0-sec:     Ch32-63
@@ -76,7 +76,7 @@ Below is the firmware related to this part - it is obvious now I understand how 
     r3 = abs r3 (v) || r7 = [FP - FP_WEIGHTDECAY]; //set weightdecay to zero to disable LMS.
     r4.l = (a0 = r0.l * r7.l), r4.h = (a1 = r0.h * r7.l) (is) || i1 += m1 || [i2++] = r3;
                 //saturate the sample (r4), save the gain (r3).
-{% endhighlight %}
+```
 
 Line 2-8 stores the 12-bit samples in the LO and HI 16-bits of r2.
 
@@ -144,13 +144,13 @@ Line 27 and line 28 involve yet another fixed-point trick. These two lines updat
 
 The key is noticing that multiplying a Q7.8 number by 0x4000 while treating both as Q15 numbers, then extracting the resulting Q31 number in s2rnd mode, results in a 16-bit number that has the same Q7.8 value as before. This can be demonstrated by the following lines using functions defined in [AGC_sim.py](https://github.com/allenyin/allen_wireless/blob/master/myopen_multi/headstage2_firmware/AGC_sim.py):
 
-{% highlight python linenos=table %}
+```python
 gain = 52                               # original gain
 Q8_gain = int(decimal_to_Q8_8(52),16)
 acc_val = int(decimal_to_Q1_31(hex_to_Q15(Q8_gain) * hex_to_Q15(16384)),16)
 final_gain = mult_acc_to_halfReg(acc_val, 0, 0, 'sub', 's2rnd')
 final_gain = hex_to_Q8_8(final_gain)    # should be 52 again.
-{% endhighlight %}
+```
 
 In line 30, we simply take the absolute value of r3, which contains the new AGC gain, just to be safe.
 
@@ -181,7 +181,7 @@ I ended up using the second approach, because I don't like throwing away bits. B
 
 **Edit: 4/6/2016
 
-After [validation]({% post_url 2016-03-31-WirelessValidationMetrics %}) of recording and sorting quality between RHA-headstage, RHD-headstage, and plexon, it looks like AGC amplifies noise too much under low SNR conditions. 
+After [validation](WirelessValidationMetrics) of recording and sorting quality between RHA-headstage, RHD-headstage, and plexon, it looks like AGC amplifies noise too much under low SNR conditions. 
 
 As a result, the final deployment [firmware](https://github.com/allenyin/allen_wireless/blob/master/myopen_multi/headstage2_firmware/radio_gain_IIR_SAA.asm#L145-L162) uses a fixed pre-gain stage before the IIR stage. This gain is Q7.8 value and can be set in the appropriately compiled version of gtkclient in 0.5 increment from -128 to 127.5.
 

@@ -46,7 +46,7 @@ If the firmware used on headstage allows for radio transmission (i.e. `radio_loo
 
 1. If the headstage's firmware is compiled correctly, the bridge's firmware is compiled correctly, gtkclient is compiled correctly, and multicast is allowed, yet there are not signals showing up in gtkclient, then there is something wrong with the radio code within the headstage's firmware.
 
-2. If the gtkclient is getting raw waveforms displayed, but the waveforms look suspicious: for example, we apply sinusoids signals but waveforms displayed aren't very smooth, that may be caused by either errors in DSP or radio transmission code. We can eliminate the former possibility if after gtkclient instructs the headstage to change coefficients to induce oscillations (see [IIR oscillator post]({{ site:url }}/2016-01-26-IIRoscillator)) we do indeed see sinusoids of the same frequency on all transmitted channels.
+2. If the gtkclient is getting raw waveforms displayed, but the waveforms look suspicious: for example, we apply sinusoids signals but waveforms displayed aren't very smooth, that may be caused by either errors in DSP or radio transmission code. We can eliminate the former possibility if after gtkclient instructs the headstage to change coefficients to induce oscillations (see [IIR oscillator post](IIRoscillator)) we do indeed see sinusoids of the same frequency on all transmitted channels.
 
 3. In gtkclient, if the `pkts/sec` field is changing, but the `dropped` and `BER` fields stays constantly 0, that means something is wrong with the radio packaging process. As great as 0 dropped packet sounds, it very unlikely.
 

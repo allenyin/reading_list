@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Deep Learning - Review by LeCun, Bengio, and Hinton"
-date: 2015-7-26
+date: 2015-07-26
 comments: false
 tags:
 - Deep_Learning

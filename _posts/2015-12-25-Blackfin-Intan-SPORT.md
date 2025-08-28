@@ -58,7 +58,7 @@ Therefore, at the beginning of each call to DSP-routine, the data values are col
 
 Therefore the SPORT ports only receive. SPORT0 generates internal frame sync which becomes the external framesync for SPORT1. The SPORT configurations are (in `headstage_firmware/main.c` and `headstage_firmware/radio5.asm`).
 
-{% highlight c linenos=table%}
+```c
 SPORT0_RCLKDIV = 1
 SPORT0_RFSDIV = 19
 SPORT0_RCR1 = 0x0603    // early frame sync, active high RFS, require RFS for every word
@@ -68,7 +68,7 @@ SPORT1_RCLKDIV = 1
 SPORT1_RFSDIV = 19
 SPORT1_RCR1 = 0x0401    // require RFS for every word
 SPORT1_RCR2 = 0x010F 
-{% endhighlight %}
+```
 
 The RFSCLK is set to be $$\frac{SCLK}{2x(1+SPORTx\_RCLKDIV)}=\frac{80MHz}{4}=20MHz$$. Setting `SPORTx_RFSDIV=19` means the ADC's chip select is pulsed high every 20 SCLK cycles for 1 clock cycle. Therefore the ADC is operated at 1MHz. The ADC outputs 12-bits word. There are 20 clock cycles between each chip-select high pulse, thus there are enough clock cycles for the SPORT to read the data output.
 
@@ -127,7 +127,7 @@ In fact, according to ADI engineers, [it is not possible to fulfill all the timi
 
 My final SPORT settings are, collected from `headstage2_firmware/main.c` and `headstage2_firmware/intan_setup_test.asm` (but also other firmware versions. `intan_setup_test` is simply the first time I tested them):
 
-{% highlight c linenos=table %}
+```c
 // SPORT0 transmit
 // Using TCLK for late-frame sync
 SPORT0_TCLKDIV = 1;
@@ -150,7 +150,7 @@ SPORT0_RCR1 = RCKFE | LARFS | LRFS | RFSR | RSPEN;
 // Serial clock and frame syncs derived from TSCLK and TFS, so RCLKDIV and RFSDIV ignored
 SPORT1_RCR2 = RXSE | 0x010; // allow secondary, 17 bits word
 SPORT1_RCR1 = RCKFE | LARFS | LRFS | RFSR | RSPEN;
-{% endhighlight %}
+```
 
 In this setup, the receive clock and frame sync are the same as the transmit clock and frame sync. The TSCLK=RSCLK=SCLK of RHD2132, is again set to be 20MHz.
 
@@ -206,7 +206,7 @@ In the plot above, channel 0, 15, 31 and 16 are applied the 6400Hz signal while 
 
 RHD2132 also support outputting ADC results in either unsigned offset-binary where reference electrode voltage has the value of 0x8000, or using signed two's complement, where the reference electrode has the value of 0x0000 and values less than that has the MSB set to 1 two's complement style.
 
-This would result in modifications of the first stage of the firmware's signal chain, which is to convert the incoming samples to fixed-point Q1.15 format for further processing. See [the post on modifying the AGC stage]({% post_url 2015-12-24-WirelessAGC %}).
+This would result in modifications of the first stage of the firmware's signal chain, which is to convert the incoming samples to fixed-point Q1.15 format for further processing. See [the post on modifying the AGC stage](2015-12-24-WirelessAGC).
 
 Finally, the option `DITFS` make the SPORT frame-sync, read and write happen every $$1\mu s$$ regardless if new commands have been pushed into the SPORT transmit FIFO. This means, if our code-path (signal-chain plus the radio transmission code) inbetween SPORT FIFO reads/writes is too long, the previous command in the FIFO will be sent again, and two cycles later, the corresponding result will be read. This will then result in erroneous data.
 
@@ -226,7 +226,7 @@ In the nop test done in `firmware2.asm`, it was found I can fit 150 nops. I have
 
 4. SAA = 58 cycles.
 
-[AGC is automatic gain control]({% post_url 2015-12-24-WirelessAGC %}), [LMS is least-mean-square adaptive noise cancellation]({% post_url 2016-01-26-BlackfinLMS %}), [IIR is infinite impulse response filter]({% post_url 2016-01-06-DirectFormI-IIR-butterworth-filters %}), and [SAA is used for spike template matching]({% post_url 2016-01-26-BlackfinSpikeSorting %}).
+[AGC is automatic gain control](WirelessAGC), [LMS is least-mean-square adaptive noise cancellation](BlackfinLMS), [IIR is infinite impulse response filter](DirectFormI-IIR-butterworth-filters), and [SAA is used for spike template matching](BlackfinSpikeSorting).
 
 Among these, SAA is required for spike matching. AGC is required because the templates for spike-sorting were made under certain signal power level, AGC is needed to fix the channel's power level. Therefore, all of LMS and half of IIR are ripped out to reduce code-length.
 
@@ -246,13 +246,13 @@ Initial RHD-headstage firmware flows like so:
 
 In step 3, after getting the latest samples from the SPORT buffers, we increment the channel count, construct a proper request to Intan and send it through SPORT again. The SPORT would presumable output this to Intan headstages simulataneously while reading for new samples from Intan. This is done through:
 
-{% highlight asm linenos=table %}
+```asm
 r7 = CHANNEL_SHIFTED; 
 [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
 [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX
 [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 primary TX
 [p0 + (SPORT0_TX - SPORT0_RX)] = r7;   // SPORT0 sec TX
-{% endhighlight %}
+```
 
 Turns out if in the Intan-setup phase, prior to the start of signal acquisition, I leave the command for auto-incrementing selected amplifier channel in the SPORT transmission (`SPORT1_TX`, `SPORT0_TX`) and delete the above snippet from the signal acquisition code, the same behavior is achieved and I can an extra 57 cycles to work with during step 3. This then allows me to fit the entire LMS step into the firmware.
 

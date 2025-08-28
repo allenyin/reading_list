@@ -1,0 +1,27 @@
+---
+pagination:
+  data: collections.tags
+  size: 1
+  alias: tag
+permalink: "/tags/{{ tag | slug }}/"
+layout: default
+---
+
+<div class="container container-left">
+    <div class="row">
+        {# This column also takes up the full width now #}
+        <div class="col-md-12">
+            <div class="well">
+                <h1>Posts tagged with "{{ tag }}"</h1>
+                <ul class="post-list">
+                    {% for post in posts %}
+                        <li>
+                            <span class="post-meta">{{ post.date | date("LLL d, yyyy") }}</span>
+                            <a class="post-link" href="{{ post.url }}">{{ post.data.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

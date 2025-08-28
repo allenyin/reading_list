@@ -111,7 +111,7 @@ void handleNetworking()
 ```
 to 
 
-{% highlight c linenos %}
+```c
 unsigned long start = millis(); // Global variable, asdffffffffffffffffffffffffffffffffffffffffffffffffffff
 
 void handleNetworking()
@@ -124,7 +124,7 @@ void handleNetworking()
         start = millis();
     }
 }
-{% endhighlight %}
+```
 
 This way, even without wireless traffic, the dongle will print out "Node #1 handleNetworking()" every second in the serial monitor.
 

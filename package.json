@@ -1,0 +1,39 @@
+{
+  "name": "reading-list",
+  "version": "1.0.0",
+  "description": "Academic reading list migrated from Jekyll to Eleventy",
+  "main": ".eleventy.js",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve",
+    "watch": "eleventy --watch",
+    "debug": "DEBUG=Eleventy* eleventy"
+  },
+  "keywords": [
+    "eleventy",
+    "static-site",
+    "academic",
+    "reading-list"
+  ],
+  "author": "Allen Yin",
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1"
+  },
+  "dependencies": {
+    "katex": "^0.16.22",
+    "luxon": "^3.7.1",
+    "markdown-it": "^14.0.0",
+    "markdown-it-mathjax3": "^4.3.0",
+    "markdown-it-prism": "^2.3.1",
+    "prismjs": "^1.30.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allenyin/reading_list.git"
+  },
+  "bugs": {
+    "url": "https://github.com/allenyin/reading_list/issues"
+  },
+  "homepage": "https://github.com/allenyin/reading_list#readme"
+}

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Raspopovic, Micera 2014: Restoring Natural Sensory Feedback in Real-Time Bidirectional Hand Prostheses"
-date: 2015-7-28
+date: 2015-07-28
 comments: false
 tags:
 - BMI

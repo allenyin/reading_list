@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Ganguly, Carmena 2011: Reversible large-scale modification of cortical networks during neuroprosthetic control"
-date: 2015-7-27
+date: 2015-07-27
 comments: false
 tags:
 - BMI

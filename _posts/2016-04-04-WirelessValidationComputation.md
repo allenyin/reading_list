@@ -41,10 +41,10 @@ before running the `jlconfig` script. The path given is the location of the so f
 
 Now to call `victorD` from Matlab, do:
 
-{% highlight matlab linenos=table %}
+```matlab
 Jl.include(`spkd_qpara.jl');
 Jl.call('victorD', spikeTimes1, spikeTimes2, 200);
-{% endhighlight %}
+```
 
 The second call takes 1.41 seconds.
 
@@ -82,7 +82,7 @@ Notes on using this toolbox:
 
 After the reference signals are generated, they are converted to .wav files with Fs=31250Hz. All audio signals (including those with two distinct spikes firing) are available on [soundcloud](https://soundcloud.com/dagolix/sets/recording-validation-signals). The audio signals then goes through the [Plexon headstage test board](http://www.plexon.com/products/headstage-tester-units), to which the wireless and plexon headstage may connect.
 
-As mentioned in [Validation of signal quality I]({% post_url 2016-03-27-WirelessValidationPktLoss %}), since the reference signal and the recording cannot be started and stopped at exactly the same time, some alignment needed to be done before applying the spike train measurements.
+As mentioned in [Validation of signal quality I](WirelessValidationPktLoss ), since the reference signal and the recording cannot be started and stopped at exactly the same time, some alignment needed to be done before applying the spike train measurements.
 
 The reference and recording are aligned in the start by aligning the peak of the first spike in the reference with that of the recording. I use the recorded analog waveform, rather than the recorded spike times for alignment because the first spike may not be detected, and it's easier to examine the alignment quality visually from the analog waveforms.
 

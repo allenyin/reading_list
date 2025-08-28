@@ -12,7 +12,7 @@ tags:
 - Distance_measures
 ---
 
-Results of the comparison in terms of the metrics given in the [metrics post]({% post_url 2016-03-31-WirelessValidationMetrics %}).
+Results of the comparison in terms of the metrics given in the [metrics post](WirelessValidationMetrics).
 
 *Right click to open plots in a new window to see better*
 

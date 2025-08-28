@@ -115,3 +115,132 @@ blockquote {
 .highlight table td.code {
     width: 100%;
 }
+
+/* ===== NEW ELEVENTY FEATURES ===== */
+
+/* Math equation styling for MathJax3 */
+.mjx-chtml {
+    font-size: 1.1em;
+    margin: 1em 0;
+}
+
+.mjx-chtml .mjx-math {
+    text-align: center;
+}
+
+/* Inline math */
+.mjx-chtml .mjx-math.mjx-n {
+    text-align: left;
+}
+
+/* Display math */
+.mjx-chtml .mjx-math.mjx-block {
+    text-align: center;
+    margin: 1em 0;
+}
+
+/* Tag cloud styling */
+.tag-cloud {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.tag-link {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px 15px;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #333;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    border: 1px solid #ddd;
+}
+
+.tag-link:hover {
+    background-color: #ee4444;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Post list styling for tag pages */
+.post-list {
+    list-style: none;
+    padding: 0;
+}
+
+.post-list li {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-left: 3px solid #ee4444;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+.post-list li:hover {
+    background-color: #f0f0f0;
+    border-left-color: #cc0000;
+}
+
+.post-meta {
+    color: #666;
+    font-size: 0.85em;
+    margin-right: 10px;
+}
+
+.post-link {
+    color: #428bca;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.post-link:hover {
+    color: #3071a9;
+    text-decoration: underline;
+}
+
+/* Prism.js syntax highlighting overrides */
+pre[class*="language-"] {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1em;
+    margin: 1em 0;
+    overflow-x: auto;
+}
+
+code[class*="language-"] {
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* Line numbers for code blocks */
+.line-numbers .line-numbers-rows {
+    border-right: 1px solid #ddd;
+    background-color: #f5f5f5;
+}
+
+.line-numbers-rows > span:before {
+    color: #999;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .tag-cloud {
+        text-align: left;
+    }
+    
+    .tag-link {
+        display: block;
+        margin: 5px 0;
+        text-align: center;
+    }
+    
+    .post-list li {
+        margin-bottom: 10px;
+        padding: 8px;
+    }
+}

@@ -13,7 +13,7 @@ tags:
 
 [Wireless Project github](https://github.com/allenyin/allen_wireless)
 
-While trying to confirm that the radio transmission for the RHD-headstage firmware was working correctly, I needed a way to decouple the signal-chain from the transmission in terms of testing. A nice side-effect of the [cascading biquad IIR filter implementation]({{ site:url }}/2016-01-06-DirectFormI-IIR-butterworth-filters) is that, by writing coefficients for the biquads in a certain way, sinusoidal oscillations for different frequencies can be generated. If this was done on the last biquad, it would result in pure sinusoids being transmitted to gtkclient (when the final output is selected for transmission, of course), and it would be easy to see if the data is getting corrupted in the transmission process (if not, then any corruption would be due to the signal-chain code).
+While trying to confirm that the radio transmission for the RHD-headstage firmware was working correctly, I needed a way to decouple the signal-chain from the transmission in terms of testing. A nice side-effect of the [cascading biquad IIR filter implementation](DirectFormI-IIR-butterworth-filters) is that, by writing coefficients for the biquads in a certain way, sinusoidal oscillations for different frequencies can be generated. If this was done on the last biquad, it would result in pure sinusoids being transmitted to gtkclient (when the final output is selected for transmission, of course), and it would be easy to see if the data is getting corrupted in the transmission process (if not, then any corruption would be due to the signal-chain code).
 
 Below is the the DI-biquad block diagram again:
 
@@ -37,7 +37,7 @@ The resulting normalized frequency of oscillation is $$\omega=\angle{p_1}$$, in 
 
 So all we need to find is $$fp$$ to get a desired oscillation frequency. To find the appropriate coefficients for the last biquad of my signal to induce oscillations, I used the following Matlab script. Note that the coefficients naming is different from that in the diagram -- $$a_0$$ and $$a_1$$ in script are the same as $$a_1$$ and $$a_2$$ in diagram.
 
-{% highlight matlab linenos=table %} 
+```matlab 
 % IIR oscillator - myopen_multi/gktclient_multi/matlab/IIR_oscillator.m
 Fs = 31250;     % sampling frequency
 
@@ -65,8 +65,8 @@ for i=3:numel(x),
 end
 
 plot_fft(y, 31250);
-{% endhighlight %}
+```
 
-In line 10, $$f_p$$ is converted to a number that can be represented by Q14 (see [biquad IIR filter implementation]({{ site:url }}/2016-01-06-DirectFormI-IIR-butterworth-filters) for why).
+In line 10, $$f_p$$ is converted to a number that can be represented by Q14 (see [biquad IIR filter implementation](DirectFormI-IIR-butterworth-filters) for why).
 
 Line 19-27 simulates running a biquad with the newly found coefficients, and plots the FFT of the output waveform.

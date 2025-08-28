@@ -1,0 +1,20 @@
+---
+layout: default
+title: All Tags
+permalink: "/tags/"
+---
+
+<div class="container container-left">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well">
+                <h1>All Tags</h1>
+                <div class="tag-cloud">
+                    {% for tag in collections.tags %}
+                    <a href="/tags/{{ tag | slug }}/" class="tag-link">{{ tag | replace('_', ' ') }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

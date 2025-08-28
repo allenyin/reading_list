@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "SW Ch. 7: What generates force and feedback?"
-date: 2015-7-13
+date: 2015-07-13
 comments: false
 tags:
 - neuroscience_reading

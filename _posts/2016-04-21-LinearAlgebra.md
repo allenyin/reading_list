@@ -57,7 +57,7 @@ Inputs: The *centered* data matrix $$X$$ and $$k\gt1$$.
 
 So in PCA, the rows of the data matrix are the observations, and the columns are in the original coordinate system. The principle components are then the eigenvectors of the row space. We can do PCA in MATLAB with `pca` or manually with `svd`:
 
-{% highlight matlab linenos=table %}
+```matlab
 % PCA test
 a = rand(100,1);
 b = 5*a+rand(100,1);
@@ -79,7 +79,7 @@ centeredData = bsxfun(@minus, data, mean(data,1));
 [U, S, V] = svd(centeredData);
 svd_score = centeredData*V;
 plot(svd_score(:,1), svd_score(:,2), 'g.');
-{% endhighlight %}
+```
 
 The results shown below. Blue is original data, green/red are the PCA results, they overlap exactly. Note that MATLAB's `pca` by default centers the data.
 ![image1]({{ site.baseurl }}/assets/PCAtest.png){: .center-image}

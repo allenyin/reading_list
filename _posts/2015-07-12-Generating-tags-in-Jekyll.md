@@ -22,12 +22,12 @@ Implementation:
 ==============
 The general approach is, whenever a new tag is created (e.g. entered into the "tags" field of a post's YAML front-matter), we need to create a `tags/my_new_tag.html` file with the following content:
 
-{% highlight html %}
+```html
 ---
 layout: tagpage
 tag: my_new_tag
 ---
-{% endhighlight %}
+```
 
 This means we need to create the layout [_layouts/tagpage.html](https://github.com/allenyin/reading_list/blob/gh-pages/_layouts/tagpage.html).
 
