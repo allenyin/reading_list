@@ -23,7 +23,7 @@ I could do a permutation based ANCOVA, as outlined in [Petraitis & Dunham 2001](
 
 ANCOVA can also be implemented in the GLM framework, although at this point by ANCOVA I really mean **linear models with categorical and continuous predictor variables and continuous dependent variable**. In MATLAB, with Poisson regression we can do:
 
-``` MATLAB
+```matlab
 ds = table(durations, reward_cond, bincnts(:,n), 'VariableNames', {'durations', 'reward_cond','bincnts'});
 lm = stepwiseglm(ds, 'constant', 'upper', 'interactions', 'distribution', 'poisson', 'DispersionFlag', true)
 ```

@@ -33,7 +33,7 @@ The 16-point templates in the time domain is limited only to the purple strip in
 
 The assembly implementation of template matching on blackfin (without LMS) is as below:
 
-```asm
+```nasm
 // At end of signal chain for both group of two samples
 // Template comparison, plexon style. Sliding window, no threshold.
    // r2=samples from amp1 and amp2; r3=samples from amp3 and amp4. Pack them

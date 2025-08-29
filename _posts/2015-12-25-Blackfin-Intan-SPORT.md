@@ -246,7 +246,7 @@ Initial RHD-headstage firmware flows like so:
 
 In step 3, after getting the latest samples from the SPORT buffers, we increment the channel count, construct a proper request to Intan and send it through SPORT again. The SPORT would presumable output this to Intan headstages simulataneously while reading for new samples from Intan. This is done through:
 
-```asm
+```nasm
 r7 = CHANNEL_SHIFTED; 
 [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 primary TX
 [p0 + (SPORT1_TX - SPORT0_RX)] = r7;   // SPORT1 sec TX

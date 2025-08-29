@@ -19,15 +19,15 @@
   "license": "MIT",
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
-    "markdown-it-attrs": "^4.3.1"
+    "markdown-it-attrs": "^4.3.1",
+    "prismjs": "^1.30.0"
   },
   "dependencies": {
     "katex": "^0.16.22",
     "luxon": "^3.7.1",
     "markdown-it": "^14.0.0",
     "markdown-it-mathjax3": "^4.3.0",
-    "markdown-it-prism": "^2.3.1",
-    "prismjs": "^1.30.0"
+    "markdown-it-prism": "^3.0.0"
   },
   "repository": {
     "type": "git",

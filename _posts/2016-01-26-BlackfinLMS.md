@@ -47,7 +47,7 @@ To apply these algorithms to our headstage application, we treat the current cha
 
 This is implemented in the firmware by Tim Hanson as [below](https://github.com/allenyin/allen_wireless/blob/master/myopen_multi/headstage_firmware/radio5.asm#L86-L132):
 
-```asm
+```nasm
 
 /* LMS adaptive noise remover
 	want to predict the current channel based on samples from the previous 8.

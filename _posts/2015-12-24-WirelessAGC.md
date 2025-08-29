@@ -43,7 +43,7 @@ The accompanying diagram is shown below:
 
 Below is the firmware related to this part - it is obvious now I understand how it works, and Tim's thesis explanations now makes perfect sense (it did before, but they seemed more like clues to an elaborate puzzle).
 
-```asm
+```nasm
  //read in the samples -- SPORT0
  r0 = w[p0] (z); // SPORT0-primary: Ch0-31
  r1 = w[p0] (z); // SPORT0-sec:     Ch32-63

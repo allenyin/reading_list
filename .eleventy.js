@@ -1,6 +1,12 @@
 const yaml = require("js-yaml");
 const { DateTime } = require("luxon");
 
+// const Prism = require('prismjs');
+require('prismjs/components/prism-nasm');   // For Assembly (asm)
+require('prismjs/components/prism-matlab'); // For MATLAB
+require('prismjs/plugins/line-numbers/prism-line-numbers');
+
+
 module.exports = function(eleventyConfig) {
 
   // This fix is needed to handle the date format in the front matter.
@@ -62,10 +68,11 @@ module.exports = function(eleventyConfig) {
 
   // Add syntax highlighting (equivalent to syntax_highlighter: rouge)
   md.use(require("markdown-it-prism"), {
-    showLineNumbers: true,
-    startLineNumber: 1,
-    defaultLanguage: 'text'
+    defaultLanguage: 'text',
+    prism: Prism,
+    preAttributes: { class: 'line-numbers' }
   });
+
 
   // Add LaTeX support (using markdown-it-mathjax3 for better compatibility)
   md.use(require("markdown-it-mathjax3"), {
