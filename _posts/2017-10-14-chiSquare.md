@@ -33,11 +33,11 @@ In comparison, post-hoc chi-squared test is not as common -- MATLAB does not hav
 
 There are several methods [documented](http://pareonline.net/getvn.asp?v=20&n=8). My favorite, and probably most intuitive one is [residual method by *Beasley and Shumacker 1995*](http://www.soph.uab.edu/statgenetics/people/mbeasley/Beasley-Schumacker-1995-JXE-CTA.pdf). After the omnibus chi-squared test rejects null hypothesis, post-hoc steps include:
 
-1. Make the contingency table $$M$$ as in any Chi-squared test.
+1. Make the contingency table $M$ as in any Chi-squared test.
 
-2. Get the expected value $$E(i,j)$$ for each cell. If $$[i,j]$$ indexes the table $$M$$, then $$E(i,j)=(\sum_{i'}M(i',j))( \sum_{j'}M(i,j')) / n$$, where $$n=\sum_{i'}\sum_{j'}M(i',j')$$.
+2. Get the expected value $E(i,j)$ for each cell. If $[i,j]$ indexes the table $M$, then $E(i,j)=(\sum_{i'}M(i',j))( \sum_{j'}M(i,j')) / n$, where $n=\sum_{i'}\sum_{j'}M(i',j')$.
 
-3. Obtain standardized residuals for each cell: $$e(i,j)=\frac{M(i,j)-E(i,j)}{\sqrt{E(i,j)}}$$. These values are equivalent to the square root of each cell's chi-squared values.
+3. Obtain standardized residuals for each cell: $e(i,j)=\frac{M(i,j)-E(i,j)}{\sqrt{E(i,j)}}$. These values are equivalent to the square root of each cell's chi-squared values.
 
 4. The standardized residuals follow a standard normal distribution. So we can obtain two-tailed or one-tailed pvalues from them. Multiple comparison procedure can be applied as usual to the resulting pvalues.
 

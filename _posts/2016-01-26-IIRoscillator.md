@@ -19,7 +19,7 @@ Below is the the DI-biquad block diagram again:
 
 ![image1]({{ site.baseurl }}/assets/simple_biquad.png){: .center-image}
 
-If we assume nonzero initial conditions such that $$y[n-1]$$ and $$y[n-2]$$ are nonzero, then pure oscillations can be induced by setting $$b_0$$, $$b_1$$ and $$b_2$$ to be 0, in which case only feedback is present in the biquad.
+If we assume nonzero initial conditions such that $y[n-1]$ and $y[n-2]$ are nonzero, then pure oscillations can be induced by setting $b_0$, $b_1$ and $b_2$ to be 0, in which case only feedback is present in the biquad.
 
 The system function is then:
 
@@ -27,15 +27,15 @@ $$\begin{align}
 Y &= a_1z^{-1}Y + a_2z^{-2}Y \\
 \end{align}$$
 
-Let $$a_1=2-f_p$$, and $$a_2=-1$$, then the resulting conjugate poles will be at
+Let $a_1=2-f_p$, and $a_2=-1$, then the resulting conjugate poles will be at
 
 $$\begin{align}
 p_{1,2} = \frac{(2-f_p)\pm\sqrt{f_p^2-4f_p}}{2} \\
 \end{align}$$
 
-The resulting normalized frequency of oscillation is $$\omega=\angle{p_1}$$, in radians/sample. Oscillation frequency in Hz is $$f=\frac{\omega F_s}{2\pi}$$, where $$F_s$$ is the sampling frequency (in our case 31.25kHz for all channels).
+The resulting normalized frequency of oscillation is $\omega=\angle{p_1}$, in radians/sample. Oscillation frequency in Hz is $f=\frac{\omega F_s}{2\pi}$, where $F_s$ is the sampling frequency (in our case 31.25kHz for all channels).
 
-So all we need to find is $$fp$$ to get a desired oscillation frequency. To find the appropriate coefficients for the last biquad of my signal to induce oscillations, I used the following Matlab script. Note that the coefficients naming is different from that in the diagram -- $$a_0$$ and $$a_1$$ in script are the same as $$a_1$$ and $$a_2$$ in diagram.
+So all we need to find is $fp$ to get a desired oscillation frequency. To find the appropriate coefficients for the last biquad of my signal to induce oscillations, I used the following Matlab script. Note that the coefficients naming is different from that in the diagram -- $a_0$ and $a_1$ in script are the same as $a_1$ and $a_2$ in diagram.
 
 ```matlab 
 % IIR oscillator - myopen_multi/gktclient_multi/matlab/IIR_oscillator.m
@@ -67,6 +67,6 @@ end
 plot_fft(y, 31250);
 ```
 
-In line 10, $$f_p$$ is converted to a number that can be represented by Q14 (see [biquad IIR filter implementation](DirectFormI-IIR-butterworth-filters) for why).
+In line 10, $f_p$ is converted to a number that can be represented by Q14 (see [biquad IIR filter implementation](DirectFormI-IIR-butterworth-filters) for why).
 
 Line 19-27 simulates running a biquad with the newly found coefficients, and plots the FFT of the output waveform.

@@ -23,37 +23,37 @@ This is great news because with the SPORT interface, there are 4 sets of buses a
 
 Further, since RHA2132 acts as simply analog amplifier, communication between the blackfin and RHA2132+ADC is simple:
 
-* Receive frame sync (RFS) provides the $$\bar{CS}$$ signal to the ADC.
+* Receive frame sync (RFS) provides the $\bar{CS}$ signal to the ADC.
 * Receive serial clock (RSCLK) provides the SCLK signal to the ADC.
 * Receive data lines are connected to the ADC's data output.
 * The input of the ADC connects to MUXout of RHA2132.
-* The $$\bar{reset}$$ and step signal of all RHA2132 connects to two GPIO pins on the blackfin.
+* The $\bar{reset}$ and step signal of all RHA2132 connects to two GPIO pins on the blackfin.
 
 Therefore, at the beginning of each call to DSP-routine, the data values are collected from the SPORT receive buffer. The step line is toggled to step all of the RHA2132's mux to the next channel. The pin out of this setp is (ADC or amp to blackfin)
 
 * Amplifier 1:
     * ADC1 SCLK - RSCLK0
-    * ADC1 $$\bar{CS}$$ - RFS0
+    * ADC1 $\bar{CS}$ - RFS0
     * ADC1 DATA - DR0PRI
-    * Amp1 $$\bar{reset}$$ - PF7
+    * Amp1 $\bar{reset}$ - PF7
     * Amp1 step - PF8
 * Amplifier 2:
     * ADC2 SCLK - RSCLK0
-    * ADC2 $$\bar{CS}$$ - RFS0
+    * ADC2 $\bar{CS}$ - RFS0
     * ADC2 DATA - DR0SEC
-    * Amp2 $$\bar{reset}$$ - PF7
+    * Amp2 $\bar{reset}$ - PF7
     * Amp2 step - PF8
 * Amplifier 3:
     * ADC3 SCLK - RSCLK1
-    * ADC3 $$\bar{CS}$$ - RFS1
+    * ADC3 $\bar{CS}$ - RFS1
     * ADC3 DATA - DR1PRI
-    * Amp3 $$\bar{reset}$$ - PF7
+    * Amp3 $\bar{reset}$ - PF7
     * Amp3 step - PF8
 * Amplifier 4:
     * ADC4 SCLK - RSCLK1
-    * ADC4 $$\bar{CS}$$ - RFS1
+    * ADC4 $\bar{CS}$ - RFS1
     * ADC4 DATA - DR1SEC
-    * Amp4 $$\bar{reset}$$ - PF7
+    * Amp4 $\bar{reset}$ - PF7
     * Amp4 step - PF8
 
 Therefore the SPORT ports only receive. SPORT0 generates internal frame sync which becomes the external framesync for SPORT1. The SPORT configurations are (in `headstage_firmware/main.c` and `headstage_firmware/radio5.asm`).
@@ -70,7 +70,7 @@ SPORT1_RCR1 = 0x0401    // require RFS for every word
 SPORT1_RCR2 = 0x010F 
 ```
 
-The RFSCLK is set to be $$\frac{SCLK}{2x(1+SPORTx\_RCLKDIV)}=\frac{80MHz}{4}=20MHz$$. Setting `SPORTx_RFSDIV=19` means the ADC's chip select is pulsed high every 20 SCLK cycles for 1 clock cycle. Therefore the ADC is operated at 1MHz. The ADC outputs 12-bits word. There are 20 clock cycles between each chip-select high pulse, thus there are enough clock cycles for the SPORT to read the data output.
+The RFSCLK is set to be $\frac{SCLK}{2x(1+SPORTx\_RCLKDIV)}=\frac{80MHz}{4}=20MHz$$. Setting `SPORTx_RFSDIV=19` means the ADC's chip select is pulsed high every 20 SCLK cycles for 1 clock cycle. Therefore the ADC is operated at 1MHz. The ADC outputs 12-bits word. There are 20 clock cycles between each chip-select high pulse, thus there are enough clock cycles for the SPORT to read the data output.
 
 This is straight forward and works well.
 
@@ -86,7 +86,7 @@ However, RHD2132 needs to interface with other chips through strictly SPI. This 
     
     ![image1]({{ site.baseurl }}/assets/SPI_timing.png){: .center-image }
     
-    The _CS ($$t_{CS1}$$) high duration needs to be greater than 154ns. The datasheet mentions that the _CS line must be pulsed high between every 16-bit data transfer. Finally, $$t_{CS1}$$ and $$t_{CS2}$$ must be greater than 20.8ns.
+    The _CS ($t_{CS1}$) high duration needs to be greater than 154ns. The datasheet mentions that the _CS line must be pulsed high between every 16-bit data transfer. Finally, $t_{CS1}$ and $t_{CS2}$ must be greater than 20.8ns.
 
 The first modification is easily taken care of -- we just need to enable the use of SPORTx_TX ports to send Intan commands at the same time as receiving conversion data.
 
@@ -98,28 +98,28 @@ The new Blackin SPORT to RHD2132 amplifiers connections are (amplifiers numbered
 
 * Amplifier 1: SPORT1_SEC
     * SCLK+ to SCLK1
-    * $$\bar{cs+}$$ to FSync1
+    * $\bar{cs+}$ to FSync1
     * MOSI+ to DT1SEC
     * MISO+ to DR1SEC
 * Amplifier 2: SPORT1_PRI
     * SCLK+ to SCLK1
-    * $$\bar{cs+}$$ to FSync1
+    * $\bar{cs+}$ to FSync1
     * MOSI+ to DT1PRI
     * MISO+ to DR1PRI
 * Amplifier 3: SPORT0_SEC
     * SCLK+ to SCLK0
-    * $$\bar{cs+}$$ to FSync0
+    * $\bar{cs+}$ to FSync0
     * MOSI+ to DT0SEC
     * MISO+ to DR0SEC
 * Amplifier 4: SPORT0_PRI
     * SCLK+ to SCLK0
-    * $$\bar{cs+}$$ to FSync0
+    * $\bar{cs+}$ to FSync0
     * MOSI+ to DT0PRI
     * MISO+ to DR0PRI
 
 where SCLK0 is RSCLK0 and TSCLK0 tied together, SCLK1 is RSCLK1 and TSCLK1 tied together, FSync0 is RFS0 and TFS0 tied together, and FSync1 is RFS1 and TFS1 tied together.
 
-This means the falling edge of _CS always corresponds to either the falling/rising edge of SCLK, and similarly, the rising edge of _CS corresponds to either the falling/rising edge of SCLK. However, $$t_{CS1}$$ defines the timing between falling edge of _CS and the next rising edge of SCLK, while $$t_{CS2}$$ defines the timing between falling edge of _CS and the next rising edge of SCLK. Given the operation of SPORT, one of these requirements will be violated.
+This means the falling edge of _CS always corresponds to either the falling/rising edge of SCLK, and similarly, the rising edge of _CS corresponds to either the falling/rising edge of SCLK. However, $t_{CS1}$ defines the timing between falling edge of _CS and the next rising edge of SCLK, while $t_{CS2}$ defines the timing between falling edge of _CS and the next rising edge of SCLK. Given the operation of SPORT, one of these requirements will be violated.
 
 In fact, according to ADI engineers, [it is not possible to fulfill all the timing requirements when using SPORT to emulate SPI](https://ez.analog.com/thread/78726). So I just hoped it could work anyways and tried to test this.
 
@@ -160,15 +160,15 @@ In this setup, the receive clock and frame sync are the same as the transmit clo
 
 However, `LATFS` sets late frame sync, which means when a frame sync triggers transmission or reception of a word, it will stay low during that time, and another further frame-sync during this time is ignored by the SPORT. After that time, if it's not time for another frame sync yet, frame sync will return to high, otherwise, it will be low again. Late frame sync also means the timing requiring between the falling edge of _CS and the next rising edge of SCLK is fulfilled. 
 
-Together, this means _CS will be low for 17 SCLK cycles, or $$17\times50ns=850ns$$ while high for 3 SCLK cycles, or $$3\times50ns=150ns$$. This is because, when frame sync first goes low, it will stay low for 17 SCLK cycles, at which time it will go high because 17 is not a multiple of 4. The next greatest multiple of 4 is 20, which is when frame sync will be pulled low again. 
+Together, this means _CS will be low for 17 SCLK cycles, or $17\times50ns=850ns$ while high for 3 SCLK cycles, or $3\times50ns=150ns$$. This is because, when frame sync first goes low, it will stay low for 17 SCLK cycles, at which time it will go high because 17 is not a multiple of 4. The next greatest multiple of 4 is 20, which is when frame sync will be pulled low again. 
 
 The reason for _CS to be low for 17 SCLK cycles is two fold: 
 
-* Because a dataword is 16 bits, it has to be at least greater than 16 cycles. No matter what settings I have, the $$t_{cs2}$$ requirment will be violated, which based on how multiplexer work, will affect the value of the last bit being read. Since the data is read MSBit first, having 17 clock cycles would mean only the 17th bit, which I will discard later will be corrupted by the $$t_{cs2}$$ violation. Therefore no harm done!
+* Because a dataword is 16 bits, it has to be at least greater than 16 cycles. No matter what settings I have, the $t_{cs2}$ requirment will be violated, which based on how multiplexer work, will affect the value of the last bit being read. Since the data is read MSBit first, having 17 clock cycles would mean only the 17th bit, which I will discard later will be corrupted by the $t_{cs2}$ violation. Therefore no harm done!
 
 * With _CS low for 17 cycles and high for 3 cycles, I get exactly 20 cycles period, making it 1MHz. This is one of the only configurations that allows me to achieve that.
 
-With this setup, the $$t_{cs2}$$ timing requirement is not fulfilled at all, while $$t_{csoff}$$ is violated by 4ns.
+With this setup, the $t_{cs2}$ timing requirement is not fulfilled at all, while $t_{csoff}$ is violated by 4ns.
 
 Initial testing required checking the acquired sample values. Fortunately, all RHD2132 comes with registers that contains the ASCII values of 'I', 'N', 'T', 'A', 'N'. Therefore, if the SPI emulation actually works, I can just issue READ commands of those register locations to Intan, and check whether the received results are correct.
 
@@ -208,7 +208,7 @@ RHD2132 also support outputting ADC results in either unsigned offset-binary whe
 
 This would result in modifications of the first stage of the firmware's signal chain, which is to convert the incoming samples to fixed-point Q1.15 format for further processing. See [the post on modifying the AGC stage](2015-12-24-WirelessAGC).
 
-Finally, the option `DITFS` make the SPORT frame-sync, read and write happen every $$1\mu s$$ regardless if new commands have been pushed into the SPORT transmit FIFO. This means, if our code-path (signal-chain plus the radio transmission code) inbetween SPORT FIFO reads/writes is too long, the previous command in the FIFO will be sent again, and two cycles later, the corresponding result will be read. This will then result in erroneous data.
+Finally, the option `DITFS` make the SPORT frame-sync, read and write happen every $1\mu s$ regardless if new commands have been pushed into the SPORT transmit FIFO. This means, if our code-path (signal-chain plus the radio transmission code) inbetween SPORT FIFO reads/writes is too long, the previous command in the FIFO will be sent again, and two cycles later, the corresponding result will be read. This will then result in erroneous data.
 
 However, the manifestation of this data corruption is somewhat counter-intuitive. After establishing correct Intan and SPORT setup to successfully acquire signals, I added in minimally modified signal-chain code from RHA-headstage's working firmware `headstage_firmware/radio5.asm`, and saved all pre-processed samples from one of the amplifiers in memory (`headstage2_firmware/firmware1.asm`). I then stopped the execution when the designated buffer is memory is full, dumped the results for plotting in JTAG. The plots, which I expected to be smooth sinusoids of the applied signal, were riddled with random spikes.
 

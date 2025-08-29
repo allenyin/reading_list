@@ -16,7 +16,7 @@ Some computation problems/notes I encountered while implementing the metrics. [C
 
 **Victor Purpura Distance**
 
-Victor-Purpura's [MATLAB implementation](http://www-users.med.cornell.edu/~jdvicto/spkdm.html), adapted from the Seller algorithm of DNA sequence matching, while having $$O(N_i N_j)$$ performance runs pretty slow.
+Victor-Purpura's [MATLAB implementation](http://www-users.med.cornell.edu/~jdvicto/spkdm.html), adapted from the Seller algorithm of DNA sequence matching, while having $O(N_i N_j)$ performance runs pretty slow.
 
 For a test comparison of two spike trains, one with 8418 spike times and the other with 9782 spike times, it takes around 75 seconds. A bit too long. On Victor's page, there are a few other Matlab implementations, but only deal with parallelizing calculations with different cost of shifting a spike. The mex function has weird usage. So I tried translating the algorithm into Julia and calling it from Matlab. The result is [spkd_qpara.jl](https://github.com/allenyin/recording_validation/blob/master/analysis/spkd_qpara.jl):
 
@@ -50,19 +50,19 @@ The second call takes 1.41 seconds.
 
 **Van Rossum Distance**
 
-Paiva 2009 derived a computational effective estimator with order $$O(N_iN_j)$$ for the VR-distance:
+Paiva 2009 derived a computational effective estimator with order $O(N_iN_j)$ for the VR-distance:
 
 $$d_{vR}(S_i,S_j)=\frac{1}{2}[\sum_{m=1}^{N_i}\sum_{m=1}^{N_i}L_{\tau}(t_m^i-t_n^i)+\sum_{m=1}^{N_j}\sum_{m=2}^{N_j}L_{\tau}(t_m^j-t_n^j)]+\sum_{m=1}^{N_i}\sum_{n=1}^{N_j}L_{\tau}(t_m^i-t_n^j)$$,
 
-where $$L_{\tau}(\cdot)=exp(-abs(\cdot)/\tau)$$ is the Laplacian kernel. However, this formula is wrong. By inspection we can see that this distance will never be 0 since it is a sum of exponentials. Further sample calculation for distance between less similar spike trains may even yield smaller distance! These problems can be corrected by changing the sign of the last summation term. Unfortunately, this *typo* occurs in (Paiva et al., 2007) as well as Paiva's PhD thesis. However, as I can't derive the formula myself (there must be some autocorrelation trick I'm missing), I don't trust it very much.
+where $L_{\tau}(\cdot)=exp(-abs(\cdot)/\tau)$ is the Laplacian kernel. However, this formula is wrong. By inspection we can see that this distance will never be 0 since it is a sum of exponentials. Further sample calculation for distance between less similar spike trains may even yield smaller distance! These problems can be corrected by changing the sign of the last summation term. Unfortunately, this *typo* occurs in (Paiva et al., 2007) as well as Paiva's PhD thesis. However, as I can't derive the formula myself (there must be some autocorrelation trick I'm missing), I don't trust it very much.
 
 It is nevertheless, a much more efficient estimator than the naive way of taking the distance between convolved spike trains, and does not depend on time discretization.
 
-Thomas Kreuz has [multiple van Rossum](http://wwwold.fi.isc.cnr.it/users/thomas.kreuz/Source-Code/VanRossum.html) Matlab code posted on his website, but they don't work when $$\tau<20ms$$.
+Thomas Kreuz has [multiple van Rossum](http://wwwold.fi.isc.cnr.it/users/thomas.kreuz/Source-Code/VanRossum.html) Matlab code posted on his website, but they don't work when $\tau<20ms$.
 
 **Schreiber Distance**
 
-This dissimilarity measure also have a data-effective method of $$O(N_iN_j)$$, given in Paiva 2010.
+This dissimilarity measure also have a data-effective method of $O(N_iN_j)$, given in Paiva 2010.
 
 $$d_{CS}(S_i, S_j)=1-\frac{\sum_{m=1}^{N_i}\sum_{n=1}^{N_j}exp[-\frac{(t_m^i-t_n^j)^2}{2\sigma^2}]}{\sqrt{(\sum_{m,n=1}^{N_i}exp[-\frac{(t_m^i-t_n^i)^2}{2\sigma^2}])(\sum_{m,n=1}^{N_j}exp[-\frac{(t_m^j-t_n^j)^2}{2\sigma^2}])}}$$
 

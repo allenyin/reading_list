@@ -94,26 +94,18 @@ Since the 40-bit accumulator value is extracted into r2 with (s2rnd) mode, we ha
 
 As the comment in line 20 hints, this is the new mean.
 
-To characterize the behavior of this integrator-filter stage, we have the following two equations:
-
-$$
-\begin{align}
+To characterize the behavior of this integrator-filter stage, we have the following two equations: $\begin{align}
 m &= mz^{-1}(1-2\mu)+8\mu x \\\\
 y &= 4x-mz^{-1}
-\end{align}
-$$
+\end{align}$
 
-where m is integrated mean, 1/z is delay, x is the original 12-bit samples, y is the output. Note again that since x is 12-bit unsigned, conversion into Q15 does not change anything, therefore the system equations are easy to derive:
-
-$$
-\begin{align}
+where m is integrated mean, 1/z is delay, x is the original 12-bit samples, y is the output. Note again that since x is 12-bit unsigned, conversion into Q15 does not change anything, therefore the system equations are easy to derive: $\begin{align}
 \frac{Y}{X} &= 4 \frac{1-z^{-1}}{1+z^{-1}(2\mu-1)}
-\end{align}
-$$
+\end{align}$
 
 The gain is 4, and the 3dB point is determined by \\(z=1-2\mu\\). In the code \\(\mu\approx 0.0244\\), so \\(z=0.9512\\). Note also, in Tim's thesis, \\(\mu\\) is actually \\(0.0488\\), this is because (s2rnd) was used in the actual implementation.
 
-The -3dB frequency can be calculated by plugging in the transfer function into MATLAB, since there's no easy way to get the Bode plot of a z-transform from the poles and zeros like the analog systems..unless if substituting $$z=exp{j\omega}$$ into the transfer function and calculating the magnitude response is easy..
+The -3dB frequency can be calculated by plugging in the transfer function into MATLAB, since there's no easy way to get the Bode plot of a z-transform from the poles and zeros like the analog systems..unless if substituting\$z=exp{j\omega}\$ into the transfer function and calculating the magnitude response is easy..
 
 ```
 >> num=[1,-1];
@@ -124,7 +116,7 @@ xlabel('Normalized Frequency (\times\pi rad/sample)')
 ylabel('Magnitude (dB)')
 ```
 
-This will plot the two-sided magnitude response. We only care the part where normalized frequency is from 0 to 1. The normalized frequency $$\omega_c$$ at the -3dB point can be found be estimated from the plot. Convert to Hz via $$f_c=\omega_c*\pi*F_s/(2*\pi)$$. For this AGC setting, $$f_c\approx 225Hz$$.
+This will plot the two-sided magnitude response. We only care the part where normalized frequency is from 0 to 1. The normalized frequency $\omega_c$ at the -3dB point can be found be estimated from the plot. Convert to Hz via $f_c=\omega_c*\pi*F_s/(2*\pi)$. For this AGC setting $f_c\approx 225Hz$.
 
 Line 20-23 is the first step of AGC, and is pretty tricky. r5 contains the AGC gain, which as described in the thesis is Q7.8 format (really Q8.8, but we never have negative gain here).
 
@@ -140,7 +132,7 @@ Line 25 does a clever bit of MAC trick. a0 contains the difference of the signal
 
 In line 26, r6.h=1 is not the value of mu, but simply indicates whether we have enabled AGC.
 
-Line 27 and line 28 involve yet another fixed-point trick. These two lines updates the AGC gain. The **AGC gain in r5** is loaded into the accumulator by multiplying 0x4000 (16384). Afterwards, the MAC with s2rnd option subtract either 0x8000 or 0x7fff from it. This whole procedure is the equivalent of either adding \\(2^{-8}\\) or subtracting \\(2^{-7}\\) from the Q7.8 value of the original AGC gain.
+Line 27 and line 28 involve yet another fixed-point trick. These two lines updates the AGC gain. The **AGC gain in r5** is loaded into the accumulator by multiplying 0x4000 (16384). Afterwards, the MAC with s2rnd option subtract either 0x8000 or 0x7fff from it. This whole procedure is the equivalent of either adding $2^{-8}$ or subtracting $2^{-7}$ from the Q7.8 value of the original AGC gain.
 
 The key is noticing that multiplying a Q7.8 number by 0x4000 while treating both as Q15 numbers, then extracting the resulting Q31 number in s2rnd mode, results in a 16-bit number that has the same Q7.8 value as before. This can be demonstrated by the following lines using functions defined in [AGC_sim.py](https://github.com/allenyin/allen_wireless/blob/master/myopen_multi/headstage2_firmware/AGC_sim.py):
 

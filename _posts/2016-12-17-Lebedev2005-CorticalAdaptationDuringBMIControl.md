@@ -27,13 +27,13 @@ Implants in M1, PMd, SMA, S1, and PP.
 
 1. *Tuning to velocity during pole and brain control*. Constructed linear regression model to predict neuronal firing rates based on velocity: 
 $$n(t+\tau)=a(\tau)V_{x}(t)+b(\tau)V_y(t)+c(\tau)+\epsilon(t,\tau)$$, 
-where $$t$$ is time, $$n(t+\tau)$$ is neuronal firing rate at time $$\tau$$, $$\tau$$ is a time lag. The square root of $$R^2$$ for this regression was termed the velocity tuning index (VTI) at $$\tau$$. A VTI curve is then constructed for $$\tau$$ ranging from [-1,1] second.
+where $t$ is time, $n(t+\tau)$ is neuronal firing rate at time $\tau$, $\tau$ is a time lag. The square root of $R^2$ for this regression was termed the velocity tuning index (VTI) at $\tau$. A VTI curve is then constructed for $\tau$ ranging from [-1,1] second.
 
-2. Preferred direction of a neuron is determined as $$PD(\tau)=arctan(b(\tau)/a(\tau))$$.
+2. Preferred direction of a neuron is determined as $PD(\tau)=arctan(b(\tau)/a(\tau))$.
 
 3. To examine the change in PD between different tasks, correspondence index is defined as:
 $$C=\frac{90^{\circ}-\overline{|\alpha-\beta|}}{90^{\circ}}$$,
-where $$\alpha$$ and $$\beta$$ are statistical values calculated from ensembles' PD measured in degrees for the different tasks. Values of $$C$$ approaching zero means no correspondence between the PDs, value approaching 1 means the opposite.
+where $\alpha$ and $\beta$ are statistical values calculated from ensembles' PD measured in degrees for the different tasks. Values of $C$ approaching zero means no correspondence between the PDs, value approaching 1 means the opposite.
 
 4. *Shuffle test* to examine how correlations between neurons contribute to tuning properties -- destroy correlations between neurons by shifting spike trains of different neurons with repsect to each other by a random interval ranging from 0 to 200s. After shuffling, VTIs are calculated from the regression models in (1). Higher unshuffled VTI would indicate correlated firing between neurons improve tuning characteristics of individual neurons.
 
@@ -42,7 +42,7 @@ where $$\alpha$$ and $$\beta$$ are statistical values calculated from ensembles'
 6. *Off-line predictions of hand velcocity* - is similar to construction of online decoder with:
 $$V_x(t)=b+\sum^{n}_{\tau=-m}\mathbf{w}(\tau)\mathbf{n}(t+\tau)+\epsilon(t)$$
 
-7. *Random neuron dropping*: 10min of neuronal population data fit the velocity prediction model. Model then used to predict on a different 10min period. A single neuron is randomly dropped from the population, train then test. This process is repeated until no neurons remained. This entire process (dropping 1 to entire population) is repeated 100 times to yield $$R$$ as a function of number of neurons. 
+7. *Random neuron dropping*: 10min of neuronal population data fit the velocity prediction model. Model then used to predict on a different 10min period. A single neuron is randomly dropped from the population, train then test. This process is repeated until no neurons remained. This entire process (dropping 1 to entire population) is repeated 100 times to yield $R$ as a function of number of neurons. 
 
 **Results**
 
@@ -56,7 +56,7 @@ $$V_x(t)=b+\sum^{n}_{\tau=-m}\mathbf{w}(\tau)\mathbf{n}(t+\tau)+\epsilon(t)$$
 
     - Fig. 5: *Tuned to BCWOH*.
   
-    Pairwise comparison of pole-control with BCWH and BCWOH (within same sessions) showed in majority of neurons, peak VTI for hand decreased after transitioning to BCWH. In BCWH, the peak VTI for robot is significantly greater than peak VTI for hand for a majority of neurons. Peak VTI during BCWOH was greater than during pole control in $$38\%$$ of neurons.
+    Pairwise comparison of pole-control with BCWH and BCWOH (within same sessions) showed in majority of neurons, peak VTI for hand decreased after transitioning to BCWH. In BCWH, the peak VTI for robot is significantly greater than peak VTI for hand for a majority of neurons. Peak VTI during BCWOH was greater than during pole control in $38\%$ of neurons.
 
 3. *Tuning patterns for ensembles* 
 
@@ -78,9 +78,9 @@ $$V_x(t)=b+\sum^{n}_{\tau=-m}\mathbf{w}(\tau)\mathbf{n}(t+\tau)+\epsilon(t)$$
 
 1. Principle finding: **Once cortical ensemble activity is switched to represent the movements of the artificial actuator, it is less representative of the movement of the animal's own limb**, as evidence by how tuning to hand velocity decreases from pole-control to BCWH.
 
-    - Neuronal tuning to robot movements may be enhanced due to increased correlation between neurons (attention leads to synchrony$$^2$$).
+    - Neuronal tuning to robot movements may be enhanced due to increased correlation between neurons (attention leads to synchrony $^2$).
     
-    - Supports evidence that cortical motor areas include cognitive signals as well as limb movements. Limb representation is highly flexible and susceptible to illusions and mental imagery (rubber arm). **Neuronal mechanisms underlying adaptive properties$$^1$$ may be responsible for cortical ensemble adaptation during the BMI operation.**
+    - Supports evidence that cortical motor areas include cognitive signals as well as limb movements. Limb representation is highly flexible and susceptible to illusions and mental imagery (rubber arm). **Neuronal mechanisms underlying adaptive properties $^1$ may be responsible for cortical ensemble adaptation during the BMI operation.**
 
 2. BMI design makes any modulation of neuronal activity translate into movement of the actuator. To interpret it as reflection of new representation of artificial actuators, uses the following evidence:
 

@@ -19,7 +19,7 @@ The graphical abstract and highlights on the publication are actually very infor
 
 As is typical Byron Yu/Aaron Batista fashion, this paper presents a clever application of dimensonality reduction (specifically factor analysis).
 
-Neuroscience literature often presents pairwise statistics to characterize neural populations (i.e. average spike-count correlations before and after learning BMI). They first propose that that this measure $$r_{sc}mean$$ needs to be complemented by the pairwise metric standard-deviation $$r_{sc}SD$$, then connect how the changes in this pair of pairwise metrics relate to population-level metrics obtained through dimensionality reduction.
+Neuroscience literature often presents pairwise statistics to characterize neural populations (i.e. average spike-count correlations before and after learning BMI). They first propose that that this measure $r_{sc}mean$ needs to be complemented by the pairwise metric standard-deviation $r_{sc}SD$, then connect how the changes in this pair of pairwise metrics relate to population-level metrics obtained through dimensionality reduction.
 
 ![motivation]({{ site.baseurl }}/assets/umakantha_figure1c.png){: .center-image }
 

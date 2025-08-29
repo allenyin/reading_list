@@ -25,9 +25,9 @@ Each 32-bytes radio packet contains, in order of low to high byte:
 
   The next four template-matching bytes has their most significant bit replaced by the bits of an `echo` nibble. This `echo` nibble is extracted from the last command packet gtkclient sent to the headstage, and allows a sort of SEQ-ACK exchange to happen between the headstage and gtkclient, although this only allows to know when a packet might've been lost -- there is no bandwidth or CPU cycles to resend a lost packet. However, the control packets can be resent easily. The `Sync headstage` in gtkclient is a good way of sending control packets to sync the headstage configurations to those in gtkclient.
 
-There are a total of $$32 \frac{channels}{amplifier} \times 4 \frac{amps}{headstage} \times 2 \frac{matches}{channel}=256 \frac{matches}{headstage}$$, meaning it takes 4 packets to transmit all template matches, accompanied by 24 samples of 4 channels.
+There are a total of $32 \frac{channels}{amplifier} \times 4 \frac{amps}{headstage} \times 2 \frac{matches}{channel}=256 \frac{matches}{headstage}$, meaning it takes 4 packets to transmit all template matches, accompanied by 24 samples of 4 channels.
 
-ADC runs at 1Msps, each packet requires 6 samples, so each packet requires $$\frac{6 samples\times 32 channels/sample}{1Msps}=192\mu s$$, and 4 packets requires $$768\mu s$$ to transmit.
+ADC runs at 1Msps, each packet requires 6 samples, so each packet requires $\frac{6 samples\times 32 channels/sample}{1Msps}=192\mu s$, and 4 packets requires $768\mu s$ to transmit.
 
 Firmware sets aside a buffer enough for two radio frames. Each radio frame contains 16 packets. The radio starts sending when a frame is full, while the signal-chain collates and saves new packet in the other frame. Therefore, each frame takes about 3.072 ms to send, which is less than the 4ms free-run PLL time. Time to transmit, change to receive, then back is 3.60ms. So,
 

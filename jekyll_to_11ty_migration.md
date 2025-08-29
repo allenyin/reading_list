@@ -7,7 +7,7 @@ This document outlines the steps to migrate from Jekyll to Eleventy (11ty) for t
 
 ## Why Migrate to Eleventy?
 - **Automatic Tag Generation**: No more manual HTML files for each tag
-- **Better LaTeX Support**: Native support for math equations with `$$...$$` blocks
+- **Better LaTeX Support**: Native support for math equations with ` $...$` blocks
 - **Faster Build Times**: Node.js-based build system
 - **Modern JavaScript Ecosystem**: Access to npm packages and modern tooling
 - **Simplified Configuration**: Single `.eleventy.js` config file
@@ -884,7 +884,6 @@ npm run serve
 
 ```diff
 -<li class="active"><a href="/archive.html">Archive</a></li>
-
 +<li class="active"><a href="/archive/">Archive</a></li>
 ```
 
@@ -922,7 +921,7 @@ Navigate through your site and verify:
 If you have posts with math equations:
 
 **Inline math:** `$E = mc^2$` should render properly
-**Display math:** `$$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$` should render centered
+**Display math:** ` $\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$` should render centered
 
 #### 9.6. Test Code Syntax Highlighting
 Create a test post with code blocks:
@@ -1098,7 +1097,7 @@ npm run serve
 ## Benefits After Migration
 
 1. **Automatic Tag Generation**: New tags automatically create pages
-2. **LaTeX Support**: Math equations render properly with `$$...$$` blocks
+2. **LaTeX Support**: Math equations render properly with ` $...$` blocks
 3. **Faster Builds**: Node.js-based system is generally faster
 4. **Better Development Experience**: Hot reloading and modern tooling
 5. **Simplified Maintenance**: No more manual tag HTML files
