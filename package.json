@@ -18,7 +18,8 @@
   "author": "Allen Yin",
   "license": "MIT",
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1"
+    "@11ty/eleventy": "^2.0.1",
+    "markdown-it-attrs": "^4.3.1"
   },
   "dependencies": {
     "katex": "^0.16.22",
@@ -31,9 +32,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/allenyin/reading_list.git"
-  },
-  "bugs": {
-    "url": "https://github.com/allenyin/reading_list/issues"
-  },
-  "homepage": "https://github.com/allenyin/reading_list#readme"
+  }
 }

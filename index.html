@@ -16,7 +16,7 @@ pagination:
         
         <p>
         <small>
-        tags:
+        Tags:
             {# 4. Use 'loop.last' and the simpler 'replace' filter #}
             {% for tag in post.data.tags %}
                 <span><a href="/tags/{{ tag | slug }}/">{{ tag | replace('_', ' ') }}</a></span>{% if not loop.last %}, {% endif %}

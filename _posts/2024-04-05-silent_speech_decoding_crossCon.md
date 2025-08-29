@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "A Cross-Modal approach to silent speech with LLM-Enhanced recognition" 
+title: "A Cross-Modal approach to silent speech with LLM-Enhanced recognition"
 date: 2024-04-05
 comments: false
 tags:
@@ -11,8 +11,7 @@ tags:
 
 [Paper link](https://arxiv.org/pdf/2403.05583.pdf)
 
-This paper advances the SOTA on silent-speech decoding from EMG recorded on the face. "Silent" here means "vocalized" or "mimed" speech. The dataset comes from [Gaddy 2022](http://www2.eecs.berkeley.edu/
-Pubs/TechRpts/2022/EECS-2022-68.html).
+This paper advances the SOTA on silent-speech decoding from EMG recorded on the face. "Silent" here means "vocalized" or "mimed" speech. The dataset comes from [Gaddy 2022](http://www2.eecs.berkeley.edu/Pubs/TechRpts/2022/EECS-2022-68.html).
 
 ![image1]({{ site.baseurl }}/assets/cross_modal_silent_speech_flow.png){: .center-image }
 

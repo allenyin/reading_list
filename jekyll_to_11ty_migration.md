@@ -799,6 +799,50 @@ After updates, your `css/` directory should contain:
 - ~~`pygments.css`~~ - Removed (replaced by Prism.js)
 - ~~`syntax.css`~~ - Removed (replaced by Prism.js)
 
+#### Image tags formatting
+
+The existing code from Jekyll used to insert and format picture uses syntax that's a feature of Jekyll's default markdown processor (`Kramdown`). Now we use Eleventy's markdown processor (`markdown-it`), so the following doesn't work:
+
+```
+# {: .center-image} is treated as part of alt-text
+
+![image1]({{ site.baseurl }}/assets/semantic_selectivity1.png){: .center-image }
+```
+
+Solution:
+
+```
+# Install extension
+npm install markdown-it-attrs --save-dev
+
+# Add in eleventy.js
+md.use(require("markdown-it-attrs")); // Add this line
+```
+
+Images are still not showing up.. this is a problem with the testing and production url handling, change eleventy config again:
+
+```diff
+// Define the prefix based on the environment
++  const pathPrefix = process.env.ELEVENTY_ENV === 'production' ? '/reading_list' : '';
+  eleventyConfig.addGlobalData("site", {
+    name: "Reading List",
+    description: "Allen's reading list",
+    url: "http://allenyin.github.io/reading_list",
++    baseurl: pathPrefix,
++    pathPrefix: pathPrefix,
+    github: "allenyin/reading_list",
+    disqus: "",
+    comments: false,
+    year: new Date().getFullYear()
+  });
+```
+
+
+
+
+
+
+
 ### 9. Test the Migration Locally
 
 Before deploying, thoroughly test your Eleventy migration to ensure everything works correctly.
@@ -833,6 +877,17 @@ npm run serve
 # This will start a server (usually at http://localhost:8080)
 # Open your browser and navigate to the local URL
 ```
+
+#### Trouble shooting
+
+**Archive page showing the content of `archive.njk` template instead of being rendered.** Problem is in `header.html`:
+
+```diff
+-<li class="active"><a href="/archive.html">Archive</a></li>
+
++<li class="active"><a href="/archive/">Archive</a></li>
+```
+
 
 #### 9.4. Test Key Features
 Navigate through your site and verify:

@@ -35,13 +35,16 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("css/*.css");
 
   // Site configuration (equivalent to _config.yml)
+  // Define the prefix based on the environment
+  const pathPrefix = process.env.ELEVENTY_ENV === 'production' ? '/reading_list' : '';
   eleventyConfig.addGlobalData("site", {
     name: "Reading List",
-    description: "Academic reading list",
+    description: "Allen's reading list",
     url: "http://allenyin.github.io/reading_list",
-    baseurl: "/reading_list",
+    baseurl: pathPrefix,
+    pathPrefix: pathPrefix,
     github: "allenyin/reading_list",
-    gaaccount: "UA-108068754-1",
+    // gaaccount: "UA-108068754-1",
     disqus: "",
     comments: false,
     year: new Date().getFullYear()
@@ -71,6 +74,10 @@ module.exports = function(eleventyConfig) {
       displayMath: [['$$', '$$'], ['\\[', '\\]']]
     }
   });
+
+  // Enable css attribute syntax for images
+  md.use(require("markdown-it-attrs"));
+
 
   // Set the markdown library
   eleventyConfig.setLibrary("md", md);
@@ -197,9 +204,6 @@ module.exports = function(eleventyConfig) {
     return postsByTag;
   });
 
-  // Generate tag pages automatically
-  eleventyConfig.addPassthroughCopy("tags");
-
   // Ignore files (equivalent to exclude)
   eleventyConfig.ignores.add("README.md");
   eleventyConfig.ignores.add("LICENSE");
@@ -211,7 +215,7 @@ module.exports = function(eleventyConfig) {
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",
     dir: {
-      input: ".",
+      input: ".",  // This specifies the project's root folder as the main source for all pages built.
       output: "_site",
       includes: "_includes",
       layouts: "_layouts"

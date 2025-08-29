@@ -5,15 +5,25 @@
         <div class="col-md-12">
           <div class="article">
             <div class="well">
-                <h1><a href="{{ page.data.permalink }}">{{ date | date("LLL d, yyyy") }} - {{ page.data.title }}</a></h1>
-            
+              <h1><a href="{{ page.url | url }}">{{ date | date("LLL d, yyyy") }} - {{ title }}</a></h1>
             {% if site.comments == true and page.data.comments == true and site.disqus != '' %}
             <p class="author"><a href="#disqus_thread">Comments</a></p>
             {% endif %}
+           
+            {# Add the tags #}
+            {% if tags %}
+            <p class="tags">
+              <small>
+                Tags:
+                {% for tag in tags %}
+                <span><a href="/tags/{{ tag | slug }}/">{{ tag | replace('_', ' ') }}</a></span>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+              </small>
+            </p>
+            {% endif %}
             
-            {% include "tag_line.html" %} 
             <div class="post-content">
-            {{ content | safe }}
+              {{ content | safe }}
             </div>
             
             {% if page.data.comments %}
