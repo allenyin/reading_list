@@ -24,9 +24,11 @@ Pretty straight forward. Importing my spike time vectors into Julia and running 
 
 Configuration through running `jlconfig` as instructed in the README was smooth, except for the message:
 
+```
 > Warning: Unable to save path to file '/usr/local/MATLAB/R2015a/toolbox/local/pathdef.m'. You can save your path to a different location by calling SAVEPATH with an input argument that specifies the full path. For MATLAB to use that path in future sessions, save the path to 'pathdef.m' in your MATLAB startup folder. 
 > > In savepath (line 169)
 >   In jlconfig (line 100) 
+```
 
 Warning most likely related to my machine.
 
@@ -52,7 +54,7 @@ The second call takes 1.41 seconds.
 
 Paiva 2009 derived a computational effective estimator with order $O(N_iN_j)$ for the VR-distance:
 
-$$d_{vR}(S_i,S_j)=\frac{1}{2}[\sum_{m=1}^{N_i}\sum_{m=1}^{N_i}L_{\tau}(t_m^i-t_n^i)+\sum_{m=1}^{N_j}\sum_{m=2}^{N_j}L_{\tau}(t_m^j-t_n^j)]+\sum_{m=1}^{N_i}\sum_{n=1}^{N_j}L_{\tau}(t_m^i-t_n^j)$$,
+$$d_{vR}(S_i,S_j)=\frac{1}{2}[\sum_{m=1}^{N_i}\sum_{m=1}^{N_i}L_{\tau}(t_m^i-t_n^i)+\sum_{m=1}^{N_j}\sum_{m=2}^{N_j}L_{\tau}(t_m^j-t_n^j)]+\sum_{m=1}^{N_i}\sum_{n=1}^{N_j}L_{\tau}(t_m^i-t_n^j)$$
 
 where $L_{\tau}(\cdot)=exp(-abs(\cdot)/\tau)$ is the Laplacian kernel. However, this formula is wrong. By inspection we can see that this distance will never be 0 since it is a sum of exponentials. Further sample calculation for distance between less similar spike trains may even yield smaller distance! These problems can be corrected by changing the sign of the last summation term. Unfortunately, this *typo* occurs in (Paiva et al., 2007) as well as Paiva's PhD thesis. However, as I can't derive the formula myself (there must be some autocorrelation trick I'm missing), I don't trust it very much.
 

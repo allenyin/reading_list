@@ -23,7 +23,7 @@
             {% endif %}
             
             <div class="post-content">
-              {{ content | safe }}
+              {{ content | addLineNumbers | safe }}
             </div>
             
             {% if page.data.comments %}

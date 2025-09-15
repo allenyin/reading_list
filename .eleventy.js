@@ -1,7 +1,7 @@
 const yaml = require("js-yaml");
 const { DateTime } = require("luxon");
 
-// const Prism = require('prismjs');
+const Prism = require('prismjs');
 require('prismjs/components/prism-nasm');   // For Assembly (asm)
 require('prismjs/components/prism-matlab'); // For MATLAB
 require('prismjs/plugins/line-numbers/prism-line-numbers');
@@ -209,6 +209,11 @@ module.exports = function(eleventyConfig) {
     });
 
     return postsByTag;
+  });
+
+  // Add a filter to ensure line numbers are applied
+  eleventyConfig.addFilter("addLineNumbers", function(content) {
+    return content.replace(/<pre class="language-([^"]+)">/g, '<pre class="language-$1 line-numbers">');
   });
 
   // Ignore files (equivalent to exclude)

@@ -25,35 +25,28 @@ Strang concludes:
 The first assertion is illuminating. Eigenvectors $v$ are defined such that $Av=\lambda v$. Suppose $A$ is $M\times N$, then $v$ must be $M\times 1$, therefore eigenvectors only work when $M=N$. On the other hand, in SVD, we have $A=U\Sigma V^T$ and
 
 * $Av_i=\sigma_i u_i$ for $i=1,...,r$, where $r$ is the rank of column and row space.
-  
-  $$u_i $ are the basis for the column space (left singular vectors), $v_i$$ are the basis for the row space (right singular vectors).
-  
-  The dimensions for this equation matches because the column space and row space are `more natural` pair.
+  - $u_i$ are the basis for the column space (left singular vectors), $v_i$ are the basis for the row space (right singular vectors).
+  - The dimensions for this equation matches because the column space and row space are **more natural** pair.
 * $Av_i=0$, $A^Tu_i=0$, for $i>r$. 
-
-  $$v_i $ are the eigenvectors of the null space of $A^T$$, 
-  
-  $$u_i $ are the eigenvectors of the null space of $A$$.
-
-  They also match up similarly (Figure 2).
- 
-
+  - $v_i$ are the eigenvectors of the null space of $A^T$,  
+  - $u_i$ are the eigenvectors of the null space of $A$.
+  - They also match up similarly (Figure 2).
 * In $Ax=b$, $x$ is in the row space, $b$ is in the column space.
 * If $Ax=0$, then $x$ is in the null space (kernel) of A, and is orthogonal complement of the row space of A, $C(A^T)$.
 * In $A^Tx=b$, $x$ is in the column space, $b$ is in the row space.
 * If $A^Tx=0$, then $x$ is in the cokernel of A, and is orthogonal complement of the column space of A, $C(A)$.
 
 
-***
-Relationship with PCA
-***
+## Relationship with PCA
 
 **PCA Algorithm**
 Inputs: The *centered* data matrix $X$ and $k\gt1$.
 1. Compute the SVD of $X$: $[U,\Gamma,V]=svd(X)$.
 2. Let $V_k=[\mathbf{v}_1,...,\mathbf{v}_k]$ be the first $k$ columns of $V$.
 3. The PCA-feature matrix and the reconstructed data are:
-            $$Z=XV_k, \hat{X}=XV_kV_k^T$$.
+
+            $$Z=XV_k$$ 
+            $$\hat{X}=XV_kV_k^T$$
 
 So in PCA, the rows of the data matrix are the observations, and the columns are in the original coordinate system. The principle components are then the eigenvectors of the row space. We can do PCA in MATLAB with `pca` or manually with `svd`:
 
@@ -84,9 +77,7 @@ plot(svd_score(:,1), svd_score(:,2), 'g.');
 The results shown below. Blue is original data, green/red are the PCA results, they overlap exactly. Note that MATLAB's `pca` by default centers the data.
 ![image1]({{ site.baseurl }}/assets/PCAtest.png){: .center-image}
 
-***
-Projection into subspace (e.g. [Kaufman 2014, Cortical activity in the null space](https://www.nature.com/articles/nn.3643), [Even-Chen 2017, Neurally-driven error detectors](http://iopscience.iop.org/article/10.1088/1741-2552/aa8dc1/meta))
-***
+## Projection into subspace (e.g. [Kaufman 2014, Cortical activity in the null space](https://www.nature.com/articles/nn.3643), [Even-Chen 2017, Neurally-driven error detectors](http://iopscience.iop.org/article/10.1088/1741-2552/aa8dc1/meta))
 
 Suppose we have a trial-averaged neural activity matrix $A$ of size $N\times T$, where $N$ is number of neurons, and $T$ is number of time bins.
 

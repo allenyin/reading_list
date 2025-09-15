@@ -111,6 +111,17 @@ pre[class*="language-"] {
 }
 
 /* Line numbers */
+pre[class*="language-"].line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+    position: relative;
+    white-space: inherit;
+}
+
 .line-numbers .line-numbers-rows {
     position: absolute;
     pointer-events: none;
