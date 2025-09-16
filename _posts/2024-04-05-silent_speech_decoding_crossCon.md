@@ -20,14 +20,14 @@ Image above shows the overall flow of the work:
 2. They take the 10 best models trained with different loss and data-set settings, and make into an ensemble.
 3. For inference, they get the decoded beam-search output from these different models, and pass them into a fine-tuned LLM, to infer the best text transcription. They call this LLM-based decoding "LLM Integrated Scoring Adjustment" (LISA).
 
-## Datasets
+# Datasets
 
 The Gaddy 2022 dataset contains:
 1. EMG, Audio, and Text recorded simulataneously during vocalized speech
 2. EMG and Text for silent speech
 3. Librispeech: Synchronized Audio + Text
 
-## Techniques
+# Techniques
 
 A key challenge to decode silent speech from EMG is the lack of labeled data. So a variety of techniques are used to overcome this, drawing inspiration from self-supervised learning techniques that have advanced automatic-speech recognition (ASR) recently.
 
@@ -52,7 +52,7 @@ The use of a joint-embedding space between EMG and Audio is crucial, as it allow
 
 __LISA__: An LLM (GPT3.5 or GPT4) are fine-tuned on the EMG/Audio-to-Text outputs for the ensemble models, and the ground truth text transcriptions. This is done from the validation dataset. Using LLM to output the final text transcription (given engineered prompt and beam-search paths), instead of the typical beam-search method, yielded significant improvements. And this technique can replace other language-model based speech-decoding (e.g. on invasive speech-decoder output) as well!
 
-## Details:
+# Details:
 
 1. CrossCon + DTW performed the best. It's interesting to note that DTW with longer time-steps (10ms per timepoint) perform better.
 2. SupTCon loss didn't actually help.
@@ -60,7 +60,7 @@ __LISA__: An LLM (GPT3.5 or GPT4) are fine-tuned on the EMG/Audio-to-Text output
 3. GeLU is used instead of ReLU for improved numerical stability.
 4. The final loss function equals to weighted sum EMG-CTC_loss, Audio-CTC_loss, CrossCon and supTConLoss
 
-## Final Results on Word-Error Rate (WER)
+# Final Results on Word-Error Rate (WER)
 
 For final MONA LISA performance (joint-model + LLM output):
 
@@ -68,7 +68,7 @@ For final MONA LISA performance (joint-model + LLM output):
 2. SOTA on vocal EMG speech: 23.3% to 3.7%
 3. SOTA on Brain-to-Text: 9.8% to 8.9%
 
-## Additional userful reference
+# Additional userful reference
 
 Cites [Acceptability of Speech and Silent Speech Input Methods in Private and Public](https://dl.acm.org/doi/10.1145/3411764.3445430):
 

@@ -837,10 +837,7 @@ Images are still not showing up.. this is a problem with the testing and product
   });
 ```
 
-
-
-
-
+Another issue was getting the line numbers to show up with syntax highlighting block. Cursor+Claude solved this in one shot, see specific commit message later.
 
 
 ### 9. Test the Migration Locally
@@ -892,28 +889,28 @@ npm run serve
 Navigate through your site and verify:
 
 **Homepage:**
-- [ ] Site loads without errors
-- [ ] Navigation menu works
-- [ ] Bootstrap styling is applied
-- [ ] No broken links
+- [x] Site loads without errors
+- [x] Navigation menu works
+- [x] Bootstrap styling is applied
+- [x] No broken links
 
 **Posts:**
-- [ ] Individual post pages load correctly
-- [ ] Post titles and dates display properly
-- [ ] Tags are displayed and clickable
-- [ ] Math equations render (if you have any)
-- [ ] Code blocks have syntax highlighting
-- [ ] Images load from assets directory
+- [x] Individual post pages load correctly
+- [x] Post titles and dates display properly
+- [x] Tags are displayed and clickable
+- [x] Math equations render (if you have any)
+- [x] Code blocks have syntax highlighting and line numbers
+- [x] Images load from assets directory
 
 **Tags System:**
-- [ ] Visit `/tags/` - should show all tags
-- [ ] Click on individual tags - should show posts for that tag
-- [ ] Tag pages have proper styling
-- [ ] Navigation between tag pages works
+- [x] Visit `/tags/` - should show all tags
+- [x] Click on individual tags - should show posts for that tag
+- [x] Tag pages have proper styling
+- [x] Navigation between tag pages works
 
 **CSS and Styling:**
-- [ ] Tag cloud displays with proper styling
-- [ ] Post lists on tag pages look good
+- [x] Tag cloud displays with proper styling
+- [x] Post lists on tag pages look good
 - [ ] Responsive design works on mobile
 - [ ] No CSS errors in browser console
 
@@ -922,97 +919,6 @@ If you have posts with math equations:
 
 **Inline math:** `$E = mc^2$` should render properly
 **Display math:** ` $\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$` should render centered
-
-#### 9.6. Test Code Syntax Highlighting
-Create a test post with code blocks:
-
-```markdown
----
-title: "Test Post"
-date: 2024-12-01
-tags: [test, syntax]
----
-
-Here's some Python code:
-
-```python
-def hello_world():
-    print("Hello, World!")
-    return True
-```
-
-And some JavaScript:
-
-```javascript
-const greeting = "Hello, World!";
-console.log(greeting);
-```
-```
-
-#### 9.7. Check Browser Console
-- Open browser DevTools (F12)
-- Check Console tab for any JavaScript errors
-- Check Network tab for failed resource loads
-- Check Elements tab for proper HTML structure
-
-#### 9.8. Test Responsive Design
-- Resize browser window to test mobile layout
-- Use browser DevTools device simulation
-- Test on actual mobile device if possible
-
-#### 9.9. Performance Check
-```bash
-# Check build performance
-time npm run build
-
-# Check file sizes
-du -sh _site/
-du -sh _site/css/
-du -sh _site/assets/
-```
-
-#### 9.10. Common Issues and Fixes
-
-**Build Errors:**
-```bash
-# If build fails, check for syntax errors
-npm run debug
-
-# Clean and rebuild
-rm -rf _site/
-npm run build
-```
-
-**CSS Not Loading:**
-- Check file paths in `_includes/header.html`
-- Verify CSS files are copied to `_site/css/`
-- Check browser Network tab for 404 errors
-
-**Math Not Rendering:**
-- Verify `markdown-it-mathjax3` is installed
-- Check browser console for MathJax errors
-- Ensure math delimiters are correct (`$` and `$$`)
-
-**Tags Not Working:**
-- Check `.eleventy.js` collections configuration
-- Verify tag front matter in posts
-- Check browser console for JavaScript errors
-- Ensure `collections.tags` and `collections.postsByTag` are properly defined
-- Verify templates use correct collection references
-
-#### 9.11. Final Validation Checklist
-- [ ] Site builds without errors
-- [ ] All pages load correctly
-- [ ] Navigation works properly
-- [ ] Tags system functions
-- [ ] CSS styling is applied
-- [ ] Math equations render
-- [ ] Code syntax highlighting works
-- [ ] Responsive design functions
-- [ ] No console errors
-- [ ] All assets load properly
-
-Only proceed to deployment after all tests pass successfully!
 
 ### 10. Update GitHub Pages Configuration
 
@@ -1066,17 +972,6 @@ jobs:
 3. **Source**: Select "GitHub Actions"
 4. **Branch**: Leave as default (will be set by the workflow)
 
-#### 10.4. Test Deployment
-```bash
-# Commit and push your changes
-git add .
-git commit -m "Complete Eleventy migration with local testing"
-git push origin main
-
-# Check GitHub Actions tab for deployment progress
-# Visit your site at https://username.github.io/repository-name/
-```
-
 ### 11. Files to Remove
 After successful migration and deployment, you can remove:
 - `Gemfile`
@@ -1113,31 +1008,6 @@ npm run serve
 - **Layouts not working**: Verify Nunjucks syntax and file paths
 - **Assets not copying**: Ensure `addPassthroughCopy` is configured correctly
 - **Package conflicts**: Clean install with `rm -rf node_modules package-lock.json` then `npm install`
-
-## Next Steps
-
-1. Test the migration locally
-2. Update any custom Liquid filters to Nunjucks equivalents
-3. Optimize the build process if needed
-4. Update documentation and README
-5. Deploy to GitHub Pages using the new workflow
-
-## New Features Added
-
-### **Smart Date Handling**
-- **Existing posts**: Automatically extract dates from filenames
-- **Future posts**: Use dates from front matter
-- **Fallback**: Graceful handling of missing dates
-
-### **Enhanced Collections**
-- `collections.posts`: All posts with smart date handling
-- `collections.tags`: All unique tags
-- `collections.postsByTag`: Posts organized by tag
-
-### **Automatic Tag Pages**
-- **`tags.njk`**: Main tags listing page
-- **`_layouts/tagpage.html`**: Template for individual tag pages
-- **Automatic generation**: No more manual HTML files for each tag
 
 ## 🎯 Migration Progress Status
 
