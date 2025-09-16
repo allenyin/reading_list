@@ -9,42 +9,40 @@ pagination:
 
 {# 2. Loop over the 'posts' variable from our alias #}
 {% for post in posts %}
-<div class="article">
-    <div class="well">
-        {# 3. Use Nunjucks date filter and Eleventy's 'url' filter #}
-        <h1><a href="{{ post.url | url }}">{{ post.date | date("LLL d, yyyy") }} - {{ post.data.title }}</a></h1>
-        
-        <p>
-        <small>
-        Tags:
-            {# 4. Use 'loop.last' and the simpler 'replace' filter #}
-            {% for tag in post.data.tags %}
-                <span><a href="/tags/{{ tag | slug }}/">{{ tag | replace('_', ' ') }}</a></span>{% if not loop.last %}, {% endif %}
-            {% endfor %}
-        </small>
-        </p>
-
-        {% if site.comments and post.data.comments and site.disqus %}
-          <p class="author"><a href="{{ post.url | url }}/#disqus_thread">Comments</a></p>
-        {% endif %}
-        
-        <div class="post-content">
-            {# 5. 'post.content' contains the rendered HTML of the post #}
-            {{ post.content | safe }}
-        </div>
+<div class="post-summary">
+  <header class="" post-header">
+    {# 3. Use Nunjucks date filter and Eleventy's 'url' filter #}
+    <h1><a href="{{ post.url | url }}">{{ post.date | date("LLL d, yyyy") }} - {{ post.data.title }}</a></h1>
+    <div class="post-meta">
+      Tags:
+      {# 4. Use 'loop.last' and the simpler 'replace' filter #}
+      {% for tag in post.data.tags %}
+      <span><a href="/tags/{{ tag | slug }}/">{{ tag | replace('_', ' ') }}</a></span>{% if not loop.last %}, {% endif
+      %}
+      {% endfor %}
     </div>
+
+    {% if site.comments and post.data.comments and site.disqus %}
+    <p class="author"><a href="{{ post.url | url }}/#disqus_thread">Comments</a></p>
+    {% endif %}
+  </header>
+
+  <div class="post-content">
+    {# 5. 'post.content' contains the rendered HTML of the post #}
+    {{ post.content | safe }}
+  </div>
 </div>
 {% endfor %}
 
 <div class="pagination">
     {# 6. Use Eleventy's pagination object and its properties #}
     {% if pagination.previousPageHref %}
-        <a class="btn btn-default" href="{{ pagination.previousPageHref | url }}" class="previous">Newer</a>
+      <a href="{{ pagination.previousPageHref | url }}" class="pagination-btn">Newer</a>
     {% endif %}
 
     <span class="page_number ">Page: {{ pagination.pageNumber + 1 }} of {{ pagination.totalPages }}</span>
 
     {% if pagination.nextPageHref %}
-        <a class="btn btn-default" href="{{ pagination.nextPageHref | url }}" class="next">Older</a>
+      <a href="{{ pagination.previousPageHref | url }}" class="pagination-btn">Older</a>
     {% endif %}
 </div>

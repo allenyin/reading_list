@@ -1,215 +1,327 @@
-/* ===== LAYOUT AND CENTERING ===== */
+/* ===== CSS CUSTOM PROPERTIES (THEME VARIABLES) ===== */
 
-/* Reset and base styles */
+/* Dark theme (default) */
+:root {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --text-primary: #e1e1e1;
+    --text-secondary: #9aa0a6;
+    --accent: #8ab4f8;
+    --accent-hover: #aecbfa;
+    --border: #3c4043;
+    --code-bg: #1e1e1e;
+    --code-text: #e1e1e1;
+    --link-color: #8ab4f8;
+    --link-hover: #aecbfa;
+    --link-visited-color: #bd93f9;
+}
+
+/* Light theme */
+[data-theme="light"] {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f8f8;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --accent: #ee4444;
+    --accent-hover: #cc0000;
+    --border: #dddddd;
+    --code-bg: #f8f8f8;
+    --code-text: #333333;
+    --link-color: #428bca;
+    --link-hover: #3071a9;
+    --link-visited-color: #551a8b;
+}
+
+/* ===== RESET AND BASE STYLES ===== */
+
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    padding-top: 60px;
-    padding-bottom: 60px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #fff;
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding-top: 80px;
 }
 
-/* Center the main content */
-.container-fluid {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
+/* ===== NAVBAR ===== */
 
-/* Center the navbar content */
 .navbar {
-    width: 800px;
-    max-width: 800;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: var(--bg-secondary);
+    padding: 1rem 0;
+    border: none;
+    box-shadow: none;
+}
+
+.navbar-content {
+    max-width: 800px;
     margin: 0 auto;
     padding: 0 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.navbar .navbar-header,
-.navbar .navbar-collapse {
-    max-width: none;
+.navbar-brand a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    text-decoration: none;
 }
 
-/* Center the main content area */
-.container-left {
+.navbar-brand a:hover {
+    color: var(--accent-hover);
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.navbar-menu a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-menu a:hover {
+    color: var(--accent-hover);
+}
+
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0s ease;
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--border);
+    color: var(--accent-hover);
+}
+
+/* ===== MAIN LAYOUT ===== */
+
+.main-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* ===== TYPOGRAPHY HIERARCHY ===== */
+/* ===== POST STYLES ===== */
 
-/* Post title in .well (home page and post page titles) - largest */
-.well h1 {
-    color: #ee4444;
+.post {
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+    border: none;
+    box-shadow: none;
+}
+
+.post-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.post-header h1 {
+    color: var(--accent);
     font-size: 2.5rem;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1rem;
+}
+
+.post-header h1 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.post-header h1 a:hover {
+    color: var(--accent-hover);
+}
+
+.post-meta {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.post-meta a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.post-meta a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+
+.author {
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.author a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+/* ===== POST SUMMARY (INDEX PAGE) ===== */
+
+.post-summary {
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+    border: none;
+    box-shadow: none;
+}
+
+.post-summary .post-header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.post-summary .post-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.post-summary .post-meta {
     text-align: center;
 }
 
-.well h1 a {
-    color: inherit;
-    text-decoration: none;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
+/* ===== CONTENT STYLES ===== */
+
+.main-container h1 {
+  overflow-wrap: break-word;
+  word-wrap: break-word; /* Legacy fallback for older browsers */
 }
 
-.well h1 a:hover {
-    color: #cc0000;
-    text-decoration: none;
-}
-
-/* H1 headings in content - second largest, LEFT ALIGNED */
-.post-content h1 {
-    font-size: 2rem;
-    font-weight: 600;
-    color: #333;
-    margin: 2rem 0 1rem 0;
-    text-align: left;
-}
-
-.post-content h1 a {
-    color: inherit;
-    text-decoration: none;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-}
-
-.post-content h1 a:hover {
-    color: #428bca;
-    text-decoration: underline;
-}
-
-/* H2 headings - third largest, LEFT ALIGNED */
-.post-content h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #444;
-    margin: 1.5rem 0 0.75rem 0;
-    text-align: left;
-}
-
-.post-content h2 a {
-    color: inherit;
-    text-decoration: none;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-}
-
-.post-content h2 a:hover {
-    color: #428bca;
-    text-decoration: underline;
-}
-
-/* H3 headings - fourth largest, LEFT ALIGNED */
-.post-content h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #555;
-    margin: 1.25rem 0 0.5rem 0;
-    text-align: left;
-}
-
-.post-content h3 a {
-    color: inherit;
-    text-decoration: none;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-}
-
-.post-content h3 a:hover {
-    color: #428bca;
-    text-decoration: underline;
-}
-
-/* H4 headings - fifth largest, LEFT ALIGNED */
-.post-content h4 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #666;
-    margin: 1rem 0 0.5rem 0;
-    text-align: left;
-}
-
-.post-content h4 a {
-    color: inherit;
-    text-decoration: none;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-}
-
-.post-content h4 a:hover {
-    color: #428bca;
-    text-decoration: underline;
-}
-
-/* H5 and H6 headings, LEFT ALIGNED */
-.post-content h5,
-.post-content h6 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #777;
-    margin: 0.75rem 0 0.25rem 0;
-    text-align: left;
-}
-
-.post-content h5 a,
-.post-content h6 a {
-    color: inherit;
-    text-decoration: none;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-}
-
-.post-content h5 a:hover,
-.post-content h6 a:hover {
-    color: #428bca;
-    text-decoration: underline;
-}
-
-/* ===== CONTENT STYLING ===== */
-
-/* Post content area */
 .post-content {
     font-size: 1.1rem;
     line-height: 1.7;
-    color: #333;
+    color: var(--text-primary);
     text-align: left;
 }
 
-/* Paragraphs */
 .post-content p {
     margin: 1rem 0;
 }
 
-/* Regular links in paragraphs and content */
 .post-content a {
-    color: #428bca;
+    color: var(--link-color);
     text-decoration: none;
-    font-size: inherit;
-    font-weight: inherit;
 }
 
 .post-content a:hover {
-    color: #3071a9;
+    color: var(--link-hover);
     text-decoration: underline;
 }
 
-/* Lists */
+/* ===== ARCHIVE & GENERAL LINK STYLES ===== */
+
+/* Default state for unvisited links */
+.main-container a:link {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+/* State for links that the user has already visited */
+.main-container a:visited {
+  color: var(--link-visited-color);
+}
+
+/* State when the user hovers over any link */
+.main-container a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+/* ===== HEADINGS - LEFT ALIGNED ===== */
+
+.post-content h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 2rem 0 1rem 0;
+    text-align: left;
+}
+
+.post-content h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 1.5rem 0 0.75rem 0;
+    text-align: left;
+}
+
+.post-content h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 1.25rem 0 0.5rem 0;
+    text-align: left;
+}
+
+.post-content h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 1rem 0 0.5rem 0;
+    text-align: left;
+}
+
+.post-content h5,
+.post-content h6 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0.75rem 0 0.25rem 0;
+    text-align: left;
+}
+
+/* Heading links inherit styling */
+.post-content h1 a,
+.post-content h2 a,
+.post-content h3 a,
+.post-content h4 a,
+.post-content h5 a,
+.post-content h6 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.post-content h1 a:hover,
+.post-content h2 a:hover,
+.post-content h3 a:hover,
+.post-content h4 a:hover,
+.post-content h5 a:hover,
+.post-content h6 a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+
+/* ===== LISTS ===== */
+
 .post-content ul,
 .post-content ol {
     margin: 1rem 0;
@@ -220,41 +332,205 @@ body {
     margin: 0.5rem 0;
 }
 
-/* Blockquotes */
+/* ===== BLOCKQUOTES ===== */
+
 .post-content blockquote {
-    border-left: 4px solid #ee4444;
+    border-left: 4px solid var(--accent);
     margin: 1.5rem 0;
     padding: 1rem 1.5rem;
-    background-color: #f9f9f9;
+    background-color: var(--bg-secondary);
     font-style: italic;
-    color: #555;
+    color: var(--text-secondary);
 }
 
 .post-content blockquote a {
-    color: #428bca;
+    color: var(--link-color);
     text-decoration: none;
-    font-size: inherit;
-    font-weight: inherit;
 }
 
 .post-content blockquote a:hover {
-    color: #3071a9;
+    color: var(--link-hover);
     text-decoration: underline;
 }
 
-/* Code blocks */
+/* ===== CODE BLOCKS - THEME-AWARE SYNTAX HIGHLIGHTING ===== */
+
+/* Base style for the <pre> container */
 .post-content pre {
     margin: 1.5rem 0;
+    background-color: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1em;
+    overflow-x: auto;
 }
 
-.post-content code {
-    background-color: #f5f5f5;
+/* * NEW: Styles for INLINE code (e.g., in a paragraph).
+ * The :not(pre) > code selector prevents this style from affecting code inside a <pre> block.
+*/
+.post-content :not(pre) > code {
+    background-color: var(--code-bg);
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
     font-size: 0.9em;
+    border: 1px solid var(--border);
 }
 
-/* Images */
+/* Base styles for Prism.js elements */
+pre[class*="language-"] {
+    background: none !important; /* The <pre> tag itself has a transparent background */
+    color: var(--code-text) !important;
+    text-shadow: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 0.9em;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+
+/* Reset the <code> element inside a <pre> block */
+pre[class*="language-"] > code {
+    background: none;
+    color: var(--code-text);
+}
+
+/*
+ * FIX: Forcefully remove any background from ALL tokens.
+ * This is the key fix for the operator highlighting issue.
+*/
+pre[class*="language-"] .token {
+    background: none !important;
+}
+
+
+/* Richer, theme-aware token colors inspired by Okaidia */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.token.punctuation {
+    color: var(--text-primary);
+}
+
+.token.namespace {
+    opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #ff79c6; /* Pink/Magenta */
+}
+
+.token.boolean,
+.token.number {
+    color: #bd93f9; /* Purple */
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: #50fa7b; /* Green */
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+    color: var(--text-primary);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+    color: #8be9fd; /* Cyan */
+}
+
+.token.keyword {
+    color: #ff79c6; /* Pink/Magenta */
+}
+
+.token.regex,
+.token.important {
+    color: #ffb86c; /* Orange */
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+
+/* Line numbers styling */
+pre[class*="language-"].line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+    position: relative;
+    white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em;
+    letter-spacing: -1px;
+    border-right: 1px solid var(--border);
+    user-select: none;
+    background-color: var(--bg-secondary) !important;
+}
+
+.line-numbers-rows > span {
+    pointer-events: none;
+    display: block;
+    counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+    content: counter(linenumber);
+    color: var(--text-secondary);
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
+}
+
+/* ===== IMAGES ===== */
+
 .post-content img {
     max-width: 100%;
     height: auto;
@@ -262,6 +538,7 @@ body {
     margin: 1.5rem auto;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid var(--border);
 }
 
 .center-image {
@@ -270,237 +547,141 @@ body {
     padding: 0;
     width: 100%;
     max-width: 600px;
+    border: 1px solid var(--border);
 }
 
-/* ===== EXISTING STYLES (keeping what works) ===== */
+/* ===== MATH EQUATIONS ===== */
 
-.copyright {
-    color: #ffffff;
-}
-
-.footer {
-    text-align: center;
-}
-
-.footer a {
-    color: #ee4444;
-}
-
-.sidebar h1 {
-    color: #ee4444;
-    font-size: 1.3em;
-}
-
-.sidebar a {
-    color: #428bca;
-}
-
-.sidebar li {
-    margin-top: .7em;
-    line-height: 1em;
-}
-
-.sidebar a:hover {
-    color: #3071a9;
-}
-
-.author {
-    color: #ee4444;
-}
-
-.author a {
-    color: #ee4444;
-}
-
-/* highlighter-rouge */
-code.highlighter-rouge {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 0 0.5em;
-    color: #d14;
-}
-
-/* fence-block style highlighting */
-pre code {
-    white-space: pre;
-}
-
-/* Block quote */
-blockquote {
-    color: #555;
-    font-size: 14px;
-}
-
-/* Syntax highlighting for monokai -- see syntax.css */
-.highlight pre,
-.highlight .table 
-{
-    border: box;
-    border-radius: 0px;
-    border-collapse: collapse;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-.highlight table td { 
-    padding: 0px; 
-    background-color: #49483e; 
-    color: #f8f8f2;
-    margin: 0px;
-}
-
-.highlight td.gutter {
-    border-right: 1px solid white;
-}
-
-.highlight table pre { 
-    margin: 0;
-    background-color: #49483e; 
-    color: #f8f8f2;
-}
-
-.highlight pre {
-    background-color: #49483e; 
-    color: #f8f8f2;
-    border: 0px;    /* no border between cells! */
-}
-
-/* The code box extend the entire code block */
-.highlight table td.code {
-    width: 100%;
-}
-
-/* ===== NEW ELEVENTY FEATURES ===== */
-
-/* Math equation styling for MathJax3 */
 .mjx-chtml {
     font-size: 1.1em;
     margin: 1em 0;
+    color: var(--text-primary);
 }
 
 .mjx-chtml .mjx-math {
     text-align: center;
 }
 
-/* Inline math */
 .mjx-chtml .mjx-math.mjx-n {
     text-align: left;
 }
 
-/* Display math */
 .mjx-chtml .mjx-math.mjx-block {
     text-align: center;
     margin: 1em 0;
 }
 
-/* Tag cloud styling */
-.tag-cloud {
-    margin: 20px 0;
+/* ===== PAGINATION ===== */
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+    padding: 1rem 0;
+}
+
+.pagination-btn {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover {
+    background-color: var(--accent);
+    color: var(--bg-secondary);
+    border-color: var(--accent);
+}
+
+.page_number {
+    color: var(--text-secondary);
+}
+
+/* ===== FOOTER ===== */
+
+.footer {
     text-align: center;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 2rem 0;
+    margin-top: 2rem;
 }
 
-.tag-link {
-    display: inline-block;
-    margin: 5px;
-    padding: 8px 15px;
-    background-color: #f5f5f5;
-    border-radius: 20px;
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer a {
+    color: var(--accent);
     text-decoration: none;
-    color: #333;
-    font-size: 0.9em;
-    transition: all 0.3s ease;
-    border: 1px solid #ddd;
 }
 
-.tag-link:hover {
-    background-color: #ee4444;
-    color: white;
-    text-decoration: none;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-/* Post list styling for tag pages */
-.post-list {
-    list-style: none;
-    padding: 0;
-}
-
-.post-list li {
-    margin-bottom: 15px;
-    padding: 10px;
-    border-left: 3px solid #ee4444;
-    background-color: #f9f9f9;
-    transition: all 0.3s ease;
-}
-
-.post-list li:hover {
-    background-color: #f0f0f0;
-    border-left-color: #cc0000;
-}
-
-.post-meta {
-    color: #666;
-    font-size: 0.85em;
-    margin-right: 10px;
-}
-
-.post-link {
-    color: #428bca;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.post-link:hover {
-    color: #3071a9;
+.footer a:hover {
+    color: var(--accent-hover);
     text-decoration: underline;
 }
 
-/* Prism.js syntax highlighting overrides */
-pre[class*="language-"] {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 1em;
-    margin: 1em 0;
-    overflow-x: auto;
+.copyright {
+    color: var(--text-secondary);
 }
 
-code[class*="language-"] {
-    font-size: 0.9em;
-    line-height: 1.4;
+/* ===== TAG CLOUD STYLES (for All Tags page) ===== */
+
+.tag-cloud {
+  text-align: center;
+  /* Increases vertical spacing for tags that wrap to a new line */
+  line-height: 2.2;
+  padding: 1rem 0;
 }
 
-/* Line numbers for code blocks */
-.line-numbers .line-numbers-rows {
-    border-right: 1px solid #ddd;
-    background-color: #f5f5f5;
+.tag-cloud a {
+  /* This is the key property for the "block" look */
+  display: inline-block;
+  
+  /* Visual styling */
+  padding: 0.35em 0.8em;
+  margin: 0.3em;
+  font-size: 0.9em;
+  color: var(--link-color);
+  background-color: var(--code-bg); /* Uses your code block background for a subtle highlight */
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
 }
 
-.line-numbers-rows > span:before {
-    color: #999;
+.tag-cloud a:hover {
+  /* Invert colors on hover for a nice effect */
+  color: var(--bg-primary);
+  background-color: var(--accent);
+  border-color: var(--accent);
 }
 
-/* Responsive improvements */
+/* ===== RESPONSIVE DESIGN ===== */
+
 @media (max-width: 768px) {
-    .tag-cloud {
-        text-align: left;
+    .navbar-content {
+        flex-direction: column;
+        gap: 1rem;
     }
     
-    .tag-link {
-        display: block;
-        margin: 5px 0;
-        text-align: center;
+    .navbar-menu {
+        gap: 1rem;
     }
     
-    .post-list li {
-        margin-bottom: 10px;
-        padding: 8px;
+    .post,
+    .post-summary {
+        padding: 1rem;
+        margin: 1rem 0;
     }
     
-    /* Mobile typography adjustments */
-    .well h1 {
+    .post-header h1 {
         font-size: 2rem;
     }
     
@@ -514,5 +695,10 @@ code[class*="language-"] {
     
     .post-content {
         font-size: 1rem;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 1rem;
     }
 }

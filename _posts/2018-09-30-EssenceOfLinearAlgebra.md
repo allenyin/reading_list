@@ -11,13 +11,13 @@ Continuing on my [quest](2016-04-21-LinearAlgebra.md) to have the best unifying 
 
 This series really expanded on the intuition behind the fundamental concepts of Linear Algebra by illustrating them geometrically. I have vaguely arrived at the same sort of intuition through thinking about them before, but never this explicitly. My notes are here.
 
-### [Chapter 1: Vectors, what even are they](https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=2&t=1s) ###
+# [Chapter 1: Vectors, what even are they](https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=2&t=1s)
 
 Vectors can be visualized geometrically as arrows in 1-D, 2-D, 3-D, ..., n-D coordinate system, and can also be represented as a list of numbers (where the numbers represent the coordinate values).
 
 The geometric interpretation here is important to build interpretation and can later be gneralized to more abstract *vector spaces*.
 
-### [Chapter 2: Linear combinations, span, and basis vectors](https://www.youtube.com/watch?v=k7RM-ot2NWY&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=3&t=0s) ###
+# [Chapter 2: Linear combinations, span, and basis vectors](https://www.youtube.com/watch?v=k7RM-ot2NWY&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=3&t=0s) ###
 
 Vectors (arrows, and list of numbers) can form linear combinations, which can involve multiplication by scalars and addition of vectors. Geometrically, multiplication by scalar is equivlaent to scaling the length of a vector by that factor. Vector addition means putting vectors tail to head and find the resulting vector.
 
@@ -27,7 +27,7 @@ In other words, 2D space are *spanned* by a set of *basis vectors*. Usually, the
 
 As a corollary, if a 3-by-3 matrix $A$ has linearly-dependent columns, that means its columns does not span the entire 3D-space (spans a plane or a line instead).
 
-### [Chapter 3: Linear transformations and matrices](https://www.youtube.com/watch?v=kYB8IZa5AuE&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=4&t=0s) ###
+# [Chapter 3: Linear transformations and matrices](https://www.youtube.com/watch?v=kYB8IZa5AuE&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=4&t=0s) ###
 
 Multiplication of a 2-by-1 vector $v$ by an 2-by-2 matrix $A$ to yield a new 2-by-1 vector $u$: $Au=v$ can be thought of as a linear transformation. In fact, this multiplication can be thought of as transforming the original 2-D coordinate system into a new one, with the caveat the grid lines still have to remain parallel after the transformation (think about a grid getting sheared or rotated).
 
@@ -37,7 +37,7 @@ Therefore, the matrix-vector multiplication then has the geometric meaning of re
 
 This is a very powerful idea -- the specific operation of matrix-vector multiplication makes clear sense under this context.
 
-### [Chapter 4: Matrix multiplication as compositions](https://www.youtube.com/watch?v=XkY2DOUCWMU&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=5&t=0s) and [Chapter 5: Three-dimensional linear transformations](https://www.youtube.com/watch?v=rHLEWRxRGiM&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=6&t=0s) ###
+# [Chapter 4: Matrix multiplication as compositions](https://www.youtube.com/watch?v=XkY2DOUCWMU&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=5&t=0s) and [Chapter 5: Three-dimensional linear transformations](https://www.youtube.com/watch?v=rHLEWRxRGiM&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=6&t=0s)
 
 If a matrix represents a transformation of the coordinate system (e.g. shear, rotation), then multiplication of matrices represent *sequences of transformations*. For example $AB$ can represent first shear the coordinate system ($B$) then rotate the resulting coordinate system ($A$).
 
@@ -45,7 +45,7 @@ This also makes it obvious why matrix multiplication is NOT *commutative*. Shear
 
 Inverse of a matrix $A$ then represents performing the reverse coordinate system transformation, such that $A^{-1}A=AA^{-1}$ represents net-zero transformation of the original coordinate system, which is exactly represented by the identity matrix.
 
-### [Chapter 6: The determinant](https://www.youtube.com/watch?v=Ip3X9LOh2dk&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=7&t=0s) ###
+# [Chapter 6: The determinant](https://www.youtube.com/watch?v=Ip3X9LOh2dk&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=7&t=0s)
 
 This is a really cool idea. In many statistics formulas, there will be a condition that reads like "assuming $A$ is positive-definite, we multiply by $A^{-1}$". Positive-definite relates to positive determinants. This gave me the sense that determinant represents a matrix analog of real number's magnitude. But then what does a negative determinant mean?
 
@@ -61,11 +61,11 @@ So if $det(A)=0$, then we know $A$ transforms maps vectors into a lower-dimensio
 
 From this intuition, the computation of determinant also makes a bit more sense (at least in the 2D case).
 
-### [Chapter 7: Inverse matrices, column space and null space](https://www.youtube.com/watch?v=uQhTuRlWMxw&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=8&t=32s) ###
+# [Chapter 7: Inverse matrices, column space and null space](https://www.youtube.com/watch?v=uQhTuRlWMxw&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=8&t=32s)
 
 This chapter combines the geometric intuition from before and solving systems of linear equations to explain inverse matrices, column space, and null space.
 
-#### Inverse matrices ####
+## Inverse matrices
 
 Solving system of linear equations in the form of $Ax=v$ (where A=3-by-3, x and v are 3-by-1 vectors) can be thought of as what vector $x$ in 3-D space, after transformation represented by $A$, become the vector $v$?
 
@@ -75,7 +75,7 @@ Intuitively this makes sense -- to get the vector pre-transformation, we simply 
 
 Now suppose $\|det(A)\|=0$, this means $A$ maps a 3-D vector onto a lower-dimensional space, which can be a plane, a line, or even a point. In this case, no inverse $A^{-1}$ exists, because how can you transform these lower-dimensional constructs into 3D space? (Note that in most textbooks, the justification of $A^{-1}$ exists only when $det(A)$ is not zero is made on the basis of Gauss-Jordan form, which is not intuitive at all).
 
-#### Column Space and Null Space ####
+## Column Space and Null Space
 
 So in the nominal case, each vector in 3D is mapped to a different one in 3D space. Therefore the set of all possible $v$'s span the entire 3D space. Therefore the 3D space is the *column space* of the matrix $A$. The *rank* of $A$ in this case is 3, because the column space is 3-dimensional.
 
@@ -87,7 +87,7 @@ If this *rank-deficient* $A$ maps $x$ onto a plane, then its column space has *r
 
 Geometrically, this means if a transformation compresses a cube into a plane, then an entire line of points are mapped onto the origin of the resulting *plane* (imagine a vertical compression of a cube, the entire z-axis is mapped onto the origin and is therefore the null space of this transformation). Similarly, if a cube is compressed into a line, then an entire plane of points are mapped onto the origin of the resulting *number line*.
 
-#### Left and Right Inverse ####
+## Left and Right Inverse
 
 Technically, the inverse $A^{-1}$ normally talked about refers to the left inverse ($A^{-1}A=I$). And the full-rank matrices for which left inverse exist perform a one-to-one transformation of vectors (*injective*) -- each unique vector $x$ is mapped onto at most one $v$ vector.
 
@@ -97,17 +97,17 @@ Consequently, if $A$ is 2-by-3, there exists a 3-by-2 *right-inverse* matrix $B$
 
 These explanations, in my opinion, are much more intuitive and easy to remember than the rules and diagram taught in all of the linear algebra courses I have ever taken, including [18.06](2016-04-21-LinearAlgebra.md).
 
-### [Chapter 8: Nonsquare matrices as transformations between dimensions](https://www.youtube.com/watch?v=v8VSDg_WQlA&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=9&t=0s) ###
+# [Chapter 8: Nonsquare matrices as transformations between dimensions](https://www.youtube.com/watch?v=v8VSDg_WQlA&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=9&t=0s)
 
 This is straight forward applying the idea that the columns of a matrix represent mapping of the basis vectors.
 
-### [Chapter 9: Dot product and duality](https://www.youtube.com/watch?v=LyGKycYT2v0&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=10&t=0s) ###
+# [Chapter 9: Dot product and duality](https://www.youtube.com/watch?v=LyGKycYT2v0&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=10&t=0s)
 
 This one is pretty interesting. Dot product represents projection. At the same time, we can think of dot product in 2D, $v \cdot u$ as a matrix-vector multiplication $v^T u$. Here we can think of the "matrix" $v^T$ as a transformation of the basis 2D basis vectors $\hat{i}$ and $\hat{j}$ onto vectors on the number line. Therefore dot-product represents a 2D-to-1D transformation.
 
 This is the idea of vector-transformation duality. Each n-dimensional vector's transpose represents an N-to-1 dimensional linear transformation.
 
-### [Chapter 10: Cross products](https://www.youtube.com/watch?v=eu6i7WJeinw&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=11&t=0s) ###
+# [Chapter 10: Cross products](https://www.youtube.com/watch?v=eu6i7WJeinw&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=11&t=0s)
 
 This one is also not too insightful, perhaps because cross product's definition as a vector was strongly motivated by physics.
 
@@ -115,13 +115,13 @@ Cross-product of two 2D vectors $a$ and $b$ yield a third vector $c$ perpendicul
 
 Then the triple product $\|c\cdot(a\times b)\|$ represents the volume of the parallelpiped formed by $a$, $b$, and $c$.
 
-### [Chapter 11: Cross products in the light of linear transformations](https://www.youtube.com/watch?v=BaM7OCEm3G0&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=12&t=0s) ###
+# [Chapter 11: Cross products in the light of linear transformations](https://www.youtube.com/watch?v=BaM7OCEm3G0&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=12&t=0s)
 
 This one basically explains the triple product by interpreting the dot-product operation ($c\cdot(\cdot)$) by the cross-product ($a\times b$) as finding a 3D-to-1D linear transformation.
 
 Not too useful.
 
-### [Chapter 12: Change of basis](https://www.youtube.com/watch?v=P2LTAUO1TdA&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=13&t=0s) ###
+# [Chapter 12: Change of basis](https://www.youtube.com/watch?v=P2LTAUO1TdA&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=13&t=0s)
 
 This also follows from the idea that a matrix represents mapping of the individual vectors of a coordinate system.
 
@@ -149,7 +149,7 @@ The imagery is suppose we have a square piece of paper/mesh, we pull at the top 
 
 However, if a matrix represents rotation, then the determinant will be 0, and the eigenvalues will be imaginary. Imaginary eigenvalues means that a rotation is involved in the transformation.
 
-### [Chapter 14: Abstract vector spaces](https://www.youtube.com/watch?v=TgKwz5Ikpc8&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=15&t=0s) ###
+# [Chapter 14: Abstract vector spaces](https://www.youtube.com/watch?v=TgKwz5Ikpc8&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=15&t=0s)
 
 This lesson extrapolate vectors, normally thought of as arrows in 1- to 3-D space and corresponding list of numbers, to any construct that obey the [axioms of vector space](https://en.wikipedia.org/wiki/Vector_space#Definition). Essentially the members of a vector space follow the rule of linear combination (or linearity).
 

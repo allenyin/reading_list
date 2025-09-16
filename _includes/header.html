@@ -2,49 +2,97 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>{{ site.name }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/theme.css" rel="stylesheet">
-    <link href="/css/prism-custom.css" rel="stylesheet">
-    <!-- Prism.js for syntax highlighting and line numbers -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-matlab.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-nasm.min.js"></script>
-    <!-- MathJax3 will be loaded by markdown-it-mathjax3 plugin -->
-    <!-- MathJax3 will be loaded by markdown-it-mathjax3 plugin -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ site.name }}</title>
+
+  <script>
+    (function () {
+      // Check localStorage for a saved theme
+      const savedTheme = localStorage.getItem('theme');
+
+      // If the user has explicitly chosen the light theme, apply it
+      if (savedTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+      // By default, the dark theme from the CSS will be used.
+    })();
+  </script>
+
+  <link href="/css/theme.css" rel="stylesheet">
+  <link href="/css/prism-custom.css" rel="stylesheet">
+  <!-- Prism.js for syntax highlighting and line numbers -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-core.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-matlab.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-nasm.min.js"></script>
+  <!-- MathJax3 will be loaded by markdown-it-mathjax3 plugin -->
+  <!-- MathJax3 will be loaded by markdown-it-mathjax3 plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-nasm.min.js"></script>
+  <!-- Theme toggle JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const themeToggleBtn = document.querySelector('.theme-toggle-btn');
+
+      // This function updates the button's text based on the current theme
+      const updateButtonText = () => {
+        // Check if the 'data-theme' attribute is 'light'
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+        // Set the button text accordingly
+        if (isLight) {
+          themeToggleBtn.textContent = 'Dark 🌙';
+        } else {
+          themeToggleBtn.textContent = 'Light ☀️';
+        }
+      };
+
+      // Add the click event listener to the button
+      themeToggleBtn.addEventListener('click', function () {
+        // Get the root <html> element
+        const root = document.documentElement;
+
+        // Check if the light theme is currently active by checking the attribute
+        const isLight = root.getAttribute('data-theme') === 'light';
+
+        if (isLight) {
+          // Switch to DARK mode: remove the attribute and the localStorage item
+          root.removeAttribute('data-theme');
+          localStorage.removeItem('theme');
+        } else {
+          // Switch to LIGHT mode: set the attribute and the localStorage item
+          root.setAttribute('data-theme', 'light');
+          localStorage.setItem('theme', 'light');
+        }
+
+        // After every click, update the button text to reflect the new theme
+        updateButtonText();
+      });
+
+      // --- IMPORTANT ---
+      // Set the initial button text when the page first loads
+      updateButtonText();
+    });
+  </script>
 </head>
 
 <body>
-
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">{{ site.name }}</a>
-              </div>
-              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">Home</a></li>
-                    
-                    <!-- <li class="active visible-xs-block"><a href="/tags.html">Tags</a></li> -->
-                    <li class="active"><a href="/archive/">Archive</a></li>
-                    <li class="active"><a href="/tags/">All Tags</a></li>
-                    {% if site.github %}
-                      <li class="active"><a href="https://github.com/{{ site.github }}">Github</a></li>
-                    {% endif %}
-                </ul>
-              </div>
-        </div>
+  <nav class="navbar">
+    <div class="navbar-content">
+      <div class="navbar-brand">
+        <a href="/">{{ site.name }}</a>
+      </div>
+      <div class="navbar-menu">
+        <a href="/">Home</a>
+        <a href="/archive/">Archive</a>
+        <a href="/tags/">All Tags</a>
+        {% if site.github %}
+        <a href="https://github.com/{{ site.github }}">Github</a>
+        {% endif %}
+        <button id="theme-toggle" class="theme-toggle-btn">
+          <span id="theme-icon">Dark</span>
+        </button>
+      </div>
     </div>
-</div>
+  </nav>

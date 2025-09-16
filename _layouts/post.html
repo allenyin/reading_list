@@ -1,52 +1,46 @@
 {% include "header.html" %}
 
-<div class="container container-left">
-    <div class="row">
-        <div class="col-md-12">
-          <div class="article">
-            <div class="well">
-              <h1><a href="{{ page.url | url }}">{{ date | date("LLL d, yyyy") }} - {{ title }}</a></h1>
-            {% if site.comments == true and page.data.comments == true and site.disqus != '' %}
-            <p class="author"><a href="#disqus_thread">Comments</a></p>
-            {% endif %}
-           
-            {# Add the tags #}
-            {% if tags %}
-            <p class="tags">
-              <small>
-                Tags:
-                {% for tag in tags %}
-                <span><a href="/tags/{{ tag | slug }}/">{{ tag | replace('_', ' ') }}</a></span>{% if not loop.last %}, {% endif %}
-                {% endfor %}
-              </small>
-            </p>
-            {% endif %}
-            
-            <div class="post-content">
-              {{ content | addLineNumbers | safe }}
-            </div>
-            
-            {% if page.data.comments %}
-            <div id="disqus_thread">
-                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_nostcript">comments powered by Disqus.</a></noscript>
-                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-            </div>
-            {% endif %}
-            
-            </div>
-          </div>
-          
-          <div class="pagination">
-              {% if page.data.next %}
-                <a class="btn btn-default" href="{{ page.data.next.permalink }}" class="next">Newer Post</a>
-              {% endif %}
-              {% if page.data.previous %}
-                <a class="btn btn-default" href="{{ page.data.previous.permalink }}" class="previous">Older Post</a>
-              {% endif %}
-</div>
+<div class="main-container">
+  <article class="post">
+    <header class="post-header">
+      <h1><a href="{{ page.url | url }}">{{ date | date("LLL d, yyyy") }} - {{ title }}</a></h1>
+      {% if site.comments == true and page.data.comments == true and site.disqus != '' %}
+      <p class="author"><a href="#disqus_thread">Comments</a></p>
+      {% endif %}
 
-        </div>
+      {# Add the tags #}
+      {% if tags %}
+      <div class="post-meta">
+          Tags:
+          {% for tag in tags %}
+          <span><a href="/tags/{{ tag | slug }}/">{{ tag | replace('_', ' ') }}</a></span>{% if not loop.last %}, {%
+          endif %}
+          {% endfor %}
+      </div>
+      {% endif %}
+    </header>
+
+    <div class="post-content">
+      {{ content | addLineNumbers | safe }}
     </div>
+
+    {% if page.data.comments %}
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_nostcript">comments powered by
+            Disqus.</a></noscript>
+      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+    {% endif %}
+  </article>
+
+  <div class="pagination">
+    {% if page.data.next %}
+    <a href="{{ page.data.next.permalink }}" class="pagination-btn">Newer Post</a>
+    {% endif %}
+    {% if page.data.previous %}
+    <a href="{{ page.data.previous.permalink }}" class="pagination-btn">Older Post</a>
+    {% endif %}
+  </div>
 </div>
 
 {% include "disqus-comments.html" %}
