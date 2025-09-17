@@ -10,6 +10,10 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
@@ -30,6 +34,6 @@ jobs:
           GA_ID: ${{ secrets.GA_ID }}
 
       - name: Deploy to GitHub Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: actions/deploy-pages@v4
         with:
-          folder: _site
+          path: _site
