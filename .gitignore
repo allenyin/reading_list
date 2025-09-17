@@ -2,3 +2,4 @@ _cache
 _site
 .env
 node_modules/
+package-lock.json
