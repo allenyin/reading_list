@@ -11,7 +11,7 @@ permalink: "/tags/"
                 <h1>All Tags</h1>
                 <div class="tag-cloud">
                     {% for tag in collections.tags %}
-                    <a href="/tags/{{ tag | slug }}/" class="tag-link">{{ tag | replace('_', ' ') }}</a>
+                    <a href="{{ '/tags/' | url }}{{ tag | slug }}/" class="tag-link">{{ tag | replace('_', ' ') }}</a>
                     {% endfor %}
                 </div>
             </div>

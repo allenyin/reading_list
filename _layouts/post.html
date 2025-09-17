@@ -35,10 +35,10 @@
 
   <div class="pagination">
     {% if page.data.next %}
-    <a href="{{ page.data.next.permalink }}" class="pagination-btn">Newer Post</a>
+    <a href="{{ page.data.next.permalink | url }}" class="pagination-btn">Newer Post</a>
     {% endif %}
     {% if page.data.previous %}
-    <a href="{{ page.data.previous.permalink }}" class="pagination-btn">Older Post</a>
+    <a href="{{ page.data.previous.permalink | url }}" class="pagination-btn">Older Post</a>
     {% endif %}
   </div>
 </div>

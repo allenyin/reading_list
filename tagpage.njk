@@ -17,7 +17,7 @@ layout: default
                     {% for post in collections.postsByTag[tag] %}
                         <li>
                             <span class="post-meta">{{ post.date | date("LLL d, yyyy") }}</span>
-                            <a class="post-link" href="{{ post.url }}">{{ post.data.title }}</a>
+                            <a class="post-link" href="{{ post.url | url }}">{{ post.data.title }}</a>
                         </li>
                     {% endfor %}
                 </ul>
