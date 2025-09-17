@@ -13,7 +13,7 @@
       <div class="post-meta">
           Tags:
           {% for tag in tags %}
-          <span><a href="/tags/{{ tag | slug }}/">{{ tag | replace('_', ' ') }}</a></span>{% if not loop.last %}, {%
+          <span><a href="{{ '/tags/' | url }}{{ tag | slug }}/">{{ tag | replace('_', ' ') }}</a></span>{% if not loop.last %}, {%
           endif %}
           {% endfor %}
       </div>

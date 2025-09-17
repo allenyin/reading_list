@@ -17,7 +17,7 @@ pagination:
       Tags:
       {# 4. Use 'loop.last' and the simpler 'replace' filter #}
       {% for tag in post.data.tags %}
-      <span><a href="/tags/{{ tag | slug }}/">{{ tag | replace('_', ' ') }}</a></span>{% if not loop.last %}, {% endif
+      <span><a href="{{ '/tags/' | url }}{{ tag | slug }}/">{{ tag | replace('_', ' ') }}</a></span>{% if not loop.last %}, {% endif
       %}
       {% endfor %}
     </div>
@@ -43,6 +43,6 @@ pagination:
     <span class="page_number ">Page: {{ pagination.pageNumber + 1 }} of {{ pagination.totalPages }}</span>
 
     {% if pagination.nextPageHref %}
-      <a href="{{ pagination.previousPageHref | url }}" class="pagination-btn">Older</a>
+      <a href="{{ pagination.nextPageHref | url }}" class="pagination-btn">Older</a>
     {% endif %}
 </div>

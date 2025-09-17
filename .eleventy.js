@@ -116,11 +116,8 @@ module.exports = function(eleventyConfig) {
       return post.data.permalink;
     }
 
-    // Then, create a "clean" slug by removing the date prefix if it exists.
-    const cleanSlug = post.fileSlug.replace(/^\d{4}-\d{2}-\d{2}-/, '');
-
-    // Finally build the consistent url
-    return `/posts/${cleanSlug}/`;
+    // Use the actual file structure: /_posts/filename/
+    return `/_posts/${post.fileSlug}/`;
   }
 
   // Custom filters for tag processing
