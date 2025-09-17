@@ -56,6 +56,11 @@ module.exports = function(eleventyConfig) {
     year: new Date().getFullYear()
   });
 
+  eleventyConfig.addGlobalData("analytics", {
+    isProduction: process.env.ELEVENTY_ENV === 'production',
+    ga_id: process.env.GA_ID || ""
+  });
+
   // Configure markdown processing with LaTeX support
   const markdownIt = require("markdown-it");
   const markdownItOptions = {

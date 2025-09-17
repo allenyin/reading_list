@@ -19,6 +19,18 @@
     })();
   </script>
 
+  {%- if analytics.isProduction and analytics.ga_id -%}
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ analytics.ga_id }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '{{ analytics.ga_id }}');
+  </script>
+  {%- endif -%}
+
   <link href="/css/theme.css" rel="stylesheet">
   <link href="/css/prism-custom.css" rel="stylesheet">
   <!-- Prism.js for syntax highlighting and line numbers -->

@@ -5,6 +5,7 @@
   "main": ".eleventy.js",
   "scripts": {
     "build": "eleventy",
+    "build:prod": "ELEVENTY_ENV=production eleventy",
     "serve": "eleventy --serve",
     "watch": "eleventy --watch",
     "debug": "DEBUG=Eleventy* eleventy"
