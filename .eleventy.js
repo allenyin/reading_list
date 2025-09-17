@@ -228,6 +228,7 @@ module.exports = function(eleventyConfig) {
   return {
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",
+    pathPrefix: pathPrefix,
     dir: {
       input: ".",  // This specifies the project's root folder as the main source for all pages built.
       output: "_site",
