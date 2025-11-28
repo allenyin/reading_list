@@ -81,6 +81,8 @@ The details are simplifying:
 
 - Training on simply the responses of high quality SFT/Instruction-tuning data is enough to both elicit proper instruction tuning, model capability, and instill reasoning abilities, without degrading other general abilities significantly (e.g. creative-writing).
 
+But perhaps even having a distinction between pretraining, mid-training, and SFT-post-training is an unecessary division. The only meaningful difference is just the learning rate. Perhaps eventually, the boundaries here will be blurred even more and dynamic learning-rate tuning will become the norm.
+
 What underlying principle hypothesis can be used to explain these observations? Perhaps a good title for a review paper could be "The unreasonable effectivness of reasoning data".
 
 
