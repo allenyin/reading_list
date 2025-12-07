@@ -235,5 +235,3 @@ It's obvious that iterative improvement for a verifiable domain like Go should w
 3. **The Difficulty Ceiling** As the model improves, the manifold covers the entire training distribution. The limiting factor becomes the difficulty of the problems. If the model can solve everything in the dataset zero-shot, the gradient for improvement vanishes. To exceed the best human capability, the system eventually needs a mechanism to generate novel, harder problems (synthetic data generation) or prove open conjectures where the ground truth is unknown, relying entirely on its self-verification rigor to guide the search into uncharted mathematical territory -- this is likely needed for "*superintelligence*".
 
 This intuition is well-observed in human learning: we improve the fastest when we are attempting tasks that are SLIGHTLY out-of-reach. In fact, the "search" and "verifier" in LLM iterative improvement are analogous to "information" in the [Challenge Point Framework]({{ site.baseurl }}/_posts/2022-01-28-ChallengePoint/) for optimal learning difficulty.
-
-Make a diagram for this!!
