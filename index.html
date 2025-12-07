@@ -27,6 +27,16 @@ pagination:
     {% endif %}
   </header>
 
+  {% set toc = post.content | getTOC %}
+  {% if toc %}
+  <div class="table-of-contents-wrapper">
+    <details class="toc-details">
+      <summary class="toc-summary">Table of Contents</summary>
+      {{ toc | safe }}
+    </details>
+  </div>
+  {% endif %}
+
   <div class="post-content">
     {# 5. 'post.content' contains the rendered HTML of the post #}
     {{ post.content | safe }}

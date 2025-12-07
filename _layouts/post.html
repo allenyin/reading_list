@@ -20,6 +20,16 @@
       {% endif %}
     </header>
 
+    {% set toc = content | getTOC %}
+    {% if toc %}
+    <div class="table-of-contents-wrapper">
+      <details class="toc-details">
+        <summary class="toc-summary">Table of Contents</summary>
+        {{ toc | safe }}
+      </details>
+    </div>
+    {% endif %}
+
     <div class="post-content">
       {{ content | addLineNumbers | safe }}
     </div>

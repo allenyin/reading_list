@@ -90,6 +90,18 @@ module.exports = function(eleventyConfig) {
   // Enable css attribute syntax for images
   md.use(require("markdown-it-attrs"));
 
+  // Add anchor links to headers for TOC navigation
+  md.use(require("markdown-it-anchor"), {
+    permalink: false, // Don't add permalink icons
+    slugify: (s) => {
+      // Custom slugify function to match common conventions
+      return s.toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '') // Remove special characters
+        .replace(/[\s_-]+/g, '-') // Replace spaces, underscores, multiple dashes with single dash
+        .replace(/^-+|-+$/g, ''); // Remove leading/trailing dashes
+    }
+  });
 
   // Set the markdown library
   eleventyConfig.setLibrary("md", md);
@@ -216,6 +228,60 @@ module.exports = function(eleventyConfig) {
   // Add a filter to ensure line numbers are applied
   eleventyConfig.addFilter("addLineNumbers", function(content) {
     return content.replace(/<pre class="language-([^"]+)">/g, '<pre class="language-$1 line-numbers">');
+  });
+
+  // Filter to extract table of contents from markdown content (only h1 and h2)
+  eleventyConfig.addFilter("getTOC", function(content) {
+    if (!content) return "";
+    
+    // Match only h1 and h2 headers with their IDs (may have tabindex attribute)
+    const headerRegex = /<h([12])\s+id="([^"]+)"[^>]*>([^<]+)<\/h[12]>/g;
+    const headers = [];
+    let match;
+    
+    while ((match = headerRegex.exec(content)) !== null) {
+      headers.push({
+        level: parseInt(match[1]),
+        id: match[2],
+        text: match[3]
+      });
+    }
+    
+    if (headers.length === 0) return "";
+    
+    // Generate TOC HTML (simplified for only 2 levels)
+    let toc = '<nav class="table-of-contents">\n<ul>\n';
+    let currentLevel = 0;
+    
+    headers.forEach(header => {
+      const level = header.level;
+      
+      // If moving from h1 to h2, start a nested list
+      if (level === 2 && currentLevel === 1) {
+        toc += '<ul>\n';
+      }
+      // If moving from h2 to h1, close the nested list
+      else if (level === 1 && currentLevel === 2) {
+        toc += '</ul>\n</li>\n';
+      }
+      // Same level, close previous item
+      else if (currentLevel > 0) {
+        toc += '</li>\n';
+      }
+      
+      toc += `<li><a href="#${header.id}">${header.text}</a>`;
+      currentLevel = level;
+    });
+    
+    // Close all remaining list items
+    if (currentLevel === 2) {
+      toc += '</li>\n</ul>\n</li>\n</ul>\n';
+    } else if (currentLevel === 1) {
+      toc += '</li>\n</ul>\n';
+    }
+    
+    toc += '</nav>';
+    return toc;
   });
 
   // Ignore files (equivalent to exclude)
