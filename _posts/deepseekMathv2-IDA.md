@@ -79,6 +79,12 @@ $$R_V = R_{format}\cdot R_{score}\cdot R_{meta}$$
 
 In the end, the verifier can both verify proofs, and verify those verifications.
 
+#### Meta-verification as an additional scaling axis?
+
+> All problems in computer science can be solved by another level of indirection.
+
+Similarly, metaverification here takes the advantage of the verification-generation gap. It's unclear how fast the metaverification-verification gap reduces compared to the verification-generator gap, and how that relative convergence varies for problem domains. Perhaps multiple layers of metaverifications can become a trick to prevent verifier performance saturation?
+
 ## Forcing self-verification during proof generation
 
 The authors points out that
