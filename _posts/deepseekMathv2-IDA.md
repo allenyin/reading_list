@@ -53,7 +53,7 @@ At the end of a round of RL, we can additionally do SFT for each problem $x$ wit
 
 ## Maintaining generation-verification gap
 
-An assumption that is implied in the above approach is that verification is easier than generation, this is known as the "generation-verification gap". This has the same intuition as [`P != NP`](https://en.wikipedia.org/wiki/P_versus_NP_problem) -- the widely believed but unproven statement that problems whose solutions are easy to verify (NP) are not necessarily easy to solve (P).
+An assumption that is implied in the above approach is that verification is easier than generation, this is known as the "generation-verification gap". This has the same intuition as [`P != NP`](https://en.wikipedia.org/wiki/P_versus_NP_problem) -- the widely believed but unproven statement that problems whose solutions are easy to verify (P) are not necessarily easy to solve (NP).
 
 Scaling verification compute to verify generated proofs by the LLM can work IF there exists a gap between the proof generator and the proof verifier. But as RL improves the generator, this gap shrinks and performance eventually saturates, and the rate of this saturation has been shown to correlate to the models' [pretraining flops](https://arxiv.org/pdf/2412.02674).
 
@@ -81,9 +81,13 @@ In the end, the verifier can both verify proofs, and verify those verifications.
 
 #### Meta-verification as an additional scaling axis?
 
-> All problems in computer science can be solved by another level of indirection.
+> All problems in computer science can be solved by another level of indirection [...] except for the problem of too many levels of indirection
 
-Similarly, metaverification here takes the advantage of the verification-generation gap. It's unclear how fast the metaverification-verification gap reduces compared to the verification-generator gap, and how that relative convergence varies for problem domains. Perhaps multiple layers of metaverifications can become a trick to prevent verifier performance saturation?
+The above is a a piece of engineering common wisdom that's also used often as a meme/joke. It's often applied in situations where the solution is to apply an extra layer of abstraction (e.g. virtual memory, file descriptors, DNS, abstract classes/interfaces, containers, etc). The use of meta-verification reminded me of this.
+
+Metaverification here takes the advantage of the verification-generation gap. It's unclear how fast the metaverification-verification gap reduces compared to the verification-generator gap, and how that relative convergence varies for problem domains. Perhaps multiple layers of metaverifications can become a trick to prevent verifier performance saturation?
+
+Alternatively, we can think of meta-verification as introducing additional layer of model ["feedback-loop"](https://springtail.ai/wp/2025/07/25/to-make-a-ml-strange-loop/) to amplify its abilities.
 
 ## Forcing self-verification during proof generation
 
