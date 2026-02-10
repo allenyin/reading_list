@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300">
+  <defs>
+    <linearGradient id="teacherGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90D9;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#4A90D9;stop-opacity:0.2" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="300" fill="#FAFAFA"/>
+  
+  <!-- Title -->
+  <text x="300" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">Single Teacher: Coherent Target Distribution</text>
+  
+  <!-- Axes -->
+  <line x1="80" y1="240" x2="520" y2="240" stroke="#666" stroke-width="2"/>
+  <line x1="80" y1="240" x2="80" y2="60" stroke="#666" stroke-width="2"/>
+  
+  <!-- Axis labels -->
+  <text x="300" y="270" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666">Response Style Space</text>
+  <text x="40" y="150" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666" transform="rotate(-90, 40, 150)">Probability Density</text>
+  
+  <!-- Single teacher distribution (bell curve) -->
+  <path d="M 120 240 
+           Q 180 240 220 200 
+           Q 260 140 300 80 
+           Q 340 140 380 200 
+           Q 420 240 480 240" 
+        fill="url(#teacherGrad)" stroke="#4A90D9" stroke-width="3"/>
+  
+  <!-- Label for teacher distribution -->
+  <text x="300" y="55" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4A90D9" font-weight="bold">Teacher Distribution</text>
+  
+  <!-- Student approximation (dashed line, similar shape) -->
+  <path d="M 130 240 
+           Q 190 240 225 205 
+           Q 265 150 300 95 
+           Q 335 150 375 205 
+           Q 410 240 470 240" 
+        fill="none" stroke="#E67E22" stroke-width="2" stroke-dasharray="8,4"/>
+  
+  <!-- Legend -->
+  <rect x="400" y="70" width="15" height="15" fill="#4A90D9" opacity="0.6"/>
+  <text x="420" y="82" font-family="Arial, sans-serif" font-size="11" fill="#333">Teacher</text>
+  
+  <line x1="400" y1="98" x2="415" y2="98" stroke="#E67E22" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="420" y="102" font-family="Arial, sans-serif" font-size="11" fill="#333">Student learns</text>
+  
+  <!-- Annotation -->
+  <text x="300" y="285" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#888" font-style="italic">Clear optimization target → coherent student outputs</text>
+</svg>

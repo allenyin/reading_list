@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320">
+  <defs>
+    <linearGradient id="interpGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#E74C3C;stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:#E74C3C;stop-opacity:0.1" />
+    </linearGradient>
+    <linearGradient id="t1Grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90D9;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#4A90D9;stop-opacity:0.05" />
+    </linearGradient>
+    <linearGradient id="t2Grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#9B59B6;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#9B59B6;stop-opacity:0.05" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="320" fill="#FAFAFA"/>
+  
+  <!-- Title -->
+  <text x="300" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">The Interpolation Problem: What the Student Learns</text>
+  
+  <!-- Axes -->
+  <line x1="80" y1="240" x2="520" y2="240" stroke="#666" stroke-width="2"/>
+  <line x1="80" y1="240" x2="80" y2="60" stroke="#666" stroke-width="2"/>
+  
+  <!-- Axis labels -->
+  <text x="300" y="265" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666">Response Style Space</text>
+  <text x="40" y="150" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666" transform="rotate(-90, 40, 150)">Probability Density</text>
+  
+  <!-- Teacher 1 distribution (left, faded) -->
+  <path d="M 110 240 
+           Q 145 240 170 200 
+           Q 195 140 220 100 
+           Q 245 140 270 200 
+           Q 295 240 330 240" 
+        fill="url(#t1Grad)" stroke="#4A90D9" stroke-width="1.5" stroke-dasharray="4,3"/>
+  
+  <!-- Teacher 2 distribution (right, faded) -->
+  <path d="M 280 240 
+           Q 320 240 350 195 
+           Q 380 130 410 90 
+           Q 440 130 470 195 
+           Q 500 240 520 240" 
+        fill="url(#t2Grad)" stroke="#9B59B6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  
+  <!-- Interpolated distribution (center, problematic) -->
+  <path d="M 140 240 
+           Q 190 238 230 220 
+           Q 270 195 310 175 
+           Q 350 195 390 220 
+           Q 430 238 480 240" 
+        fill="url(#interpGrad)" stroke="#E74C3C" stroke-width="3"/>
+  
+  <!-- Labels -->
+  <text x="220" y="85" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#4A90D9">Teacher A</text>
+  <text x="410" y="75" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#9B59B6">Teacher B</text>
+  
+  <!-- Problem zone annotation -->
+  <text x="310" y="155" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#E74C3C" font-weight="bold">Student learns</text>
+  <text x="310" y="168" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#E74C3C" font-weight="bold">interpolated distribution</text>
+  
+  <!-- Arrow pointing to problematic region -->
+  <path d="M 310 200 L 310 180" stroke="#E74C3C" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- X marks in the interpolation zone -->
+  <text x="270" y="215" font-family="Arial, sans-serif" font-size="14" fill="#C0392B">✗</text>
+  <text x="310" y="205" font-family="Arial, sans-serif" font-size="14" fill="#C0392B">✗</text>
+  <text x="350" y="215" font-family="Arial, sans-serif" font-size="14" fill="#C0392B">✗</text>
+  
+  <!-- Legend -->
+  <line x1="420" y1="105" x2="440" y2="105" stroke="#4A90D9" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="447" y="109" font-family="Arial, sans-serif" font-size="10" fill="#333">Teacher A</text>
+  
+  <line x1="420" y1="120" x2="440" y2="120" stroke="#9B59B6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="447" y="124" font-family="Arial, sans-serif" font-size="10" fill="#333">Teacher B</text>
+  
+  <line x1="420" y1="135" x2="440" y2="135" stroke="#E74C3C" stroke-width="3"/>
+  <text x="447" y="139" font-family="Arial, sans-serif" font-size="10" fill="#333">Student (interpolated)</text>
+  
+  <!-- Bottom annotation -->
+  <rect x="100" y="280" width="400" height="30" rx="5" fill="#FDF2F2" stroke="#E74C3C" stroke-width="1"/>
+  <text x="300" y="300" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#C0392B">Outputs fall between modes: neither Teacher A's style nor Teacher B's style</text>
+</svg>
