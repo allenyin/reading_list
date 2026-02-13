@@ -10,7 +10,7 @@ pagination:
 {# 2. Loop over the 'posts' variable from our alias #}
 {% for post in posts %}
 <div class="post-summary">
-  <header class="" post-header">
+    <header class="post-header">
     {# 3. Use Nunjucks date filter and Eleventy's 'url' filter #}
     <h1><a href="{{ post.url | url }}">{{ post.date | date("LLL d, yyyy") }} - {{ post.data.title }}</a></h1>
     <div class="post-meta">
@@ -22,8 +22,8 @@ pagination:
       {% endfor %}
     </div>
 
-    {% if site.comments and post.data.comments and site.disqus %}
-    <p class="author"><a href="{{ post.url | url }}/#disqus_thread">Comments</a></p>
+    {% if site.comments and site.cusdis_app_id and post.data.comments != false %}
+    <p class="author"><a href="{{ post.url | url }}#cusdis_thread">Comments</a></p>
     {% endif %}
   </header>
 

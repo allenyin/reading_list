@@ -1,0 +1,72 @@
+{% if site.comments and site.cusdis_app_id and page.data.comments != false %}
+<div id="cusdis_thread"
+  data-app-id="{{ site.cusdis_app_id }}"
+  data-host="https://cusdis.com"
+  data-page-id="{{ page.fileSlug }}"
+  data-page-url="{{ site.url }}{{ page.url }}"
+  data-page-title="{{ title }}"
+  data-theme="auto">
+</div>
+<script>
+  // Sync Cusdis theme with site theme before Cusdis loads
+  (function() {
+    const el = document.getElementById('cusdis_thread');
+    if (el) {
+      el.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+    }
+  })();
+</script>
+<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+<script>
+(function() {
+  // Fix dark mode form labels (Cusdis iframe injection)
+  const cusdisEl = document.getElementById('cusdis_thread');
+  if (!cusdisEl) return;
+
+  const isDarkMode = () => document.documentElement.getAttribute('data-theme') !== 'light';
+  const darkModeStyles = `
+    label, .cds-label, [class*="label"], .cusdis-comment-form label,
+    .cds-input-label, .cusdis-form-label, .text-gray-700, [class*="text-gray"] { color: #e1e1e1 !important; }
+    input::placeholder, textarea::placeholder { color: #9aa0a6 !important; }
+  `;
+  const lightModeStyles = `
+    label, .cds-label, [class*="label"], .cusdis-comment-form label,
+    .cds-input-label, .cusdis-form-label { color: #333 !important; }
+  `;
+
+  const injectStyles = (iframe) => {
+    if (!iframe.srcdoc) return;
+    const styles = isDarkMode() ? darkModeStyles : lightModeStyles;
+    const styleTag = '<style id="cusdis-theme-fix">' + styles + '</style>';
+    const existingFix = /<style id="cusdis-theme-fix">[\s\S]*?<\/style>/;
+    let doc = iframe.srcdoc;
+    if (existingFix.test(doc)) {
+      doc = doc.replace(existingFix, styleTag);
+    } else if (doc.indexOf('</head>') !== -1) {
+      doc = doc.replace('</head>', styleTag + '</head>');
+    } else if (doc.indexOf('<head>') !== -1) {
+      doc = doc.replace('<head>', '<head>' + styleTag);
+    } else {
+      doc = styleTag + doc;
+    }
+    iframe.srcdoc = doc;
+  };
+
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.tagName === 'IFRAME') injectStyles(node);
+        if (node.querySelectorAll) node.querySelectorAll('iframe').forEach(injectStyles);
+      });
+    });
+  });
+  observer.observe(cusdisEl, { childList: true, subtree: true });
+
+  const themeObserver = new MutationObserver(() => {
+    const iframe = cusdisEl.querySelector('iframe');
+    if (iframe) injectStyles(iframe);
+  });
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+{% endif %}

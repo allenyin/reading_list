@@ -1,3 +1,4 @@
+require("dotenv").config();
 const yaml = require("js-yaml");
 const { DateTime } = require("luxon");
 
@@ -52,7 +53,8 @@ module.exports = function(eleventyConfig) {
     github: "allenyin/reading_list",
     // gaaccount: "UA-108068754-1",
     disqus: "",
-    comments: false,
+    comments: true,
+    cusdis_app_id: process.env.CUSDIS_APP_ID || "",
     year: new Date().getFullYear()
   });
 

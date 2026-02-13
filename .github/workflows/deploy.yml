@@ -32,6 +32,7 @@ jobs:
         run: npm run build:prod
         env:
           GA_ID: ${{ secrets.GA_ID }}
+          CUSDIS_APP_ID: ${{ secrets.CUSDIS_APP_ID }}
 
       - name: Upload artifact 📦
         uses: actions/upload-pages-artifact@v3
